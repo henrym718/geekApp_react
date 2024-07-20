@@ -1,0 +1,28 @@
+@import url("non.geist");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: "Geist Variable" !important;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #09090b;
+}
+/* Cambia el tipo de letra de todos los componentes de Ant Design */
+.ant-form-item-label,
+.ant-input,
+.ant-button,
+.ant-select-selector {
+  font-family: "Geist Variable" !important;
+  font-weight: 400;
+  line-height: 1.5;
+  color: #09090b;
+}
+
+.custom-span {
+  font-family: "Geist Variable" !important;
+  color: #09090b;
+  font-weight: 500;
+}
