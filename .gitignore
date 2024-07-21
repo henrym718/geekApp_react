@@ -7,21 +7,11 @@ api/.env
 # Ignorar dist (build) directory de Vite en client
 client/dist/
 
-# Ignorar build output de Express (si aplicable)
-api/build/
-
 # Ignorar archivos de log
 *.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-# Ignorar directorios de entorno (si los hay)
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
 
 # Ignorar archivos de configuración del sistema operativo
 .DS_Store
