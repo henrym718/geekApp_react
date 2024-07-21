@@ -9,10 +9,10 @@ dotenv.config();
 
 //Other imports
 import mongoConnect from "./config/dataBases/mongoConnect.js";
-import authRoutes from "./features/auth/infraestructure/input_adapters/authRoutes.js"
-import userRoutes from "./features/user/infraestructure/input_adapters/userRoutes.js"
-import imagesRoutes from "./features/images/infraestructure/input_adapters/imageRoutes.js"
-import productRoutes from "./features/product/infraestructure/input_adapters/productRoutes.js"
+import authRoutes from "./modules/auth/infraestructure/input_adapters/authRoutes.js"
+import userRoutes from "./modules/user/infraestructure/input_adapters/userRoutes.js"
+import imagesRoutes from "./modules/images/infraestructure/input_adapters/imageRoutes.js"
+import productRoutes from "./modules/product/infraestructure/input_adapters/productRoutes.js"
 
 
 /** esta es la que vale */
@@ -39,7 +39,7 @@ app.use(errorLog);
 app.use(errorHandler);
 
 //Running server
-var server = app.listen(process.env.PORT || 3000, () => {
+var server = app.listen(process.env.PORT || 8000, () => {
   mongoConnect();
   console.log("express server listening on port " + server.address().port);
 });

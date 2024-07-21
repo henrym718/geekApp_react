@@ -3,7 +3,7 @@ import { Steps } from "antd";
 import OneStepForm from "./components/OneStepForm";
 import TwoStepForm from "./components/TwoStepFrom";
 import ThreeStepForm from "./components/ThreeStepForm";
-import FourStepForm from "./components/fourStepForm";
+import FourStepForm from "./components/FourStepForm";
 
 export default function InputProfile() {
   const [current, setCurrent] = useState(0);
