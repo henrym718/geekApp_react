@@ -7,11 +7,7 @@ export class ChekIsAuthenticatedUseCase {
 
   async execute(email) {
     const auth = await this.authService.getAuthByfield({ email });
-    console.log(auth);
-    if (auth) {
-      return { autheticate: true };
-    } else {
-      return { autheticate: false };
-    }
+    return { autheticate: !!auth };
   }
 }
+

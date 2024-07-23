@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { AutoComplete } from "antd";
+import { AutoComplete, Input } from "antd";
 import { useQuery } from "react-query";
 import { useNavigate } from "react-router-dom";
 import homeService from "../services/homeService.js";
@@ -22,13 +22,20 @@ export default function InputSearch() {
   };
 
   return (
-    <div>
+    <div className="w-full flex justify-center">
       <AutoComplete
-        className='w-52'
+        className="w-[600px]"
         options={data || []}
         onChange={onChange}
         onKeyUp={onKeyUp}
-      />
+      >
+        <Input.Search
+          size="large"
+          placeholder="input here"
+          enterButton
+          className="h-full"
+        />
+      </AutoComplete>
     </div>
   );
 }
