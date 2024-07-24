@@ -63,12 +63,12 @@ export default function Home() {
         <img
           src={bgImage}
           alt="background"
-          className="absolute top-0 left-0 w-full h-full object-cover"
+          className="absolute top-0 left-0 w-full h-full object-cover rounded-xl"
         />
         <div className=" flex flex-col absolute top-0 left-0 w-full h-full justify-center items-center">
           <h2 className="text-6xl text-white text-center mb-5 ">
             Encuentra el servicio <br />
-            freelance adecuado de <br />
+             freelance adecuado de <br />
             inmediato
           </h2>
           <InputSearch />
@@ -76,6 +76,7 @@ export default function Home() {
       </div>
       <CatgeoriesCard categories={categories} />
 
+      <h1 className="text-5xl text-gray-700">Servicios populares</h1>
       <div>
         <SubcategoryCarousel subcategories={subcategories} />
       </div>
@@ -109,5 +110,19 @@ const categories = [
     name: "categoria 4",
     ico: ico,
   },
-
+  {
+    id: 6,
+    name: "categoria 4",
+    ico: ico,
+  },
+  {
+    id: 7,
+    name: "categoria 4",
+    ico: ico,
+  },
+  {
+    id: 8,
+    name: "categoria 4",
+    ico: ico,
+  },
 ];

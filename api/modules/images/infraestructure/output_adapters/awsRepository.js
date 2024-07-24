@@ -2,7 +2,7 @@ import { S3Client, PutObjectCommand, GetObjectCommand, DeleteObjectCommand } fro
 import { getSignedUrl } from "@aws-sdk/s3-request-presigner";
 
 
-class AwsRepository {
+export class AwsRepository {
     constructor() {
         this.s3Client = new S3Client({
             region: process.env.AWS_REGION,
@@ -40,5 +40,4 @@ class AwsRepository {
 }
 
 
-export default AwsRepository
 

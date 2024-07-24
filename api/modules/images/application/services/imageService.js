@@ -1,18 +1,18 @@
-import ImageRepository from '../repository/imageRepository.js';
+import {AwsRepository} from '../../infraestructure/output_adapters/awsRepository.js';
 import path from "path";
 
-class ImageService {
+export class ImageService {
     constructor() {
-        this.imageRepository = new ImageRepository();
+        this.awsRepository = new AwsRepository();
     }
 
     async uploadFile(file) {
-        return await this.imageRepository.uploadFile(file)
+        return await this.awsRepository.uploadFile(file)
     }
 
     async deleteFile(src) {
         const filename = this.getPathNameUrl(src)
-        return await this.imageRepository.deleteFile(filename)
+        return await this.awsRepository.deleteFile(filename)
     }
 
     getPathNameUrl(src) {
@@ -26,4 +26,3 @@ class ImageService {
     }
 }
 
-export default ImageService 

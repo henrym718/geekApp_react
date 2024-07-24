@@ -1,6 +1,7 @@
 
 # Ignorar node_modules en subdirectorios client y api
-client/node_modules/
+web/node_modules/
+movil/node_modules/
 api/node_modules/
 api/.env
 

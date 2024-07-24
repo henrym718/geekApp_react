@@ -31,7 +31,7 @@ class ProductController {
         try {
             const { input } = req.query
             const response = await this.getProductsTagsUseCase.execute(input)
-            console.log(response)
+//            console.log(response)
             res.status(200).json(response)
         } catch (err) {
             next(err);

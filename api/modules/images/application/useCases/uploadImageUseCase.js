@@ -1,7 +1,7 @@
-import ImageService from '../../domain/service/imageService.js';
+import {ImageService} from '../services/imageService.js';
 import createError from 'http-errors';
 
-class UploadImageUseCase {
+export class UploadImageUseCase {
     constructor() {
         this.imageService = new ImageService()
     }
@@ -20,4 +20,3 @@ class UploadImageUseCase {
 }
 
 
-export default UploadImageUseCase

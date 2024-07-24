@@ -1,8 +1,9 @@
-import UploadImageUseCase from '../../application/upload/uploadImageUseCase.js';
+import {UploadImageUseCase} from '../../application/useCases/uploadImageUseCase.js';
 
 class ImageController {
     constructor() {
         this.uploadImageUseCase = new UploadImageUseCase();
+        
         this.uploadFile = this.uploadFile.bind(this);
     }
 

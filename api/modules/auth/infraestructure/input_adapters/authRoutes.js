@@ -1,10 +1,10 @@
 // Importamos el módulo de Express para crear el router
-import express from "express";
+import { Router } from "express"
 import {AuthController} from "./authController.js"
 import { validator } from '../../../../middleware/data/validatorData.js';
 import * as data from "../../domain/authValidateData.js"
 
-const router = express.Router();
+const router = Router();
 const authController = new AuthController()
 
 
