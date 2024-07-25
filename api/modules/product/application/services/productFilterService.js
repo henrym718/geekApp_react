@@ -1,4 +1,4 @@
-class ProductFilterService {
+export class ProductFilterService {
     orderByField(queryParams) {
         /**Recomendado */ /** por counter si esta por defecto */
         /**Nuevos arrivos */ /** siempre de mayor a menor */
@@ -42,4 +42,3 @@ class ProductFilterService {
     }
 }
 
-export default ProductFilterService

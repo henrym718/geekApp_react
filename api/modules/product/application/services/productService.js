@@ -1,6 +1,6 @@
-import ProductRepository from "../repository/productRepository.js"
+import {ProductRepository} from "../../infraestructure/output_adapters/productRepository.js"
 
-class ProductService {
+export class ProductService {
     constructor() {
         this.productRepository = new ProductRepository()
     }
@@ -22,4 +22,3 @@ class ProductService {
     }
 }
 
-export default ProductService

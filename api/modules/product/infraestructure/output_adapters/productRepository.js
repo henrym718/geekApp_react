@@ -1,11 +1,10 @@
-import ProductModel from "./productMongooseModel.js";
+import { productModel } from "./productModel.js";
 
-class ProductMoongoseRepository {
+export class ProductRepository {
   constructor() {
-    this.productModel = ProductModel;
+    this.productModel = productModel;
   }
 
-  // create a new product
   async createProduct(product) {
     return await this.productModel.create(product);
   }
@@ -27,5 +26,3 @@ class ProductMoongoseRepository {
     // .find(filter).sort(optionOrder).skip(0 * 2).limit(2)
   }
 }
-
-export default ProductMoongoseRepository;

@@ -1,7 +1,7 @@
 import joi from "joi"
 import createError from "http-errors";
 import jwt from "jsonwebtoken"
-import multer from "multer";
+
 
 
 function errorLog(err, req, res, next) {
@@ -11,10 +11,8 @@ function errorLog(err, req, res, next) {
 }
 
 function errorHandler(err, req, res, next) {
-  if (err instanceof joi.ValidationError) {
-    const erroMessages = err.details.map((e) => e.message)
-    const parseErrorMessage = erroMessages[0].replace(/"/g, "")
-    return res.status(403).json({ error: true, message: parseErrorMessage })
+  if (err instanceof joi.ValidationError) {  
+    return res.status(403).json({ error: true, message: err.details[0].message })
   }
   if (err instanceof jwt.JsonWebTokenError) {
     res.clearCookie("refreshToken")

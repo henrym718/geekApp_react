@@ -1,7 +1,7 @@
-import ProductFilterService from "../../domain/services/productFilterService.js"
-import ProductService from "../../domain/services/productService.js"
+import {ProductFilterService} from "../services/productFilterService.js"
+import {ProductService} from "../services/productService.js"
 
-class GetProductsByCategoryUseCase {
+export class GetProductsByCategoryUseCase {
     constructor() {
         this.productService = new ProductService()
         this.productFilterService = new ProductFilterService()
@@ -29,4 +29,3 @@ class GetProductsByCategoryUseCase {
     }
 }
 
-export default GetProductsByCategoryUseCase
