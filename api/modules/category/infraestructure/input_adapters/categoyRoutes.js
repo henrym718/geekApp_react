@@ -9,5 +9,5 @@ const categoryController = new CategoryController();
 
 //Routes
 router.post("/api/category/create", validator(categoryModelData), categoryController.createCategory);
-
+router.get("/api/category/getall", categoryController.getCategories)
 export default router;

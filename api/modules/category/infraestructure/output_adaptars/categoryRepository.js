@@ -12,4 +12,8 @@ export class CategoryRepository {
   async findByField(field) {
     return await this.model.findOne(field);
   }
+
+  async getCategories() {
+    return await this.model.find();
+  }
 }

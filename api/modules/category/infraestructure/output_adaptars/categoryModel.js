@@ -7,7 +7,7 @@ const categorySchema = new Schema(
     urlCover: String,
   },
   {
-    timestamps: true,
+    timestamps: false,
     versionKey: false,
   }
 );

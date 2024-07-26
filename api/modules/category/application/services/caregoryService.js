@@ -12,4 +12,8 @@ export class CategoryService {
   async findByField(field) {
     return await this.categoryRepository.findByField(field);
   }
+
+  async getCategories() {
+    return await this.categoryRepository.getCategories();
+  }
 }
