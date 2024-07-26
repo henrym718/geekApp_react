@@ -3,12 +3,12 @@ import { model, Schema } from "mongoose";
 const subcategoryShema = new Schema(
   {
     name: String,
-    icon: String,
-    cover: String,
-    categoryid : {type: Schema.Types.ObjectId, ref: "Category" }
+    urlIcon: String,
+    urlCover: String,
+    category : {type: Schema.Types.ObjectId, ref: "Category" }
   },
   {
-    timestamps: true,
+    timestamps: false,
     versionKey: false,
   }
 );

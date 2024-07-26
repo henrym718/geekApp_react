@@ -9,12 +9,12 @@ dotenv.config();
 
 //Other imports
 import mongoConnect from "./config/dataBases/mongoConnect.js";
-import authRoutes from "./modules/auth/infraestructure/input_adapters/authRoutes.js"
-import userRoutes from "./modules/user/infraestructure/input_adapters/userRoutes.js"
-import imagesRoutes from "./modules/images/infraestructure/input_adapters/imageRoutes.js"
-import productRoutes from "./modules/product/infraestructure/input_adapters/productRoutes.js"
-import categoryRoutes from "./modules/category/infraestructure/input_adapters/categoyRoutes.js"
-
+import authRoutes from "./modules/auth/infraestructure/input_adapters/authRoutes.js";
+import userRoutes from "./modules/user/infraestructure/input_adapters/userRoutes.js";
+import imagesRoutes from "./modules/images/infraestructure/input_adapters/imageRoutes.js";
+import productRoutes from "./modules/product/infraestructure/input_adapters/productRoutes.js";
+import categoryRoutes from "./modules/category/infraestructure/input_adapters/categoyRoutes.js";
+import subCategoryRoutes from "./modules/subcategory/infraestructure/input_adapters/subcategoryRoutes.js";
 
 /** esta es la que vale */
 // app.use((req, res, next) => {
@@ -30,11 +30,12 @@ app.use(express.json());
 app.use(cookieParser());
 
 //Index routes
-app.use(authRoutes)
-app.use(userRoutes)
-app.use(imagesRoutes)
-app.use(productRoutes)
-app.use(categoryRoutes)
+app.use(authRoutes);
+app.use(userRoutes);
+app.use(imagesRoutes);
+app.use(productRoutes);
+app.use(categoryRoutes);
+app.use(subCategoryRoutes);
 
 //ErrorHandler
 app.use(errorLog);
@@ -45,8 +46,6 @@ var server = app.listen(process.env.PORT || 8000, () => {
   mongoConnect();
   console.log("express server listening on port " + server.address().port);
 });
-
-
 
 /**
  * const userSchema = new Schema({
