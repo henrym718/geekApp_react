@@ -1,9 +1,9 @@
 import joi from "joi";
 
-export const validator = (schema) => {
+export const validator = (attribute, schema) => {
   return (req, res, next) => {
     try {
-      req.body = joi.attempt(req.body, schema, {
+      req[attribute] = joi.attempt(req[attribute], schema, {
         abortEarly: true,
         stripUnknown: true,
       });

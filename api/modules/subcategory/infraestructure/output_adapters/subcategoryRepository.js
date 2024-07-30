@@ -16,7 +16,7 @@ export class SubcategoryRepository {
   }
 
   //Obtiene todas la subcategorias de una categoria
-  async getAllByCategory(categoryid) {
-    return await this.model.find({ category: categoryid });
+  async getAllByCategory(categoryId) {
+    return await this.model.find({ category: categoryId });
   }
 }

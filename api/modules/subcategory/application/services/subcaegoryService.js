@@ -12,4 +12,8 @@ export class SubcaegoryService {
   async findByField(field) {
     return await this.subcategoryRepository.findByField(field);
   }
+
+  async getAllByCategory(categoryId){
+    return await this.subcategoryRepository.getAllByCategory(categoryId)
+  }
 }

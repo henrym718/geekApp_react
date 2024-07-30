@@ -9,8 +9,8 @@ const authController = new AuthController()
 
 
 // Definimos la ruta de login y asociamos el método del controlador
-router.post("/api/auth/logincredentials", validator(data.authDataValidateLogin),  authController.loginCredentials)
-router.post("/api/auth/registercredentials", validator(data.authDataValidateRegister), authController.registerCredentials)
+router.post("/api/auth/logincredentials", validator("body",data.authDataValidateLogin),  authController.loginCredentials)
+router.post("/api/auth/registercredentials", validator("body",data.authDataValidateRegister), authController.registerCredentials)
 router.get("/api/auth/logout",authController.logout)
 router.get("/api/auth/refreshtoken", authController.getNewRefreshToken)
 router.post("/api/auth/isauthenticated", authController.chekIsAuthenticated)

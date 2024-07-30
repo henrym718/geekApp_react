@@ -19,10 +19,17 @@ const urlIcon = joi.string().uri().required().messages({
   "string.empty": "La URL del ícono es un campo requerido.",
   "any.required": "La URL del ícono es un campo requerido.",
 });
-const category = joi.string().hex().length(24).messages({
+const category = joi.string().hex().length(24).required().messages({
   "string.hex.length": "La categoría debe ser un hexadecimal de 24 caracteres.",
   "string.empty": "La URL de la portada es un campo requerido.",
   "any.required": "El campo categoría es requerido.",
+});
+
+const categoryid = joi.string().hex().length(24).required().messages({
+  "string.base": "La categoría debe ser un string.",
+  "string.length": "EL ID de la categoría debe tener 24 caracteres.",
+  "string.empty": "La categoria es un campo requerido.",
+  "any.required": "La categoria es un campo es requerido.",
 });
 
 export const subCategoryModelData = joi.object({
@@ -31,3 +38,5 @@ export const subCategoryModelData = joi.object({
   urlCover,
   category,
 });
+
+export const subCategoryParams = joi.object({ categoryid });
