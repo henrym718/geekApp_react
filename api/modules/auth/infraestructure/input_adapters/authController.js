@@ -4,7 +4,7 @@ import { LogoutUseCase } from "../../application/useCases/logoutUseCase.js";
 import { RefreshTokenUseCase } from "../../application/useCases/refreshTokenUseCase.js";
 import { ChekIsAuthenticatedUseCase } from "../../application/useCases/chekIsAuthenticatedUseCase.js";
 
- export class AuthController {
+export class AuthController {
   constructor() {
     this.loginCredentialsUseCase = new LoginCredentialsUseCase();
     this.registerCredentialsUseCase = new RegisterCredentialsUseCase();
@@ -15,7 +15,7 @@ import { ChekIsAuthenticatedUseCase } from "../../application/useCases/chekIsAut
     this.loginCredentials = this.loginCredentials.bind(this);
     this.registerCredentials = this.registerCredentials.bind(this);
     this.logout = this.logout.bind(this);
-    this.getNewRefreshToken = this.getNewRefreshToken.bind(this);
+    this.getRefreshToken = this.getRefreshToken.bind(this);
     this.chekIsAuthenticated = this.chekIsAuthenticated.bind(this);
   }
 
@@ -73,20 +73,29 @@ import { ChekIsAuthenticatedUseCase } from "../../application/useCases/chekIsAut
     }
   }
 
-  async getNewRefreshToken(req, res, next) {
+  async getRefreshToken(req, res, next) {
     try {
+      //Obtengo el refreshToken si es web o si es movil
+      const token = req?.cookies?.refreshToken || req?.headers?.refreshToken;
       const { accessToken, refreshToken } =
-        await this.refreshTokenUseCase.execute(req?.cookies);
-      if (refreshToken) {
-        res.cookie("refreshToken", refreshToken, {
-          httpOnly: true,
-          secure: true,
-          sameSite: "none",
-          maxAge: 24 * 60 * 60 * 1000,
-        });
+        await this.refreshTokenUseCase.execute(token);
+
+      const options = {
+        httpOnly: true,
+        secure: true,
+        sameSite: "none",
+        maxAge: 24 * 60 * 60 * 1000,
+      };
+
+      //respondo si es web
+      if (req.platform === "web") {
+        res.cookie("refreshToken", refreshToken, options);
         res.status(200).json({ accessToken });
-      } else {
-        res.status(200).json({ accessToken });
+      }
+
+      //respondo si es mobile
+      if (req.platform === "mobile") {
+        res.status(200).json({ accessToken, refreshToken });
       }
     } catch (error) {
       next(error);

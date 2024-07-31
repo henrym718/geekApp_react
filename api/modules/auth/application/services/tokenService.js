@@ -14,7 +14,7 @@ export class TokenService {
     }
 
     decodeToken(token) {
-        return jwt.decode(token, process.env.KEY_TOKEN_SECRET)
+        return jwt.decode(token)
     }
 
 }

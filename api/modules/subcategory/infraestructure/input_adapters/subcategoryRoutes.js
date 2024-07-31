@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { SubcategoryController } from "./subcategoryController.js";
-import { validator } from "../../../../middleware/data/validatorData.js";
+import { validator } from "../../../../middleware/validatorData.js";
 import * as data from "../../domain/subCategoryValidateData.js";
 
 const router = Router();

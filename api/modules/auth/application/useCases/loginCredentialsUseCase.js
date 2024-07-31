@@ -24,16 +24,10 @@ export class LoginCredentialsUseCase {
     if (!passwordsMatch) throw createError.BadRequest("Contraseña incorrecta");
 
     /*crear RefreshToken para el usuario*/
-    const payload = { email: auth.email };
+    const payload = { id: auth._id };
     const refreshToken = this.tokenService.createRfereshToken(payload);
 
-    /*actualizo el refreshtoken en la db*/
-    const response = await this.authService.updateRefreshToken(
-      { email },
-      { refreshToken }
-    );
-    if (response.acknowledged === false)
-      throw createError(404, "Error al actualizar el refreshToken");
+;
 
     return { refreshToken };
   }

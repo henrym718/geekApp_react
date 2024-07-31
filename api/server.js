@@ -1,7 +1,7 @@
 import express from "express";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
-import { errorLog, errorHandler } from "./middleware/errors/errorHandler.js";
+import { errorLog, errorHandler } from "./middleware/errorHandler.js";
 
 //Inicialization
 const app = express();
@@ -13,7 +13,7 @@ import authRoutes from "./modules/auth/infraestructure/input_adapters/authRoutes
 import userRoutes from "./modules/user/infraestructure/input_adapters/userRoutes.js";
 import imagesRoutes from "./modules/images/infraestructure/input_adapters/imageRoutes.js";
 import productRoutes from "./modules/product/infraestructure/input_adapters/productRoutes.js";
-import categoryRoutes from "./modules/category/infraestructure/input_adapters/categoyRoutes.js";
+import categoryRoutes from "./modules/category/infraestructure/input_adapters/categoryRoutes.js";
 import subCategoryRoutes from "./modules/subcategory/infraestructure/input_adapters/subcategoryRoutes.js";
 
 /** esta es la que vale */

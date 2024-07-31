@@ -4,7 +4,6 @@ const authSchema = new Schema(
   {
     email: String,
     password: String,
-    refreshToken: String,
   },
   {
     timestamps: true,

@@ -1,0 +1,70 @@
+TODO:
+refreshtoken: debe contener el id del user
+accesstoken: debe contener el id del user y el rol
+
+
+SERVER
+endpoint: refreshtoken
+recibe un jwt: web por cookie : movil por cabecera
+1- verifica si llega el jwt, si no, responde con una excepcion
+2- verifica si es valido, sino, responde con una excepcion
+3- buscar al usuario correspondiente del token con el id decodificado
+4- si no existe el user respondo con una excepcion
+5- si todo va bien, crea un nuevo refreshtoken con el id del usuario
+6- crea un nuevo accestoken con el id del usuario y el rol del user
+7- responde con ambos token para que el controlador lo envie al CLIENTE
+
+
+middleware: verifyToken
+1- verifico si viene en el header el accesstoken, sino, respondo con una excepcion
+2- verifio si el accestoken es valido, sino, respondo con una excepcion
+3- decodifico el token y obtengo el id, rol
+4- agrego a un req.id el id y a un req.rol el rol
+5- dejo pasar al siguiente middleware
+
+middleware: checkrole
+SI llegamos aqui ya hemos pasado el middleware anterior
+1- verificamos si el los roles permitidos  incluyen al req.rol, sino respondemos con una excepcion
+2- si todo va bien, next() 
+
+endpoint: getuser
+1-busco en la db al user con el req.id que obtuvimos de los middleware
+2- SI el usuario no existe respondemos con una excepcion
+3- respondemos con el usuario encontrado. 
+
+
+endpoint: Login y Rgeister
+1- Verificaciones de seguridad
+2- buscan en tabla auth el user y su id o se crea uno nuevo segun el caso
+3- Obtiene el user de la tabla user segun el id del obtenido en el auth segun el caso
+4- crean accessToken y refreshtoken
+1- Devuelven accessToken, refreshtoken y el user
+
+
+CLIENTE
+#Utils
+Funtion: saveUser - web & mobile
+1- Se le pasa el objeto del usuario y lo guarda en el stato Zustand
+
+Funtion: saveAccessToken - web & mobile
+1- Se le pasa el accessToken y lo coloca en el headerdefault de la peticion authenticated
+
+Funtion: saveARefresToken - mobile
+1- Se le pasa el refresToken y lo guarda en el safestorage del mobile
+
+#Services
+Api: hacer un refresToken
+1- Constuir la peticion usando el refrestoken en el header si es mobile y with credential si es web
+
+Api: getuser
+1- Construir la peticion usando sabiendo que existe un header con el aceesToken
+
+
+Hook: useislogin
+1- usar el servicio de refresToken en un useEffect
+2- Si el refrestoken es ok, llamar Funtion saveAccessToken si es mobile o seguir si es web
+3- usar el servicio de getuser
+4- usar la Funtion saveUser
+
+Login y Rgeister
+

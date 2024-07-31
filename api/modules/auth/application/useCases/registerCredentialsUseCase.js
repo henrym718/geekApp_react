@@ -25,7 +25,7 @@ export class RegisterCredentialsUseCase {
       const passwordEncrypted = this.passwordService.encryptPasswords(password);
 
       /*crear RefreshToken para el usuario*/
-      const payload = { email };
+      const payload = { id: user._id };
       const refreshToken = this.tokenService.createRfereshToken(payload);
 
       /* agrego al registro su respectivo refreshtoken */
@@ -38,6 +38,7 @@ export class RegisterCredentialsUseCase {
 
       /*creo el nuevo usuario con su email y su rol en la db user*/
       const result = await this.userService.createNewUser({
+        userId: user._id,
         email,
         rol: "BASICUSER",
       });
