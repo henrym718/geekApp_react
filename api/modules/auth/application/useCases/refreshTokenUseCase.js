@@ -11,23 +11,22 @@ export class RefreshTokenUseCase {
   }
 
   async execute(token) {
-       /*verifico si no existe una cookie */
+    /*verifico si no existe una cookie */
     if (!token) throw createError.BadRequest("Token no proporcionado");
 
     //Verifico si es valido
     const decode = this.tokenService.verifyToken(token);
-    console.log(decode.expired );
+
+    /* agrego al registro su respectivo accestoken */
+    const user = await this.userService.getUserByField({ userId: decode.id });
+    if (!user) throw createError.NotFound("Usuario no encontrado");
 
     /*crear RefreshToken*/
     const payloadrToken = { id: decode.id };
     const refreshToken = this.tokenService.createRfereshToken(payloadrToken);
 
-    /* agrego al registro su respectivo accestoken */
-    const user = await this.userService.getUserByField({ user: decode.id });
-    if (!user) throw createError.NotFound("Usuario no encontrado");
-
     /*crear accessToken */
-    const payloadaToken = { id: user._id, rol: user.rol };
+    const payloadaToken = { id: decode.id, rol: user.rol };
     const accessToken = this.tokenService.createAccesToken(payloadaToken);
 
     return { accessToken, refreshToken };

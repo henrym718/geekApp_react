@@ -1,22 +1,22 @@
-import { GetCurrentUserByCookieUseCase } from "../../application/useCases/getCurrentUserByCookieUseCase.js";
+import { GetUserLoggedUseCase } from "../../application/useCases/getUserLoggedUseCase.js";
 import { UpdateUserUseCase } from "../../application/useCases/updateUserUseCase.js";
 
 export class UserController {
   constructor() {
-    this.getCurrentUserByCookieUseCase = new GetCurrentUserByCookieUseCase();
     this.updateUserUseCase = new UpdateUserUseCase();
+    this.getUserLoggedUseCase = new GetUserLoggedUseCase()
 
-    this.getCurrentUserByCookie = this.getCurrentUserByCookie.bind(this);
+    this.getUserLogged = this.getUserLogged.bind(this);
     this.updateUser = this.updateUser.bind(this);
   }
-  async getCurrentUserByCookie(req, res, next) {
+
+  //Obtener el usuario logueado
+  async getUserLogged(req, res, next) {
     try {
-      const result = await this.getCurrentUserByCookieUseCase.execute(
-        req?.cookies
-      );
-      res.status(200).json(result);
+      const {user} = await this.getUserLoggedUseCase.execute(req.user)
+      res.json(user)
     } catch (error) {
-      res.status(404).json(error);
+      next(error)
     }
   }
 

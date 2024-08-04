@@ -1,10 +1,10 @@
 import joi from "joi";
-import httpError from "../shared/httpError.js";
+import httpError from "../shared/httpError.js"
 import jwt from "jsonwebtoken";
 
 function errorLog(err, req, res, next) {
   console.error("An error occurred:");
-  console.error({code: err?.status, msg: err?.message} ) 
+  console.error(err?.details ?? err);
   next(err);
 }
 
@@ -18,6 +18,7 @@ function errorHandler(err, req, res, next) {
       .status(403)
       .json({ error: true, message: err.details[0].message });
   }
+
   if (err instanceof jwt.TokenExpiredError) {
     res.clearCookie("refreshToken");
     return res.status(401).json({ error: true, message: "Token expired" });

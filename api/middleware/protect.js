@@ -1,4 +1,4 @@
-import createError from "http-errors";
+import createError from "../shared/httpError.js";
 import { TokenService } from "../modules/auth/application/services/tokenService.js";
 
 const tokenService = new TokenService();
@@ -16,8 +16,8 @@ export const protect = (accessRol) => {
       const { id, rol } = tokenService.verifyToken(token);
 
       //Verifico si el rol del usuario tiene permisos al recurso
-      if (!accessRol.includes(req.rol))
-        throw createError(401, "No tiene permisos para este recurso");
+      if (!accessRol.includes(rol))
+        throw createError.Unauthorized("No tiene permisos para este recurso");
 
       //asigno al objeto req los valores del token
       req.user = id;
