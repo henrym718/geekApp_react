@@ -23,15 +23,22 @@ export class AuthController {
   async loginCredentials(req, res, next) {
     try {
       const { email, password } = req.body;
-      const { refreshToken } = await this.loginCredentialsUseCase.execute({
-        email,
-        password,
-      });
+      const { refreshToken, accessToken, user } =
+        await this.loginCredentialsUseCase.execute({
+          email,
+          password,
+        });
 
-      res
-        .cookie("refreshToken", refreshToken, env.OPTIONS_COOKIE)
-        .status(200)
-        .send(true);
+      if (req.platform === "web") {
+        res
+          .cookie("refreshToken", refreshToken, env.OPTIONS_COOKIE)
+          .status(200)
+          .json({ accessToken, user });
+      }
+
+      if (req.platform === "mobile") {
+        res.status(200).json({ refreshToken, accessToken, user });
+      }
     } catch (error) {
       next(error);
     }
@@ -45,7 +52,7 @@ export class AuthController {
       if (req.platform === "web") {
         res
           .cookie("refreshToken", refreshToken, env.OPTIONS_COOKIE)
-          .status(201)
+          .status(200)
           .json({ accessToken, user });
       }
 
@@ -74,7 +81,6 @@ export class AuthController {
       const { accessToken, refreshToken } =
         await this.refreshTokenUseCase.execute(token);
 
-    
       //respondo si es web
       if (req.platform === "web") {
         res.cookie("refreshToken", refreshToken, env.OPTIONS_COOKIE);
