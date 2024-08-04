@@ -1,5 +1,5 @@
 import { CategoryService } from "../services/caregoryService.js";
-import createError from "http-errors";
+import createError from "../../../../shared/httpError.js";
 
 export class CreateCategoryUseCase {
   constructor() {

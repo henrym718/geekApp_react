@@ -3,6 +3,7 @@ import { RegisterCredentialsUseCase } from "../../application/useCases/registerC
 import { LogoutUseCase } from "../../application/useCases/logoutUseCase.js";
 import { RefreshTokenUseCase } from "../../application/useCases/refreshTokenUseCase.js";
 import { ChekIsAuthenticatedUseCase } from "../../application/useCases/chekIsAuthenticatedUseCase.js";
+import { env } from "../../../../config/env.js";
 
 export class AuthController {
   constructor() {
@@ -26,14 +27,9 @@ export class AuthController {
         email,
         password,
       });
-      const refreshTokenOptions = {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        maxAge: 24 * 60 * 60 * 1000,
-      };
+
       res
-        .cookie("refreshToken", refreshToken, refreshTokenOptions)
+        .cookie("refreshToken", refreshToken, env.OPTIONS_COOKIE)
         .status(200)
         .send(true);
     } catch (error) {
@@ -43,21 +39,19 @@ export class AuthController {
 
   async registerCredentials(req, res, next) {
     try {
-      const { email, password } = req.body;
-      const refreshTokenOptions = {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        maxAge: 24 * 60 * 60 * 1000,
-      };
-      const { refreshToken } = await this.registerCredentialsUseCase.execute({
-        email,
-        password,
-      });
-      res
-        .cookie("refreshToken", refreshToken, refreshTokenOptions)
-        .status(200)
-        .send(true);
+      const { refreshToken, accessToken, user } =
+        await this.registerCredentialsUseCase.execute(req.body);
+
+      if (req.platform === "web") {
+        res
+          .cookie("refreshToken", refreshToken, env.OPTIONS_COOKIE)
+          .status(201)
+          .json({ accessToken, user });
+      }
+
+      if (req.platform === "mobile") {
+        res.status(200).json({ refreshToken, accessToken, user });
+      }
     } catch (error) {
       next(error);
     }
@@ -80,16 +74,10 @@ export class AuthController {
       const { accessToken, refreshToken } =
         await this.refreshTokenUseCase.execute(token);
 
-      const options = {
-        httpOnly: true,
-        secure: true,
-        sameSite: "none",
-        maxAge: 24 * 60 * 60 * 1000,
-      };
-
+    
       //respondo si es web
       if (req.platform === "web") {
-        res.cookie("refreshToken", refreshToken, options);
+        res.cookie("refreshToken", refreshToken, env.OPTIONS_COOKIE);
         res.status(200).json({ accessToken });
       }
 

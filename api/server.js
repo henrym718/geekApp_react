@@ -8,7 +8,7 @@ const app = express();
 dotenv.config();
 
 //Other imports
-import mongoConnect from "./config/dataBases/mongoConnect.js";
+import mongoConnect from "./config/mongoConnect.js";
 import authRoutes from "./modules/auth/infraestructure/input_adapters/authRoutes.js";
 import userRoutes from "./modules/user/infraestructure/input_adapters/userRoutes.js";
 import imagesRoutes from "./modules/images/infraestructure/input_adapters/imageRoutes.js";

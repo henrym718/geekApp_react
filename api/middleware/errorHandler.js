@@ -1,14 +1,18 @@
 import joi from "joi";
-import createError from "http-errors";
+import httpError from "../shared/httpError.js";
 import jwt from "jsonwebtoken";
 
 function errorLog(err, req, res, next) {
   console.error("An error occurred:");
-  console.error(err?.details ?? err);
+  console.error({code: err?.status, msg: err?.message} ) 
   next(err);
 }
 
 function errorHandler(err, req, res, next) {
+  if (err instanceof httpError.HttpError) {
+    return res.status(err.status).json({ error: true, message: err.message });
+  }
+
   if (err instanceof joi.ValidationError) {
     return res
       .status(403)
@@ -22,11 +26,14 @@ function errorHandler(err, req, res, next) {
     res.clearCookie("refreshToken");
     return res.status(401).json({ error: true, message: "Invalid token" });
   }
-
-  if (err instanceof createError.HttpError) {
-    return res.status(err.status).json({ error: true, message: err.message });
-  } else {
-    return res.status(500).json({ message: "Internal Server Error" });
+  if (err instanceof jwt.NotBeforeError) {
+    res.clearCookie("refreshToken");
+    return res.status(401).json({ error: true, message: "Invalid token" });
   }
+
+  // Otros errores genéricos
+  const status = err.status || 500;
+  const message = err.message || "Error interno del servidor";
+  res.status(status).json({ error: message });
 }
 export { errorLog, errorHandler };

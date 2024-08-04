@@ -1,7 +1,7 @@
 import { AuthService } from "../services/authService.js";
 import { TokenService } from "../services/tokenService.js";
 import { PasswordService } from "../services/passwordService.js";
-import createError from "http-errors";
+import createError from "../../../../shared/httpError.js";
 
 export class LoginCredentialsUseCase {
   constructor() {

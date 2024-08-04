@@ -1,5 +1,5 @@
 import {ImageService} from '../services/imageService.js';
-import createError from 'http-errors';
+import createError from "../../../../shared/httpError.js";
 
 export class UploadImageUseCase {
     constructor() {
