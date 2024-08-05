@@ -9,28 +9,19 @@ export class ProductFilterService {
   }
 
   priceRange(queryParams) {
-    // Inicializar el objeto price vacío
+    const { min, max } = queryParams;
     const price = {};
-
-    // Extraer min y max de queryParams y parsear a enteros si son válidos
-    const qMin = Number.isInteger(parseInt(queryParams?.min))
-      ? parseInt(queryParams.min)
-      : undefined;
-    const qMax = Number.isInteger(parseInt(queryParams?.max))
-      ? parseInt(queryParams.max)
-      : undefined;
-
-    // Asignar $gte y $lte a price si qMin y qMax son válidos
-    if (qMin !== undefined) price.$gte = qMin;
-    if (qMax !== undefined) price.$lte = qMax;
-
-    // Retornar el objeto price si tiene propiedades, de lo contrario undefined
-    return Object.keys(price).length > 0 ? { price } : undefined;
+    if (!isNaN(min)) price.$gte = parseInt(min);
+    if (!isNaN(max)) price.$lte = parseInt(max);
+    return Object.keys(price).length ? { price } : undefined;
   }
 
   location(queryParams) {
     if (queryParams?.location) {
-      const locationQuery = { $regex: `^${queryParams.location}$`, $options: "i" };
+      const locationQuery = {
+        $regex: `^${queryParams.location}$`,
+        $options: "i",
+      };
       const location = { "location.city": locationQuery };
       return location;
     }
