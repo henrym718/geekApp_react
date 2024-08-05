@@ -12,14 +12,14 @@ const productSchema = new Schema(
       province: String,
       city: String,
     },
-    tags: [String],
-    faq: [{ question: String, answer: String }],
+    tags: [String], 
+    faq: [{ question: String, answer: String, _id: false }],
     createdAt: { type: Date, default: new Date() },
     //campos de control
     counter: { type: Number, default: 0 },
     active: { type: Boolean, default: false },
     //campos de referencia
-    createdBy: { type: Schema.Types.ObjectId, ref: "User" },
+    userId: { type: Schema.Types.ObjectId, ref: "User" },
     subcategory: { type: Schema.Types.ObjectId, ref: "Subcategory" },
   },
   {

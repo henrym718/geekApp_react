@@ -13,8 +13,7 @@ class ProductController {
 
     this.createProduct = this.createProduct.bind(this);
     this.getProductsTags = this.getProductsTags.bind(this);
-    this.getProductsbyCategoryOrQuery =
-      this.getProductsbyCategoryOrQuery.bind(this);
+    this.listProducts = this.listProducts.bind(this);
   }
 
   async createProduct(req, res, next) {
@@ -38,24 +37,26 @@ class ProductController {
     }
   }
 
-  async getProductsbyCategoryOrQuery(req, res, next) {
+  async listProducts(req, res, next) {
     try {
       let response;
-      /**aqui verifico si viene con params o con query search */
+      /**Flujo por paramns, cuando seleccionan una subcategoria */
       if (req?.params.category) {
         response = await this.getProductsByCategoryUseCase.execute(
           req.params.category,
           req?.query
         );
       }
-
+      /**Flujo por queries, cuando usan el buscador */
       if (req?.query.search) {
         response = await this.getProductsByQueriesUseCase.execute(req.query);
       }
+      /**Flujo si no se envian params ni queriees */
       if (!(req?.params.category && req?.query.search)) {
         httpError.BadRequest("Error en solicitud");
       }
-      const { gigs, ngigs, nPages } = result;
+      /**Respuesta al cliente */
+      const { gigs, ngigs, nPages } = response;
       res.status(200).json({ gigs, ngigs, nPages });
     } catch (err) {
       next(err);

@@ -1,4 +1,5 @@
 import { productModel } from "./productModel.js";
+import {convertToObjectId} from "../../../../shared/convertToObjectId.js"
 
 export class ProductRepository {
   constructor() {
@@ -16,13 +17,15 @@ export class ProductRepository {
     return await this.productModel.find(field).select("tags");
   }
 
-  async getProductsWithFilter(filter, optionOrder, skipCount, perPage) {
+  async getProductsWithFilter(search, optionOrder, skipCount, perPage) {
+    search.subcategory = convertToObjectId(search.subcategory ); 
+    console.log(search.subcategory)
+
     return await this.productModel.aggregate([
-      { $match: filter },
+      { $match: search },
       { $sort: optionOrder },
       { $skip: skipCount },
       { $limit: perPage },
     ]);
-    // .find(filter).sort(optionOrder).skip(0 * 2).limit(2)
   }
 }

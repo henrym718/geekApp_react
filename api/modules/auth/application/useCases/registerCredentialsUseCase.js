@@ -40,7 +40,7 @@ export class RegisterCredentialsUseCase {
 
       /*creo el nuevo usuario con su email y su rol en la db user*/
       const user = await this.userService.createNewUser({
-        userId: auth._id,
+        _id: auth._id,
         email,
         rol: "BASICUSER",
       });

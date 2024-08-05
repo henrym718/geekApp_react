@@ -30,7 +30,7 @@ export class LoginCredentialsUseCase {
     const refreshToken = this.tokenService.createRfereshToken(payloadrt);
 
     /**Obtengo el usuario para devolverlo en la respuesto */
-    const user = await this.userService.getUserByField({ userId: auth._id });
+    const user = await this.userService.getUserByField({ _id: auth._id });
     if (!user) throw createError.NotFound("Uusario no encontrado");
 
     /**crear el accessToken */

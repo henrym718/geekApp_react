@@ -6,8 +6,8 @@ export class GetUserLoggedUseCase {
     this.userService = new UserService();
   }
 
-  async execute(userId) {
-    const user = await this.userService.getUserByField({ userId });
+  async execute(_id) {
+    const user = await this.userService.getUserByField({ _id });
     if (!user) throw createError.NotFound("Uusario no encontrado");
     return { user };
   }

@@ -10,7 +10,7 @@ export const protect = (accessRol) => {
       const header = req?.headers?.authorization || req?.headers?.Authorization;
       const token = header?.split(" ")[1];
 
-      if (!token) throw createError.BadRequest("No existe token");
+      if (!token) throw createError.Unauthorized();
 
       //valido que sea valido el accessToken
       const { id, rol } = tokenService.verifyToken(token);

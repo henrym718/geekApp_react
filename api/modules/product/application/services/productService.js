@@ -17,8 +17,8 @@ export class ProductService {
         return await this.productRepository.getProductsByTags(search)
     }
 
-    async getProductsWithFilter(filter, optionOrder, skipCount, perPage) {
-        return await this.productRepository.getProductsWithFilter(filter, optionOrder, skipCount, perPage)
+    async getProductsWithFilter(search, optionOrder, skipCount, perPage) {
+        return await this.productRepository.getProductsWithFilter(search, optionOrder, skipCount, perPage)
     }
 }
 

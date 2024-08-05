@@ -7,9 +7,9 @@ import {productModelData} from "../../domain/productValidateData.js"
 const router = express.Router();
 const productController = new ProductController()
 
-router.post("/api/product/create", /*protect(["BASICUSER", "COMPLETEUSER"])*/validator("body", productModelData), productController.createProduct)
+router.post("/api/product/create", protect(["BASICUSER", "COMPLETEUSER"]),validator("body", productModelData), productController.createProduct)
 router.get("/api/product/search", productController.getProductsTags)
-router.get("/api/product/gigsbyfilter/:category?", productController.getProductsbyCategoryOrQuery)
+router.get("/api/product/list/:category?", productController.listProducts)
 
 
 export default router

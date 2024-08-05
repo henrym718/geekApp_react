@@ -18,7 +18,7 @@ export class RefreshTokenUseCase {
     const decode = this.tokenService.verifyToken(token);
 
     /* agrego al registro su respectivo accestoken */
-    const user = await this.userService.getUserByField({ userId: decode.id });
+    const user = await this.userService.getUserByField({ _id: decode.id });
     if (!user) throw createError.NotFound("Usuario no encontrado");
 
     /*crear RefreshToken*/

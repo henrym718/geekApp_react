@@ -23,7 +23,7 @@ const BadRequest = (message) =>
     400,
     message || "Solicitud inválida. Revisa los datos y vuelve a intentarlo."
   );
-const Unauthorized = () =>
+const Unauthorized = (message) =>
   createError(
     401,
     message || "Se requiere autenticación para acceder al recurso solicitado."
