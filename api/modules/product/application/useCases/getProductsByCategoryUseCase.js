@@ -2,44 +2,29 @@ import { ProductFilterService } from "../services/productFilterService.js";
 import { ProductService } from "../services/productService.js";
 
 export class GetProductsByCategoryUseCase {
-  constructor() {
-    this.productService = new ProductService();
-    this.productFilterService = new ProductFilterService();
-  }
+	constructor() {
+		this.productService = new ProductService();
+		this.productFilterService = new ProductFilterService();
+	}
 
-  async execute(idCategory, queryFilter) {
-    /** paginacion */
-    const { perPage, skipCount } =
-      this.productFilterService.pagination(queryFilter);
+	async execute(idCategory, query) {
+		/** Lógica de filtrado y paginación */
+		const { perPage, skipCount } = this.productFilterService.pagination(query);
+		const optionOrder = this.productFilterService.orderByField(query);
+		const location = this.productFilterService.location(query);
+		const price = this.productFilterService.priceRange(query);
+		const category = { subcategory: idCategory };
 
-    /** ordenacion */
-    const optionOrder = this.productFilterService.orderByField(queryFilter);
+		/** Construir el filtro completo */
+		const search = { ...category, ...location, ...price };
 
-    /** filtrar por ubicacion */
-    const location = this.productFilterService.location(queryFilter);
+		/**llamada a la bd */
+		const gigs = await this.productService.getProductsWithFilter(search, optionOrder, skipCount, perPage);
 
-    /**filtrar por rango de precio */
-    const price = this.productFilterService.priceRange(queryFilter);
+		/** Calcular el número de páginas */
+		const ngigs = gigs.length;
+		const nPages = Math.ceil(ngigs / perPage);
 
-    /** filtrar por categoria */
-    const category = { subcategory: idCategory };
-
-    /** Unificar criterios de busqueda y filtrado */
-    const search = { ...category, ...location, ...price };
-
-    /**llamada a la bd */
-    const gigs = await this.productService.getProductsWithFilter(
-      search,
-      optionOrder,
-      skipCount,
-      perPage
-    );
-
-    /**Saber numero de paginas de la query */
-    const ngigs = gigs.length;
-    const nPages = Math.ceil(ngigs / perPage);
-
-    /**retornar los resultados */
-    return { gigs, ngigs, nPages };
-  }
+		return { gigs, ngigs, nPages };
+	}
 }

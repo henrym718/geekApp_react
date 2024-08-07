@@ -2,47 +2,29 @@ import { ProductFilterService } from "../services/productFilterService.js";
 import { ProductService } from "../services/productService.js";
 
 export class GetProductsByQueriesUseCase {
-  constructor() {
-    this.productService = new ProductService();
-    this.productFilterService = new ProductFilterService();
-  }
+	constructor() {
+		this.productService = new ProductService();
+		this.productFilterService = new ProductFilterService();
+	}
 
-  async execute(queries) {
-    /**Paginacion */
-    const { perPage, skipCount } =
-      this.productFilterService.pagination(queries);
+	async execute(query) {
+		/** Lógica de filtrado y paginación */
+		const { perPage, skipCount } = this.productFilterService.pagination(query);
+		const optionOrder = this.productFilterService.orderByField(query);
+		const location = this.productFilterService.location(query);
+		const price = this.productFilterService.priceRange(query);
+		const searchQuery = this.productFilterService.searchQuery(query);
 
-    /**Ordenacion */
-    const optionOrder = this.productFilterService.orderByField(queries);
+		/** Construir el filtro completo */
+		const search = { ...searchQuery, ...location, ...price };
 
-    /**FIltrar por ubicacion */
-    const location = this.productFilterService.location(queries);
+		/**llamada a la bd */
+		const gigs = await this.productService.getProductsWithFilter(search, optionOrder, skipCount, perPage);
 
-    /**Filtrar por rango de precio */
-    const price = this.productFilterService.priceRange(queries);
+		/** Calcular el número de páginas */
+		const ngigs = gigs.length;
+		const nPages = Math.ceil(ngigs / perPage);
 
-    /** Parametro de busqueda principal */
-    const str = queries.search.replace(/-/g, " ");
-    const parameter = { $regex: str, $options: "i" };
-    const filter = { $or: [{ title: parameter }, { tags: parameter }] };
-    console.log(filter);
-
-    /** Unificar criterios de busqueda y filtrado */
-    const search = { ...filter, ...location, ...price };
-
-    /**llamada a la bd */
-    const gigs = await this.productService.getProductsWithFilter(
-      search,
-      optionOrder,
-      skipCount,
-      perPage
-    );
-
-    /**Saber numero de paginas de la query */
-    const ngigs = gigs.length;
-    const nPages = Math.ceil(ngigs / perPage);
-
-    return { gigs, ngigs, nPages };
-  }
+		return { gigs, ngigs, nPages };
+	}
 }
-
