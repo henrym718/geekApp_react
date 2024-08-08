@@ -1,5 +1,7 @@
+import { convertToObjectId } from "../../../../shared/convertToObjectId.js";
 import { ProductFilterService } from "../services/productFilterService.js";
 import { ProductService } from "../services/productService.js";
+
 
 export class GetProductsByCategoryUseCase {
 	constructor() {
@@ -7,23 +9,24 @@ export class GetProductsByCategoryUseCase {
 		this.productFilterService = new ProductFilterService();
 	}
 
-	async execute(idCategory, query) {
+	async execute(subcategoryid, query) {
 		/** Lógica de filtrado y paginación */
 		const { perPage, skipCount } = this.productFilterService.pagination(query);
 		const optionOrder = this.productFilterService.orderByField(query);
-		const location = this.productFilterService.location(query);
+		const city = this.productFilterService.city(query);
 		const price = this.productFilterService.priceRange(query);
-		const category = { subcategory: idCategory };
+		const subcategory = { subcategory: convertToObjectId(subcategoryid) };
+		
 
 		/** Construir el filtro completo */
-		const search = { ...category, ...location, ...price };
+		const search = { ...subcategory, ...city, ...price };
+
+		/** Determinar numero de paginas y productos */
+		const ngigs = await this.productService.countProducts(search);
+		const nPages = Math.ceil(ngigs / perPage);
 
 		/**llamada a la bd */
-		const gigs = await this.productService.getProductsWithFilter(search, optionOrder, skipCount, perPage);
-
-		/** Calcular el número de páginas */
-		const ngigs = gigs.length;
-		const nPages = Math.ceil(ngigs / perPage);
+		const gigs = ngigs ? await this.productService.getProductsWithFilter(search, optionOrder, skipCount, perPage) : [];
 
 		return { gigs, ngigs, nPages };
 	}

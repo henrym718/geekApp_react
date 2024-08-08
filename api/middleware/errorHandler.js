@@ -35,6 +35,6 @@ function errorHandler(err, req, res, next) {
   // Otros errores genéricos
   const status = err.status || 500;
   const message = err.message || "Error interno del servidor";
-  res.status(status).json({ error: message });
+  res.status(status).json({ error: true, message });
 }
 export { errorLog, errorHandler };

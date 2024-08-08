@@ -11,20 +11,19 @@ export class GetProductsByQueriesUseCase {
 		/** Lógica de filtrado y paginación */
 		const { perPage, skipCount } = this.productFilterService.pagination(query);
 		const optionOrder = this.productFilterService.orderByField(query);
-		const location = this.productFilterService.location(query);
+		const city = this.productFilterService.city(query);
 		const price = this.productFilterService.priceRange(query);
 		const searchQuery = this.productFilterService.searchQuery(query);
 
 		/** Construir el filtro completo */
-		const search = { ...searchQuery, ...location, ...price };
+		const search = { ...searchQuery, ...city, ...price };
 
-		/**llamada a la bd */
-		const gigs = await this.productService.getProductsWithFilter(search, optionOrder, skipCount, perPage);
-
-		/** Calcular el número de páginas */
-		const ngigs = gigs.length;
+		/** Determinar numero de paginas y productos */
+		const ngigs = await this.productService.countProducts(search)
 		const nPages = Math.ceil(ngigs / perPage);
 
+		/**llamada a la bd */
+		const gigs = ngigs ? await this.productService.getProductsWithFilter(search, optionOrder, skipCount, perPage): [];
 		return { gigs, ngigs, nPages };
 	}
 }

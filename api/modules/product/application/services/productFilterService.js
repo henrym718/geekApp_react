@@ -10,12 +10,12 @@ export class ProductFilterService {
 		const price = {};
 		if (!isNaN(min)) price.$gte = parseInt(min);
 		if (!isNaN(max)) price.$lte = parseInt(max);
-		return { price };
+		return Object.keys(price).length ? { price } : null;
 	}
-	location(query) {
-		const loc = { $regex: `^${query?.location}$`, $options: "i" };
+	city(query) {
+		const loc = { $regex: `^${query?.city}$`, $options: "i" };
 		const location = { "location.city": loc };
-		return location;
+		return query.city ? location : null;
 	}
 	pagination(query) {
 		const perPage = parseInt(process.env.GIGS_SHOW_BY_PAGE);
@@ -24,7 +24,7 @@ export class ProductFilterService {
 		return { perPage, skipCount };
 	}
 	searchQuery(query) {
-		const str = query.search.replace(/-/g, "");
+		const str = query?.search.replace(/-/g, " ");
 		const search = { $regex: str, $options: "i" };
 		const searchQuery = { $or: [{ title: search }, { tags: search }] };
 		return searchQuery;
