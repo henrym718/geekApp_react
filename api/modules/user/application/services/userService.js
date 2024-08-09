@@ -9,8 +9,8 @@ export class UserService {
     return await this.userRepository.createNewUser(user);
   }
 
-  async updateUser(field) {
-    return await this.userRepository.updateUser(identifier, dataToUpdate);
+  async updateUser(userid, dataToUpdate) {
+    return await this.userRepository.updateUser(userid, dataToUpdate);
   }
 
   async getUserByField(field) {
