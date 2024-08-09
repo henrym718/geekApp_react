@@ -2,7 +2,6 @@ import { convertToObjectId } from "../../../../shared/convertToObjectId.js";
 import { ProductFilterService } from "../services/productFilterService.js";
 import { ProductService } from "../services/productService.js";
 
-
 export class GetProductsByCategoryUseCase {
 	constructor() {
 		this.productService = new ProductService();
@@ -16,7 +15,6 @@ export class GetProductsByCategoryUseCase {
 		const city = this.productFilterService.city(query);
 		const price = this.productFilterService.priceRange(query);
 		const subcategory = { subcategory: convertToObjectId(subcategoryid) };
-		
 
 		/** Construir el filtro completo */
 		const search = { ...subcategory, ...city, ...price };

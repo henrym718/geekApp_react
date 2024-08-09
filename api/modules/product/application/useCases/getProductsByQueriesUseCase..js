@@ -19,11 +19,11 @@ export class GetProductsByQueriesUseCase {
 		const search = { ...searchQuery, ...city, ...price };
 
 		/** Determinar numero de paginas y productos */
-		const ngigs = await this.productService.countProducts(search)
+		const ngigs = await this.productService.countProducts(search);
 		const nPages = Math.ceil(ngigs / perPage);
 
 		/**llamada a la bd */
-		const gigs = ngigs ? await this.productService.getProductsWithFilter(search, optionOrder, skipCount, perPage): [];
+		const gigs = ngigs ? await this.productService.getProductsWithFilter(search, optionOrder, skipCount, perPage) : [];
 		return { gigs, ngigs, nPages };
 	}
 }

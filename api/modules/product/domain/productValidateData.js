@@ -126,6 +126,18 @@ const search = joi.string().required().messages({
 	"any.required": "El parametro search es obligatorio.",
 });
 
+const productid = joi
+	.string()
+	.regex(/^[0-9a-fA-F]{24}$/)
+	.required()
+	.messages({
+		"string.base": "El parametro de busqueda debe ser un texto.",
+		"string.empty": "El id del producto es obligatorio",
+		"string.pattern.base": "EL id del producto debe ser un ObjectId valido",
+		"eny.required": "EL id del producto es obligatorio",
+	});
+
+
 const min = joi.string();
 const max = joi.string();
 const city = joi.string();
@@ -157,4 +169,8 @@ const queryModelData = joi.object({
 	city,
 });
 
-export { productModelData, paramsModelData, queryModelData };
+const productIdShema = joi.object({
+	productid,
+});
+
+export { productModelData, paramsModelData, queryModelData, productIdShema };

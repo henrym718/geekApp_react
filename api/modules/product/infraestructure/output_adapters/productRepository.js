@@ -19,15 +19,19 @@ export class ProductRepository {
 	}
 
 	async getProductsWithFilter(search, optionOrder, skipCount, perPage) {
-		// if (search.subcategory) {
-		// 	search.subcategory = convertToObjectId(search.subcategory);
-		// }
-
 		return await this.productModel.aggregate([
 			{ $match: search },
 			{ $skip: skipCount },
 			{ $sort: optionOrder },
 			{ $limit: perPage },
 		]);
+	}
+
+	async getProductById(productid) {
+		return await this.productModel.findByIdAndUpdate(productid, { $inc: { counter: 1 } }, { new: true }).populate({
+			path: "userId",
+			model: "User",
+			select: "-rol",
+		});
 	}
 }

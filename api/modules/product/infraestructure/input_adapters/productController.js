@@ -2,6 +2,7 @@ import { CreateProductUseCase } from "../../application/useCases/createProductUs
 import { GetProductsTagsUseCase } from "../../application/useCases/getProductsTagsUseCase.js";
 import { GetProductsByCategoryUseCase } from "../../application/useCases/getProductsByCategoryUseCase.js";
 import { GetProductsByQueriesUseCase } from "./../../application/useCases/getProductsByQueriesUseCase..js";
+import { GetProductByIdUseCase } from "../../application/useCases/getProductByIdUseCase.js";
 
 class ProductController {
 	constructor() {
@@ -9,11 +10,13 @@ class ProductController {
 		this.getProductsTagsUseCase = new GetProductsTagsUseCase();
 		this.getProductsByCategoryUseCase = new GetProductsByCategoryUseCase();
 		this.getProductsByQueriesUseCase = new GetProductsByQueriesUseCase();
+		this.getProductByIdUseCase = new GetProductByIdUseCase();
 
 		this.createProduct = this.createProduct.bind(this);
 		this.getProductsTags = this.getProductsTags.bind(this);
 		this.getProductByCategory = this.getProductByCategory.bind(this);
 		this.getProductByQuery = this.getProductByQuery.bind(this);
+		this.getProductById = this.getProductById.bind(this);
 	}
 
 	async createProduct(req, res, next) {
@@ -39,7 +42,10 @@ class ProductController {
 
 	async getProductByCategory(req, res, next) {
 		try {
-			const { gigs, ngigs, nPages } = await this.getProductsByCategoryUseCase.execute(req.params.subcategory, req?.query);
+			const { gigs, ngigs, nPages } = await this.getProductsByCategoryUseCase.execute(
+				req.params.subcategory,
+				req?.query
+			);
 			res.status(200).json({ gigs, ngigs, nPages });
 		} catch (err) {
 			next(err);
@@ -50,6 +56,15 @@ class ProductController {
 		try {
 			const { gigs, ngigs, nPages } = await this.getProductsByQueriesUseCase.execute(req.query);
 			res.status(200).json({ gigs, ngigs, nPages });
+		} catch (err) {
+			next(err);
+		}
+	}
+
+	async getProductById(req, res, next) {
+		try {
+			const resp = await this.getProductByIdUseCase.execute(req.params.productid);
+			res.status(200).json(resp);
 		} catch (err) {
 			next(err);
 		}

@@ -20,4 +20,8 @@ export class ProductService {
 	async getProductsWithFilter(search, optionOrder, skipCount, perPage) {
 		return await this.productRepository.getProductsWithFilter(search, optionOrder, skipCount, perPage);
 	}
+
+	async getProductById(productid){
+		return await this.productRepository.getProductById(productid)
+	}
 }
