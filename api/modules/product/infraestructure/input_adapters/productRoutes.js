@@ -11,5 +11,6 @@ router.get("/api/product/search", productController.getProductsTags);
 router.get("/api/product/list/query",validator("query", queryModelData) ,productController.getProductByQuery);
 router.get("/api/product/list/params/:subcategory", validator("params", paramsModelData),productController.getProductByCategory);
 router.get("/api/product/:productid", validator("params", productIdShema), productController.getProductById);
+router.get("/api/product/usrename/:username",  productController.getProductsByUsername); //POr hacer
 
 export default router;

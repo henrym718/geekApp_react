@@ -4,6 +4,7 @@ import { GetProductsByCategoryUseCase } from "../../application/useCases/getProd
 import { GetProductsByQueriesUseCase } from "./../../application/useCases/getProductsByQueriesUseCase..js";
 import { GetProductByIdUseCase } from "../../application/useCases/getProductByIdUseCase.js";
 
+
 class ProductController {
 	constructor() {
 		this.createProductUseCase = new CreateProductUseCase();
@@ -17,6 +18,7 @@ class ProductController {
 		this.getProductByCategory = this.getProductByCategory.bind(this);
 		this.getProductByQuery = this.getProductByQuery.bind(this);
 		this.getProductById = this.getProductById.bind(this);
+		this.getProductsByUsername = this.getProductsByUsername.bind(this);
 	}
 
 	async createProduct(req, res, next) {
@@ -65,6 +67,13 @@ class ProductController {
 		try {
 			const resp = await this.getProductByIdUseCase.execute(req.params.productid);
 			res.status(200).json(resp);
+		} catch (err) {
+			next(err);
+		}
+	}
+	async getProductsByUsername(req, res, next) {
+		try {
+			res.status(200).json(req.params.username);
 		} catch (err) {
 			next(err);
 		}

@@ -24,7 +24,7 @@ export default function InputSearch() {
   return (
     <div className="w-full flex justify-center">
       <AutoComplete
-        className="w-[600px]"
+        className="w-[500px]"
         options={data || []}
         onChange={onChange}
         onKeyUp={onKeyUp}
@@ -33,7 +33,7 @@ export default function InputSearch() {
           size="large"
           placeholder="input here"
           enterButton
-          className="h-full"
+        
         />
       </AutoComplete>
     </div>
