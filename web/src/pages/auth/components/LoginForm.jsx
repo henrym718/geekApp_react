@@ -1,0 +1,71 @@
+import { Form, Input, Button } from "antd";
+import { useAuthStore } from "../store/auth";
+import AuthService from "../services/authService";
+
+export default function LoginForm() {
+	// const email = useAuthStore((state) => state.email);
+	// const setEmail = useAuthStore((state) => state.setEmail);
+	// const setAccion = useAuthStore((state) => state.setAccion);
+
+	// const handleStateForm = async (value) => {
+	// 	setEmail(value.email);
+	// 	const data = await AuthService.isAuhenticated({ email: value.email });
+	// 	if (data) {
+	// 		setAccion("LOGGIN");
+	// 	} else {
+	// 		setAccion("CREATE_ACCOUNT");
+	// 	}
+	// };
+
+	const setChangeAction = useAuthStore((state) => state.setChangeAction);
+
+	const handleChangeForm = () => {
+		setChangeAction("CREATE_ACCOUNT");
+	};
+
+	return (
+		<div className="flex flex-col h-full pb-8 mx-10 pt-5">
+			<div className="flex-grow">
+				<div className="main-container pt-12">
+					<p className="text-2xl font-bold pb-1">Inicia sesión en tu cuenta</p>
+					<div className="space-x-2 pb-8">
+						<span>¿No tienes una cuenta?</span>
+						<span onClick={handleChangeForm} className="underline cursor-pointer">
+							Únete aquí
+						</span>
+					</div>
+
+					<Form>
+						<Form.Item name="email" className="mb-4">
+							<div className="pb-2">
+								<span className="text-base font-semibold text-color1 -tracking-tight">Email o username</span>
+							</div>
+							<Input className="h-[42px]" />
+						</Form.Item>
+						<Form.Item name="password">
+							<div className="pb-2">
+								<span className="text-base font-semibold text-color1 -tracking-tight">Contraseña</span>
+							</div>
+							<Input.Password type="password" className="h-[42px]" />
+						</Form.Item>
+						<div className="flex justify-end pb-10">
+							<span className="underline -tracking-tight">¿Olvidaste tu contraseña?</span>
+						</div>
+						<Button className="w-full h-10" htmlType="submit">
+							Continuar
+						</Button>
+					</Form>
+				</div>
+			</div>
+
+			<div className="footer mt-auto">
+				<p className="text-xs text-color4 opacity-90 leading-relaxed">
+					Al unirte, aceptas los <span className="underline cursor-pointer">Términos de servicio</span> de Fiverr y
+					recibirás ocasionalmente nuestros correos electrónicos. Lee nuestra{" "}
+					<span className="underline cursor-pointer">Política de privacidad</span> para saber cómo utilizamos tus datos
+					personales.
+				</p>
+			</div>
+		</div>
+	);
+}

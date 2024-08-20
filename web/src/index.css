@@ -4,13 +4,37 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  font-family: "Geist Variable" !important;
-  font-weight: 400;
-  line-height: 1.5;
-  color: #09090b;
+
+@layer base {
+	body {
+		@apply bg-primary  text-color1;
+	}
 }
-/* Cambia el tipo de letra de todos los componentes de Ant Design */
+
+@layer utilities {
+  .font-geist {
+    font-family: "Geist Variable", sans-serif !important;
+  }
+}
+
+.ant-modal-content {
+  padding: 0 !important; /* Eliminar el padding del cuerpo del modal */
+  border-radius: 13px !important;
+  overflow: hidden;
+}
+
+.custom-span {
+  font-family: "Geist Variable" !important;
+  color: #09090b;
+  font-weight: 500;
+}
+
+
+/**#06202A/ color de HULU 031116 --fiverr #fff text-gray-300 platsy bg-[#13161C]*/
+
+
+
+/*Cambia el tipo de letra de todos los componentes de Ant Design */
 .ant-form-item-label,
 .ant-input,
 .ant-button,
@@ -21,8 +45,4 @@ body {
   color: #09090b;
 }
 
-.custom-span {
-  font-family: "Geist Variable" !important;
-  color: #09090b;
-  font-weight: 500;
-}
+

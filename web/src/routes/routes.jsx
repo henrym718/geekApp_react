@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
 
-import Layout from "./../layouts";
-import Profile from "./../features/profile";
-import Home from "./../features/home";
-import NewGig from "./../features/createGig";
-import Auth from "./../features/auth";
-import ListGigsView from "../features/listGig";
-import DetailGig from "../features/detailGig";
+import Layout from "./../pages/layouts";
+import Profile from "./../pages/profile";
+import Home from "./../pages/home";
+import NewGig from "./../pages/createGig";
+import Auth from "../pages/auth";
+import ListGigsView from "../pages/listGig";
+import DetailGig from "../pages/detailGig";
 
 export const routes = createBrowserRouter([
   {
@@ -35,7 +35,7 @@ export const routes = createBrowserRouter([
     ],
   },
   {
-    path: "/next",
+    path: "/authentication",
     element: <Auth />,
   },
 ]);

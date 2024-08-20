@@ -1,35 +1,53 @@
 import React, { useState, useRef, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
 
-const Autocomplete = ({ options, onChange, onSelected }) => {
+import Typewriter from "typewriter-effect";
+
+const Autocomplete = ({ options = [], onChange, onSelected, limit }) => {
 	const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
 	const [inputValue, setInputValue] = useState("");
 	const [isOptionsVisible, setIsOptionsVisible] = useState(false);
+	const [isPlaceholverVisible, setIsPlaceholverVisible] = useState(true);
 	const inputRef = useRef(null);
 	const containerRef = useRef(null);
+
+	// Funcion para limitar las opcione
+	const limitOptions = (options, limit) => {
+		const ocopy = [...options];
+		return limit ? ocopy.splice(0, limit) : options;
+	};
+	const optiosToShow = limitOptions(options, limit);
 
 	// Manejar la navegación del teclado
 	const handleKeyDown = (event) => {
 		if (event.key === "ArrowUp") {
 			event.preventDefault();
-			setSelectedOptionIndex((prevIndex) =>
-				prevIndex === null ? 0 : (prevIndex - 1 + options.length) % options.length
-			);
+			setSelectedOptionIndex((prevIndex) => (prevIndex === null ? 0 : prevIndex - 1));
+			if (selectedOptionIndex === -1) {
+				setSelectedOptionIndex(optiosToShow.length - 1);
+			}
 		} else if (event.key === "ArrowDown") {
-			setSelectedOptionIndex((prevIndex) => (prevIndex === null ? 0 : (prevIndex + 1) % options.length));
+			setSelectedOptionIndex((prevIndex) => (prevIndex === null ? 0 : prevIndex + 1));
+			if (selectedOptionIndex === optiosToShow.length) {
+				setSelectedOptionIndex(0);
+			}
+		} else if (event.key === "Escape") {
+			setIsOptionsVisible(false);
 		} else if (event.key === "Enter") {
 			if (selectedOptionIndex !== null) {
-				const selectedOption = options[selectedOptionIndex];
+				const selectedOption = optiosToShow[selectedOptionIndex];
 				setInputValue(selectedOption.value);
 				onSelected(selectedOption.value);
 				setIsOptionsVisible(false); // Ocultar opciones al presionar "Enter"
+			} else if (inputRef.current.value.trim()) {
+				onSelected(inputRef.current.value);
 			}
 		}
 	};
 
 	// Manejar la selección por clic del usuario
 	const handleOptionClick = (index) => {
-		const selectedOption = options[index];
+		const selectedOption = optiosToShow[index];
 		setInputValue(selectedOption.value);
 		onSelected(selectedOption.value);
 		setIsOptionsVisible(false); // Ocultar opciones al seleccionar una opción
@@ -47,6 +65,7 @@ const Autocomplete = ({ options, onChange, onSelected }) => {
 	const handleClickOutside = (event) => {
 		if (containerRef.current && !containerRef.current.contains(event.target)) {
 			setIsOptionsVisible(false);
+			!inputRef.current.value && setIsPlaceholverVisible(true);
 		}
 	};
 
@@ -61,6 +80,8 @@ const Autocomplete = ({ options, onChange, onSelected }) => {
 	// Mostrar las opciones al hacer clic en el input
 	const handleInputClick = () => {
 		setIsOptionsVisible(true);
+		setIsPlaceholverVisible(false);
+		inputRef.current.focus();
 	};
 
 	// Estilos
@@ -71,20 +92,25 @@ const Autocomplete = ({ options, onChange, onSelected }) => {
 	};
 
 	return (
-		<div style={containerStyle} ref={containerRef}>
-			<Input
-				value={inputValue}
-				onChange={handleInputChange}
-				onKeyDown={handleKeyDown}
-				onClick={handleInputClick}
-				inputRef={inputRef}
-			/>
-			{isOptionsVisible && options.length > 0 && (
+		<div className="relative z-10 gap-x-24 sm:w-[450px]" style={containerStyle} ref={containerRef}>
+			<div onClick={handleInputClick}>
+				<Input
+					value={inputValue}
+					onChange={handleInputChange}
+					onKeyDown={handleKeyDown}
+					onClick={handleInputClick}
+					inputRef={inputRef}
+				/>
+
+				<Placeholder isVisible={isPlaceholverVisible} />
+			</div>
+			{isOptionsVisible && optiosToShow.length > 0 && (
 				<Options
-					options={options}
+					options={optiosToShow}
 					selectedOptionIndex={selectedOptionIndex}
 					onOptionClick={handleOptionClick}
 					inputValue={inputValue}
+					limit={limit}
 				/>
 			)}
 		</div>
@@ -101,8 +127,8 @@ const Input = ({ value, onChange, onKeyDown, onClick, inputRef }) => {
 		justifyContent: "center",
 		paddingRight: "24px",
 		paddingLeft: "12px",
-		borderRadius: "10px",
-		border: "1px solid #ccc",
+		borderRadius: "8px",
+		border: "1px solid #0ae98a",
 		position: "relative",
 	};
 
@@ -118,8 +144,8 @@ const Input = ({ value, onChange, onKeyDown, onClick, inputRef }) => {
 	return (
 		<div style={inputContainerStyle}>
 			<input
+				className="text-gray-300"
 				style={inputStyle}
-				placeholder="Busca tu servicio"
 				type="text"
 				value={value}
 				onChange={onChange}
@@ -127,12 +153,32 @@ const Input = ({ value, onChange, onKeyDown, onClick, inputRef }) => {
 				onClick={onClick}
 				ref={inputRef}
 			/>
-			<FaSearch />
+			<FaSearch className="text-color6" />
 		</div>
 	);
 };
 
-const Options = ({ options = [], selectedOptionIndex, onOptionClick, inputValue }) => {
+const Placeholder = ({ isVisible }) => {
+	return (
+		<div
+			className="absolute top-[-1px] left-0 m-3 text-gray-200 opacity-75"
+			style={{ visibility: isVisible ? "visible" : "hidden" }}
+		>
+			<Typewriter
+				options={{
+					strings: ["Editar un video", "Organizar un evento", "Pintar tu habitaciòn", "Clases de Ingles"],
+					autoStart: true,
+					loop: true,
+					delay: 100,
+					cursor: "|",
+					deleteSpeed: 50,
+				}}
+			/>
+		</div>
+	);
+};
+
+const Options = ({ options, selectedOptionIndex, onOptionClick, inputValue }) => {
 	const [hoveredOptionIndex, setHoveredOptionIndex] = useState(null);
 
 	// Función para resaltar texto
@@ -153,15 +199,16 @@ const Options = ({ options = [], selectedOptionIndex, onOptionClick, inputValue 
 	// Estilos
 	const optionsListStyle = {
 		listStyleType: "none",
-		padding: 0,
+		padding: 6,
 		margin: 0,
 		position: "absolute",
-		top: "56px",
+		top: "58px",
 		width: "100%",
-		backgroundColor: "white",
-		borderRadius: "4px",
+		backgroundColor: "#fcfcfd",
+		borderRadius: "10px",
 		boxShadow: "0 2px 10px rgba(0,0,0,0.1)",
 		transform: "translateY(-4px)",
+		color: "black",
 	};
 
 	const optionItemStyle = {
@@ -171,11 +218,11 @@ const Options = ({ options = [], selectedOptionIndex, onOptionClick, inputValue 
 	};
 
 	const hoverStyle = {
-		backgroundColor: "#f0f0f0",
+		backgroundColor: "#e1e3e5",
 	};
 
 	const selectedStyle = {
-		backgroundColor: "#f0f0f0",
+		backgroundColor: "#e1e3e5",
 	};
 
 	return (
@@ -184,8 +231,8 @@ const Options = ({ options = [], selectedOptionIndex, onOptionClick, inputValue 
 				<li
 					style={{
 						...optionItemStyle,
-						...(index === selectedOptionIndex ? selectedStyle : {}),
-						...(index === hoveredOptionIndex ? hoverStyle : {}),
+						...(index === selectedOptionIndex && selectedStyle ),
+						...(index === hoveredOptionIndex && hoverStyle ),
 					}}
 					key={option.id}
 					onClick={() => onOptionClick(index)}

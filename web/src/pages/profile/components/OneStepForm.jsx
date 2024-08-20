@@ -15,7 +15,7 @@ export default function PersonalDataFrom({ next }) {
           rules={[{ required: true, message: "Campo Requerido" }]}
         >
           <Input
-            className='h-15 hover:border-slate-500 focus:border-slate-500 focus:ring-slate-500 !important'
+            className='h-15 hover:border-gray-500 focus:border-gray-300 focus:shadow-none focus:ring-slate-500 !important'
             onChange={(e) =>
               setDataStoreFn({ [e.currentTarget.id]: e.currentTarget.value })
             }
