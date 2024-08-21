@@ -1,26 +1,46 @@
 import { Form, Input, Button } from "antd";
 import { useAuthStore } from "../store/auth";
+import InputLOading from "../../../ui/InputLoading";
 import AuthService from "../services/authService";
+import { useRef, useState } from "react";
 
 export default function LoginForm() {
-	// const email = useAuthStore((state) => state.email);
-	// const setEmail = useAuthStore((state) => state.setEmail);
-	// const setAccion = useAuthStore((state) => state.setAccion);
-
-	// const handleStateForm = async (value) => {
-	// 	setEmail(value.email);
-	// 	const data = await AuthService.isAuhenticated({ email: value.email });
-	// 	if (data) {
-	// 		setAccion("LOGGIN");
-	// 	} else {
-	// 		setAccion("CREATE_ACCOUNT");
-	// 	}
-	// };
-
 	const setChangeAction = useAuthStore((state) => state.setChangeAction);
+	const [error, setError] = useState(null);
+	const [openSpinner, setOpenSpinner] = useState(false);
+
+	const timeoutRef = useRef(null);
 
 	const handleChangeForm = () => {
 		setChangeAction("CREATE_ACCOUNT");
+	};
+
+	const handleOnchange = (value) => {
+		let str = value?.split("@");
+		const str1 = str[1]?.split(".")
+
+		if ((value?.trim().length > 3 && (!value?.includes("@")) || str1[1]?.length > 1)) {
+			setOpenSpinner(true);
+
+			if (timeoutRef.current) {
+				clearTimeout(timeoutRef.current);
+			}
+
+			timeoutRef.current = setTimeout(() => {
+				let validate = "henry";
+				if (validate == value) {
+					setError(false);
+
+					console.log("son iguales");
+				} else {
+					setError(true);
+					console.log("no son iguales");
+				}
+				setOpenSpinner(false);
+			}, 800);
+		} else {
+			setOpenSpinner(false);
+		}
 	};
 
 	return (
@@ -40,7 +60,15 @@ export default function LoginForm() {
 							<div className="pb-2">
 								<span className="text-base font-semibold text-color1 -tracking-tight">Email o username</span>
 							</div>
-							<Input className="h-[42px]" />
+							{/* <Input className="h-[42px]" /> */}
+							<InputLOading
+								name="email"
+								type="text"
+								onChange={handleOnchange}
+								error={error}
+								msgError="Email no valido"
+								openSpinner={openSpinner}
+							/>
 						</Form.Item>
 						<Form.Item name="password">
 							<div className="pb-2">

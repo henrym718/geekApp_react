@@ -15,6 +15,10 @@ export default function Home() {
 		console.log(value);
 	};
 
+	const onSubmit = (e) => {
+		e.preventDefault();
+		console.log(e.target.email.value);
+	};
 	return (
 		<>
 			<div>
