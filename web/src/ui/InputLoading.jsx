@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { TailSpin } from "react-loader-spinner";
 import { IoAlertCircleSharp } from "react-icons/io5";
+import { IoMdCheckmark } from "react-icons/io";
 
 export default function InputLoading({ name, type, onChange, error, msgError, openSpinner }) {
 	const [textInput, setTextInput] = useState("");
@@ -8,10 +9,11 @@ export default function InputLoading({ name, type, onChange, error, msgError, op
 	const inputRef = useRef();
 
 	useEffect(() => {
-		if ((error == true || error === null) && textInput.trim()) {
+		if (openSpinner) {
+			setShowError(false);
+		} else if (error === true) {
 			setShowError(true);
-		}
-		if (error === false || openSpinner) {
+		} else {
 			setShowError(false);
 		}
 	}, [textInput, openSpinner]);
@@ -37,7 +39,7 @@ export default function InputLoading({ name, type, onChange, error, msgError, op
 					name={name}
 					onChange={handleOnchange}
 					autoComplete="off"
-				/>	
+				/>
 
 				{openSpinner ? (
 					<TailSpin
@@ -53,6 +55,7 @@ export default function InputLoading({ name, type, onChange, error, msgError, op
 				) : null}
 
 				{!openSpinner && showError ? <IoAlertCircleSharp size={20} color="red" /> : null}
+				{/* {!openSpinner && !showError && textInput.length > 3 ? <IoMdCheckmark size={15} /> : null} */}
 			</div>
 			{showError && <span className="text-sm text-red-500 mt-1">{msgError}</span>}
 		</div>

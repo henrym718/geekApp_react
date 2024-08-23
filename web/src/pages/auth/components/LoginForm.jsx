@@ -1,12 +1,15 @@
 import { Form, Input, Button } from "antd";
 import { useAuthStore } from "../store/auth";
 import InputLOading from "../../../ui/InputLoading";
+
 import AuthService from "../services/authService";
 import { useRef, useState } from "react";
 
 export default function LoginForm() {
 	const setChangeAction = useAuthStore((state) => state.setChangeAction);
 	const [error, setError] = useState(null);
+	const [msgError, setMsgError] = useState("");
+
 	const [openSpinner, setOpenSpinner] = useState(false);
 
 	const timeoutRef = useRef(null);
@@ -15,11 +18,14 @@ export default function LoginForm() {
 		setChangeAction("CREATE_ACCOUNT");
 	};
 
+	
+
 	const handleOnchange = (value) => {
 		let str = value?.split("@");
-		const str1 = str[1]?.split(".")
+		const str1 = str[1]?.split(".");
+		console.log(value?.trim().length);
 
-		if ((value?.trim().length > 3 && (!value?.includes("@")) || str1[1]?.length > 1)) {
+		if (value?.trim().length > 3 && (!value?.includes("@") || (str1 && str1[1]?.length > 1))) {
 			setOpenSpinner(true);
 
 			if (timeoutRef.current) {
@@ -30,11 +36,8 @@ export default function LoginForm() {
 				let validate = "henry";
 				if (validate == value) {
 					setError(false);
-
-					console.log("son iguales");
 				} else {
 					setError(true);
-					console.log("no son iguales");
 				}
 				setOpenSpinner(false);
 			}, 800);
@@ -66,7 +69,7 @@ export default function LoginForm() {
 								type="text"
 								onChange={handleOnchange}
 								error={error}
-								msgError="Email no valido"
+								msgError={msgError}
 								openSpinner={openSpinner}
 							/>
 						</Form.Item>
