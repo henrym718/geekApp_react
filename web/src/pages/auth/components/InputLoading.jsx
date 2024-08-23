@@ -25,7 +25,7 @@ export default function InputLoading({ name, type, onChange, error, msgError, op
 	};
 
 	return (
-		<div className="flex flex-col">
+		<div className="flex flex-col pb-5">
 			<div
 				className={`flex border h-[42px] justify-center items-center w-full pl-3 pr-4 ${
 					showError ? "border-red-500" : ""

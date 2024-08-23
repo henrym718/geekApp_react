@@ -1,23 +1,23 @@
 import { useRef, useState } from "react";
-import { Button, Form, Input } from "antd";
+import { useFormsStore } from "../store/forms";
 import { IoIosArrowRoundBack } from "react-icons/io";
-import InputLOading from "../../../ui/InputLoading";
-import { useAuthStore } from "../store/auth";
-import InputPassword from "../../../ui/InputPassword";
+import InputLOading from "./InputLoading";
+import InputPassword from "./InputPassword";
 
 export default function CreateAccountForm() {
 	const [error, setError] = useState(null);
 	const [msgError, setMsgError] = useState("");
 	const [openSpinner, setOpenSpinner] = useState(false);
-	const [disabledButton, setDisabledButton] = useState(true);
-
+	const [disabledButton, setDisabledButton] = useState(true);	
 	const timeoutRef = useRef();
+	const setChangeAction = useFormsStore((state) => state.setChangeAction);
 
-	const setChangeAction = useAuthStore((state) => state.setChangeAction);
-
-	const handleChangeForm = () => {
+	const handleBackForm = () => {
 		setChangeAction("LOGIN");
 	};
+	const handleNextForm = ()=>{
+		setChangeAction("CREATE_USERNAME");
+	}
 
 	const handleOnchangeEmail = (value) => {
 		const str = value?.split("@");
@@ -37,7 +37,7 @@ export default function CreateAccountForm() {
 						setError(false);
 						setOpenSpinner(false);
 					}
-				}, 900);
+				}, 800);
 			} else if (value?.includes("@")) {
 				setError(true);
 				setMsgError("Parece que el email esta incompleto");
@@ -49,60 +49,43 @@ export default function CreateAccountForm() {
 		console.log(value);
 	};
 
+
+
 	return (
-		<div className="flex flex-col h-full pb-8 mx-10 pt-5">
-			<div className="relative flex-grow">
-				<div onClick={handleChangeForm} className="header flex space-x-[2px] items-center pb-6 -ml-4 cursor-pointer">
-					<IoIosArrowRoundBack size={25} />
-					<span className="font-medium text-sm">Volver</span>
-				</div>
-				<div className="relative">
-					<p className="text-2xl font-bold pb-8">Continuar con tu correo electrónico</p>
-					<Form>
-						<Form.Item name="email">
-							<div className="pb-2">
-								<span className="text-base font-semibold text-color1 -tracking-tight">Email</span>
-							</div>
-							<InputLOading
-								name="email"
-								type="text"
-								onChange={handleOnchangeEmail}
-								error={error}
-								msgError={msgError}
-								openSpinner={openSpinner}
-							/>
-						</Form.Item>
-						<Form.Item name="password" className="pb-7">
-							<div className="pb-2">
-								<span className="text-base font-semibold text-color1 -tracking-tight">Contraseña</span>
-							</div>
-							<div>
-								<InputPassword
-									onChange={handleOnchangePassword}
-									setDisabledButton={setDisabledButton}
-									showCheck={error}
-								/>
-							</div>
-						</Form.Item>
-						<div className="w-full">
-							<Button
-								className="w-full h-10 disabled:cursor-default"
-								htmlType="submit"
-								disabled={!disabledButton && !error ? false : true}
-							>
-								Continuar
-							</Button>
-						</div>
-					</Form>
-				</div>
-				<div className="absolute bottom-0">
-					<p className="text-xs text-color4 opacity-90 leading-relaxed">
-						Al unirte, aceptas los <span className="underline cursor-pointer">Términos de servicio</span> de Fiverr y
-						recibirás ocasionalmente nuestros correos electrónicos. Lee nuestra{" "}
-						<span className="underline cursor-pointer">Política de privacidad</span> para saber cómo utilizamos tus
-						datos personales.
-					</p>
-				</div>
+		<div className="flex flex-col relative h-full mx-10 pt-5">
+			<div onClick={handleBackForm} className="header flex space-x-[2px] items-center pb-6 -ml-4 cursor-pointer">
+				<IoIosArrowRoundBack size={25} />
+				<span className="font-medium text-sm">Volver</span>
+			</div>
+			<div className="flex-grow">
+				<p className="text-2xl font-bold pb-8">Continuar con tu correo electrónico</p>
+				<p className="text-base font-medium text-color1 -tracking-tight pb-[10px]">Email</p>
+				<InputLOading
+					name="email"
+					type="text"
+					onChange={handleOnchangeEmail}
+					error={error}
+					msgError={msgError}
+					openSpinner={openSpinner}
+				/>
+				<p className="text-base font-medium text-color1 -tracking-tight pb-[10px]">Contraseña</p>
+				<InputPassword onChange={handleOnchangePassword} setDisabledButton={setDisabledButton} showCheck={error} />
+				<button
+					className="w-full h-[42px] text-color5 bg-color3 hover:bg-zinc-700 font-medium rounded border disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-400 mt-12	"
+					htmlType="submit"
+					disabled={!disabledButton && !error ? false : true}
+					onClick={handleNextForm}
+				>
+					Continuar
+				</button>
+			</div>
+			<div className=" pb-6">
+				<p className="text-xs text-color4 opacity-90 leading-relaxed">
+					Al unirte, aceptas los <span className="underline cursor-pointer">Términos de servicio</span> de Fiverr y
+					recibirás ocasionalmente nuestros correos electrónicos. Lee nuestra{" "}
+					<span className="underline cursor-pointer">Política de privacidad</span> para saber cómo utilizamos tus datos
+					personales.
+				</p>
 			</div>
 		</div>
 	);

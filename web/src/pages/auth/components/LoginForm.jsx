@@ -1,12 +1,12 @@
 import { Form, Input, Button } from "antd";
-import { useAuthStore } from "../store/auth";
-import InputLOading from "../../../ui/InputLoading";
+import { useFormsStore } from "../store/forms";
+import InputLOading from "../components/InputLoading";
 
 import AuthService from "../services/authService";
 import { useRef, useState } from "react";
 
 export default function LoginForm() {
-	const setChangeAction = useAuthStore((state) => state.setChangeAction);
+	const setChangeAction = useFormsStore((state) => state.setChangeAction);
 	const [error, setError] = useState(null);
 	const [msgError, setMsgError] = useState("");
 

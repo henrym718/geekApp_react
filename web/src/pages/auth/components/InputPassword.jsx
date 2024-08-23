@@ -66,8 +66,8 @@ export default function InputPassword({ onChange, setDisabledButton, showCheck }
 				</div>
 			</div>
 
-			{ showCheck === false ? <div className={`pt-3 transition-all duration-300 h-auto -mb-8`}>
-				<div className="min-h-[40px]"> 
+			{ showCheck === false ? <div className={`pt-3 transition-all duration-300 h-auto`}>
+				<div className="min-h-[40px] -mb-5"> 
 					<OptionsCheck option="Al menos 8 caracteres" check={check.checkLength} />
 					<OptionsCheck option="Al menos 1 minúscula" check={check.checkLower} />
 					<OptionsCheck option="Al menos 1 mayúscula" check={check.ckeckUpper} />

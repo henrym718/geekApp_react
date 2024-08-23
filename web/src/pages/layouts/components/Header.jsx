@@ -1,16 +1,16 @@
 import { Bars3Icon } from "@heroicons/react/24/outline";
 import HeaderItems from "./HeaderItems";
-import { useAuthStore } from "../../auth/store/auth";
+import { useFormsStore } from "../../auth/store/forms";
 import Authentication from "../../auth";
 import { useRef } from "react";
 
 function Header() {
 	const buttonRef = useRef();
-	const { setOpenModal, setChangeAction } = useAuthStore((state) => state);
+	const { setOpenModal, setChangeAction } = useFormsStore((state) => state);
 
 	const handleOpenModal = () => {
 		setOpenModal();
-		setChangeAction("LOGIN");
+		setChangeAction("CREATE_USERNAME");
 		if (buttonRef.current) {
 			buttonRef.current.blur();
 		}

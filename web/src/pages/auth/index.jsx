@@ -1,14 +1,11 @@
 import LoginForm from "./components/LoginForm";
 import CreateAccountForm from "./components/CreateAccountForm";
-import { useAuthStore } from "./store/auth";
+import CreateUsernameForm from "./components/CreateUsernameForm";
+import { useFormsStore } from "./store/forms";
 import Modal from "../../ui/Modal";
 
 export default function Auth() {
-	const { action, isOpenModal, setCloseModal } = useAuthStore((state) => ({
-		action: state.action,
-		isOpenModal: state.isOpenModal,
-		setCloseModal: state.setCloseModal,
-	}));
+	const { form, isOpenModal, setCloseModal } = useFormsStore((state) => state);
 
 	return (
 		<Modal open={isOpenModal} onCancel={setCloseModal}>
@@ -22,9 +19,9 @@ export default function Auth() {
 				</div>
 
 				<div className="min-w-[50%] flex-grow">
-					{action === "LOGIN" && <LoginForm/>}
-					{action === "CREATE_ACCOUNT" && <CreateAccountForm />}
-					{action === "CREATE_USERNAME" && <h1>UserName</h1>	}
+					{form === "LOGIN" && <LoginForm />}
+					{form === "CREATE_ACCOUNT" && <CreateAccountForm />}
+					{form === "CREATE_USERNAME" && <CreateUsernameForm />}
 				</div>
 			</div>
 		</Modal>
