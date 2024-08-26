@@ -16,6 +16,10 @@ export class AuthRepository {
   async createNewRegisterAuth(data) {
     return await this.authModel.create(data);
   }
+
+  async countDocuments(field) {
+    return await this.authModel.countDocuments(field);
+  }
 }
 
 

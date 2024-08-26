@@ -1,3 +1,4 @@
+import "./api/axios.js";
 import { RouterProvider } from "react-router-dom";
 import { routes } from "./routes/routes";
 import { QueryClientProvider, QueryClient } from "react-query";

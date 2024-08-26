@@ -16,5 +16,9 @@ export class AuthService {
   async createNewRegisterAuth(data) {
     return await this.authRepository.createNewRegisterAuth(data);
   }
+
+  async countDocuments(field) {
+    return await this.authRepository.countDocuments(field);
+  }
 }
 

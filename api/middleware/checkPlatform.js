@@ -5,7 +5,7 @@ export const checkPlatform = () => {
 		try {
 			//verifico si existe el header
 			const platform = req?.headers?.platform;
-			if (!platform) throw createError.BadRequest("Incuir header platform");
+			if (!platform) throw createError.BadRequest("Incluir el header platform");
 
 			//verifico si la plataforma esta permitida
 			if (!["mobile", "web"].includes(platform)) throw createError.BadRequest("Plataforma no permitida");

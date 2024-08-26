@@ -3,6 +3,7 @@ import { RegisterCredentialsUseCase } from "../../application/useCases/registerC
 import { LogoutUseCase } from "../../application/useCases/logoutUseCase.js";
 import { RefreshTokenUseCase } from "../../application/useCases/refreshTokenUseCase.js";
 import { ChekIsAuthenticatedUseCase } from "../../application/useCases/chekIsAuthenticatedUseCase.js";
+import { CheckEmailIsExistsUseCase } from "../../application/useCases/checkEmailIsExistsUseCase.js"
 import { env } from "../../../../config/env.js";
 
 export class AuthController {
@@ -12,32 +13,32 @@ export class AuthController {
     this.logoutUseCase = new LogoutUseCase();
     this.refreshTokenUseCase = new RefreshTokenUseCase();
     this.chekIsAuthenticatedUseCase = new ChekIsAuthenticatedUseCase();
+    this.checkEmailIsExistsUseCase = new CheckEmailIsExistsUseCase();
 
     this.loginCredentials = this.loginCredentials.bind(this);
     this.registerCredentials = this.registerCredentials.bind(this);
     this.logout = this.logout.bind(this);
     this.getRefreshToken = this.getRefreshToken.bind(this);
     this.chekIsAuthenticated = this.chekIsAuthenticated.bind(this);
+    this.checkEmailIsExists = this.checkEmailIsExists.bind(this)
   }
 
   async loginCredentials(req, res, next) {
     try {
       const { email, password } = req.body;
       const { refreshToken, accessToken, user } =
-        await this.loginCredentialsUseCase.execute({
-          email,
-          password,
-        });
+        await this.loginCredentialsUseCase.execute({ email, password });
 
       if (req.platform === "web") {
         res
           .cookie("refreshToken", refreshToken, env.OPTIONS_COOKIE)
-          .status(200)
-          .json({ accessToken, user });
+          .status(200).json({ accessToken, user });
       }
 
       if (req.platform === "mobile") {
-        res.status(200).json({ refreshToken, accessToken, user });
+        res
+          .status(200)
+          .json({ refreshToken, accessToken, user });
       }
     } catch (error) {
       next(error);
@@ -78,8 +79,7 @@ export class AuthController {
     try {
       //Obtengo el refreshToken si es web o si es movil
       const token = req?.cookies?.refreshToken || req?.headers?.refreshToken;
-      const { accessToken, refreshToken } =
-        await this.refreshTokenUseCase.execute(token);
+      const { accessToken, refreshToken } = await this.refreshTokenUseCase.execute(token);
 
       //respondo si es web
       if (req.platform === "web") {
@@ -99,10 +99,18 @@ export class AuthController {
   async chekIsAuthenticated(req, res, next) {
     try {
       const email = req.body.email.toLowerCase();
-      const { autheticate } = await this.chekIsAuthenticatedUseCase.execute(
-        email
-      );
+      const { autheticate } = await this.chekIsAuthenticatedUseCase.execute(email);
       res.status(200).json(autheticate);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async checkEmailIsExists(req, res, next) {
+    try {
+      const existsEmail = await this.checkEmailIsExistsUseCase.execute(req.params.email);
+      res.status(200).json(existsEmail)
+
     } catch (error) {
       next(error);
     }

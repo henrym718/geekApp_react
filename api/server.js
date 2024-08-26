@@ -17,13 +17,15 @@ import categoryRoutes from "./modules/category/infraestructure/input_adapters/ca
 import subCategoryRoutes from "./modules/subcategory/infraestructure/input_adapters/subcategoryRoutes.js";
 
 /** esta es la que vale */
-// app.use((req, res, next) => {
-//   res.setHeader('Access-Control-Allow-Origin', req.headers.origin); // Reemplaza con el origen de tu aplicación React
-//   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-//   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
-//   res.setHeader('Access-Control-Allow-Credentials', 'true');
-//   next();
-// });
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', "*"); // Reemplaza con el origen de tu aplicación React
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Platform');
+  res.setHeader('Access-Control-Allow-Credentials', 'true');
+  next();
+});
+
+
 
 /**Middleware */
 app.use(express.json());
