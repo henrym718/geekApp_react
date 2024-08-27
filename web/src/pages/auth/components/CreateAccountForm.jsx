@@ -1,18 +1,20 @@
 import { useRef, useState } from "react";
+import useAuthStore from "../store/auth";
 import axiosPublic from "../../../api/axiosPublic";
-import { endpoints } from "./../../../api/endpoints";
-import { useFormsStore } from "../store/forms";
-import { IoIosArrowRoundBack } from "react-icons/io";
+import useFormsStore from "../store/forms";
 import InputLOading from "./InputLoading";
 import InputPassword from "./InputPassword";
+import { endpoints } from "./../../../api/endpoints";
+import { IoIosArrowRoundBack } from "react-icons/io";
 
 export default function CreateAccountForm() {
   const [error, setError] = useState(null);
   const [msgError, setMsgError] = useState("");
   const [openSpinner, setOpenSpinner] = useState(false);
   const [disabledButton, setDisabledButton] = useState(true);
+  const { setEmail, setPassword } = useAuthStore((state) => state);
+  const { setChangeAction } = useFormsStore((state) => state);
   const timeoutRef = useRef();
-  const setChangeAction = useFormsStore((state) => state.setChangeAction);
 
   const handleBackForm = () => {
     setChangeAction("LOGIN");
@@ -21,37 +23,43 @@ export default function CreateAccountForm() {
     setChangeAction("CREATE_USERNAME");
   };
 
-  const handleOnchangeEmail = (value) => {
-    const str = value?.split("@");
+  const handleOnchangeEmail = (email) => {
+    const str = email?.split("@");
     setOpenSpinner(false);
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-    if (value?.trim()?.length) {
-      if (value?.includes("@") && str[0]?.length && str[1].split(".")[1]?.length > 1) {
+    if (email?.trim()?.length) {
+      if (email?.includes("@") && str[0]?.length && str[1].split(".")[1]?.length > 1) {
         setOpenSpinner(true);
 
         timeoutRef.current = setTimeout(async () => {
           try {
-            const { data } = await axiosPublic.get(endpoints.auth.checkEmailIsExist(value));
+            const { data } = await axiosPublic.get(endpoints.auth.checkEmailIsExist(email));
             setError(data);
             setMsgError(data ? "Ya tienes una cuenta con este email" : "");
+            !data && setEmail(email);
           } catch (err) {
             setError(true);
             setMsgError("Ha ocurrido un error, intenta más tarde");
-            console.error(err);
           } finally {
             setOpenSpinner(false);
           }
         }, 800);
-      } else if (value?.includes("@")) {
+      } else if (email?.includes("@")) {
         setError(true);
         setMsgError("Parece que el email esta incompleto");
       }
+    } else if (
+      (error === false && email.trim() === "") ||
+      (error === true && email.trim() === "")
+    ) {
+      setError(true);
+      setMsgError("Parece que el email esta incompleto");
     }
   };
 
-  const handleOnchangePassword = (value) => {
-    console.log(value);
+  const handleOnchangePassword = (password) => {
+    setPassword(password);
   };
 
   return (
@@ -91,9 +99,9 @@ export default function CreateAccountForm() {
       </div>
       <div className=" pb-6">
         <p className="text-xs text-color4 opacity-90 leading-relaxed">
-          Al unirte, aceptas los{" "}
+          Al unirte, aceptas los
           <span className="underline cursor-pointer">Términos de servicio</span> de Fiverr y
-          recibirás ocasionalmente nuestros correos electrónicos. Lee nuestra{" "}
+          recibirás ocasionalmente nuestros correos electrónicos. Lee nuestra
           <span className="underline cursor-pointer">Política de privacidad</span> para saber cómo
           utilizamos tus datos personales.
         </p>

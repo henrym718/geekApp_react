@@ -16,4 +16,7 @@ export class UserRepository {
 	async updateUser(userid, dataToUpdate) {
 		return await this.userModel.findByIdAndUpdate(userid, { $set: dataToUpdate }, { new: true });
 	}
+	async countDocuments(field) {
+		return await this.userModel.countDocuments(field);
+	}
 }

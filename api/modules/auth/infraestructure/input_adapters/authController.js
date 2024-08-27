@@ -4,6 +4,7 @@ import { LogoutUseCase } from "../../application/useCases/logoutUseCase.js";
 import { RefreshTokenUseCase } from "../../application/useCases/refreshTokenUseCase.js";
 import { ChekIsAuthenticatedUseCase } from "../../application/useCases/chekIsAuthenticatedUseCase.js";
 import { CheckEmailIsExistsUseCase } from "../../application/useCases/checkEmailIsExistsUseCase.js"
+import CheckUsernameIsExistsUseCase from './../../application/useCases/checkUsernameIsExistsUseCase.js';
 import { env } from "../../../../config/env.js";
 
 export class AuthController {
@@ -14,13 +15,15 @@ export class AuthController {
     this.refreshTokenUseCase = new RefreshTokenUseCase();
     this.chekIsAuthenticatedUseCase = new ChekIsAuthenticatedUseCase();
     this.checkEmailIsExistsUseCase = new CheckEmailIsExistsUseCase();
+    this.checkUernameIsExistsUseCase = new CheckUsernameIsExistsUseCase();
 
     this.loginCredentials = this.loginCredentials.bind(this);
     this.registerCredentials = this.registerCredentials.bind(this);
     this.logout = this.logout.bind(this);
     this.getRefreshToken = this.getRefreshToken.bind(this);
-    this.chekIsAuthenticated = this.chekIsAuthenticated.bind(this);
+    this.checkIsAuthenticated = this.checkIsAuthenticated.bind(this);
     this.checkEmailIsExists = this.checkEmailIsExists.bind(this)
+    this.checkUernameIsExists = this.checkUernameIsExists.bind(this)
   }
 
   async loginCredentials(req, res, next) {
@@ -96,7 +99,7 @@ export class AuthController {
     }
   }
 
-  async chekIsAuthenticated(req, res, next) {
+  async checkIsAuthenticated(req, res, next) {
     try {
       const email = req.body.email.toLowerCase();
       const { autheticate } = await this.chekIsAuthenticatedUseCase.execute(email);
@@ -110,9 +113,16 @@ export class AuthController {
     try {
       const existsEmail = await this.checkEmailIsExistsUseCase.execute(req.params.email);
       res.status(200).json(existsEmail)
-
     } catch (error) {
       next(error);
+    }
+  }
+  async checkUernameIsExists(req, res, next) {
+    try {
+      const existsUsername = await this.checkUernameIsExistsUseCase.execute(req.params.username);
+      res.status(200).json(existsUsername)
+    } catch (error) {
+      next(error)
     }
   }
 }

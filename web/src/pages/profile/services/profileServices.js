@@ -1,6 +1,6 @@
 import axiosPrivate from '../../../api/axiosPrivate';
 
-class profileServices {
+class ProfileServices {
 
     async uploadAvatar(file) {
         try {
@@ -21,4 +21,4 @@ class profileServices {
 }
 
 
-export default new profileServices();
+export default new ProfileServices();

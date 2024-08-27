@@ -1,11 +1,12 @@
 import { create } from "zustand";
 
-export const useAuthStore = create((set) => ({
+const useAuthStore = create((set) => ({
 	email: null,
-	action: "LOGIN",
-	isOpenModal: false,
+	password: null,
+	username: null,
 	setEmail: (email) => set({ email }),
-	setChangeAction: (action) => set({ action }),
-	setOpenModal: () => set({ isOpenModal: true }),
-	setCloseModal: () => set({ isOpenModal: false }),
+	setPassword: (password) => set({ password }),
+	setUsername: (username) => set({ username })
 }));
+
+export default useAuthStore;

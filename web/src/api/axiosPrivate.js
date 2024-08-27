@@ -25,3 +25,4 @@ axiosPrivate.interceptors.response.use(
         return Promise.reject(error) // Rechaza la promesa con el error
     }
 )
+export default axiosPrivate

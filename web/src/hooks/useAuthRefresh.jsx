@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useUserStore } from "../store/userStore";
 import AuthService from "../pages/auth/services/authService";
-import axiosAuthenticated from "../api/axiosAuthenticated";
+import axiosPrivate from "../api/axiosPrivate";
 
 const useAuthRefresh = () => {
   const getUserByCookieApi = useUserStore((state) => state.getUserByCookieApi);
@@ -14,7 +14,7 @@ const useAuthRefresh = () => {
       const token = await AuthService.getRefreshToken();
       // Si el token existe, lo asigna al encabezado de autorización de axios
       if (token?.accessToken) {
-        axiosAuthenticated.defaults.headers["Authorization"] = `Bearer ${token?.accessToken}`;
+        axiosPrivate.defaults.headers["Authorization"] = `Bearer ${token?.accessToken}`;
       }
       // Obtiene los datos del usuario mediante la API
       await getUserByCookieApi();

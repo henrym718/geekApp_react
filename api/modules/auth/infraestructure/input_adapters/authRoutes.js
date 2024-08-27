@@ -12,7 +12,8 @@ router.post("/api/auth/logincredentials", checkPlatform(), validator("body", dat
 router.post("/api/auth/registercredentials", checkPlatform(), validator("body", data.authDataValidateRegister), authController.registerCredentials)
 router.get("/api/auth/logout", authController.logout)
 router.get("/api/auth/refreshtoken", checkPlatform(), authController.getRefreshToken)
-router.post("/api/auth/isauthenticated", authController.chekIsAuthenticated)
+router.post("/api/auth/isauthenticated", authController.checkIsAuthenticated)
 router.get("/api/auth/checkemail/:email", authController.checkEmailIsExists)
+router.get("/api/auth/checkusername/:username", authController.checkUernameIsExists)
 
 export default router

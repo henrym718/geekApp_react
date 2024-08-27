@@ -1,16 +1,16 @@
-import axiosAuthenticated from "../../../api/axiosAuthenticated"
+import axiosPrivate from "../../../api/axiosPrivate"
 
 class NewGigService {
 
     async sendImageCover(file) {
         const formData = new FormData();
         formData.append("file", file);
-        const { data } = await axiosAuthenticated.post("/image/upload", formData)
+        const { data } = await axiosPrivate.post("/image/upload", formData)
         return data
     }
 
     async createGig(gig) {
-        const { data } = await axiosAuthenticated.post("/product/create", gig)
+        const { data } = await axiosPrivate.post("/product/create", gig)
         return data
     }
 

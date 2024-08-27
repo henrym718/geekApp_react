@@ -16,4 +16,8 @@ export class UserService {
   async getUserByField(field) {
     return await this.userRepository.getUserByField(field);
   }
+
+  async countDocuments(field) {
+    return await this.userRepository.countDocuments(field);
+  }
 }
