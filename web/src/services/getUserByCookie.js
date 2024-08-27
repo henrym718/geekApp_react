@@ -1,7 +1,7 @@
-import axiosUnauthenticated from "../api/axiosUnauthenticated"
+import axiosPublic from "../api/axiosPublic";
 
 export const getUserByCookie = async () => {
-    const { data } = await axiosUnauthenticated.get("/user/getuserbycookie")
+    const { data } = await axiosPublic.get("/user/getuserbycookie")
     return data
 }
 

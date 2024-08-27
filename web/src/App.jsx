@@ -8,7 +8,7 @@ import { useUserStore } from "./store/userStore";
 const queryClient = new QueryClient();
 
 export default function App() {
-  useAuthRefresh();
+  // useAuthRefresh();
   const user = useUserStore((state) => state.user);
   console.log(user);
   return (

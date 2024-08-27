@@ -1,4 +1,4 @@
-import axiosAuthenticated from '../../../api/axiosAuthenticated';
+import axiosPrivate from '../../../api/axiosPrivate';
 
 class profileServices {
 
@@ -6,7 +6,7 @@ class profileServices {
         try {
             const formData = new FormData();
             formData.append("file", file);
-            const { data } = await axiosAuthenticated.post("/image/upload", formData);
+            const { data } = await axiosPrivate.post("/image/upload", formData);
             return data
         } catch (error) {
             console.log(error)
@@ -15,7 +15,7 @@ class profileServices {
     }
 
     async updateDataUser(dataUser) {
-        const { data } = await axiosAuthenticated.post("/user/createuser", dataUser)
+        const { data } = await axiosPrivate.post("/user/createuser", dataUser)
         return data
     }
 }

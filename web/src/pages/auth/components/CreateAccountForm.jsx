@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import axios from "axios";
+import axiosPublic from "../../../api/axiosPublic";
 import { endpoints } from "./../../../api/endpoints";
 import { useFormsStore } from "../store/forms";
 import { IoIosArrowRoundBack } from "react-icons/io";
@@ -32,12 +32,13 @@ export default function CreateAccountForm() {
 
         timeoutRef.current = setTimeout(async () => {
           try {
-            const { data } = await axios.get(endpoints.auth.checkEmailIsExist(value));
+            const { data } = await axiosPublic.get(endpoints.auth.checkEmailIsExist(value));
             setError(data);
             setMsgError(data ? "Ya tienes una cuenta con este email" : "");
           } catch (err) {
             setError(true);
             setMsgError("Ha ocurrido un error, intenta más tarde");
+            console.error(err);
           } finally {
             setOpenSpinner(false);
           }

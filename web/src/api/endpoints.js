@@ -1,5 +1,6 @@
 export const endpoints = {
     auth: {
-        checkEmailIsExist: (email) => `/auth/checkemail/${email}`
+        checkEmailIsExist: (email) => `/auth/checkemail/${email}`,
+        getRefreshToken: () => "/auth/refreshtoken"
     }
 }

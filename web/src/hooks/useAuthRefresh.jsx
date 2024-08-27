@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useUserStore } from "../store/userStore";
-import { getRefreshToken } from "../services/getRefreshToken";
+import AuthService from "../pages/auth/services/authService";
 import axiosAuthenticated from "../api/axiosAuthenticated";
 
 const useAuthRefresh = () => {
@@ -11,12 +11,10 @@ const useAuthRefresh = () => {
   useEffect(() => {
     const request = async () => {
       // Obtiene el token de acceso a partir del token de refresco
-      const token = await getRefreshToken();
+      const token = await AuthService.getRefreshToken();
       // Si el token existe, lo asigna al encabezado de autorización de axios
       if (token?.accessToken) {
-        axiosAuthenticated.defaults.headers[
-          "Authorization"
-        ] = `Bearer ${token?.accessToken}`;
+        axiosAuthenticated.defaults.headers["Authorization"] = `Bearer ${token?.accessToken}`;
       }
       // Obtiene los datos del usuario mediante la API
       await getUserByCookieApi();
