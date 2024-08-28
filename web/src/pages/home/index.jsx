@@ -2,86 +2,97 @@ import { useState } from "react";
 import TextIntroduction from "./components/TextIntroduction";
 import Autocomplete from "./components/Autocomplete";
 import Nav from "./components/Nav";
+import useUserStore from "../auth/store/user";
 
 export default function Home() {
-	const [options, setOptions] = useState([]);
+  const [options, setOptions] = useState([]);
 
-	const handleChange = (value) => {
-		const data = servicios.filter((service) => service.value.toLowerCase().includes(value.toLowerCase()));
-		setOptions(data);
-	};
+  const { user } = useUserStore((state) => state);
+  console.log(user);
 
-	const handleOnSelected = (value) => {
-		console.log(value);
-	};
+  const handleChange = (value) => {
+    const data = servicios.filter((service) =>
+      service.value.toLowerCase().includes(value.toLowerCase())
+    );
+    setOptions(data);
+  };
 
-	const onSubmit = (e) => {
-		e.preventDefault();
-		console.log(e.target.email.value);
-	};
-	return (
-		<>
-			<div>
-				<div className=" flex flex-col bg-hero px-5 py-10 sm:items-center sm:py-24 ">
-					<TextIntroduction />
-					<Autocomplete options={options} onChange={handleChange} onSelected={handleOnSelected} limit={10} />
-				</div>
-			</div>
-			<div className="sm:max-w-screen-xl sm:mx-auto">
-				<Nav />
-			</div>
-		</>
-	);
+  const handleOnSelected = (value) => {
+    console.log(value);
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    console.log(e.target.email.value);
+  };
+  return (
+    <>
+      <div>
+        <div className=" flex flex-col bg-hero px-5 py-10 sm:items-center sm:py-24 ">
+          <TextIntroduction />
+          <Autocomplete
+            options={options}
+            onChange={handleChange}
+            onSelected={handleOnSelected}
+            limit={10}
+          />
+        </div>
+      </div>
+      <div className="sm:max-w-screen-xl sm:mx-auto">
+        <Nav />
+      </div>
+    </>
+  );
 }
 
 const servicios = [
-	// Servicios digitales y tecnológicos
-	{ id: 1, value: "Desarrollo web personalizado" },
-	{ id: 2, value: "Diseño de aplicaciones móviles" },
-	{ id: 3, value: "Marketing digital integral" },
-	{ id: 4, value: "Consultoría SEO y SEM" },
-	{ id: 5, value: "Gestión de redes sociales" },
-	{ id: 6, value: "Desarrollo de ecommerce" },
-	{ id: 7, value: "Ciberseguridad y protección de datos" },
-	{ id: 8, value: "Análisis de datos y Business Intelligence" },
-	{ id: 9, value: "Desarrollo de software a medida" },
-	{ id: 10, value: "Diseño UX/UI" },
+  // Servicios digitales y tecnológicos
+  { id: 1, value: "Desarrollo web personalizado" },
+  { id: 2, value: "Diseño de aplicaciones móviles" },
+  { id: 3, value: "Marketing digital integral" },
+  { id: 4, value: "Consultoría SEO y SEM" },
+  { id: 5, value: "Gestión de redes sociales" },
+  { id: 6, value: "Desarrollo de ecommerce" },
+  { id: 7, value: "Ciberseguridad y protección de datos" },
+  { id: 8, value: "Análisis de datos y Business Intelligence" },
+  { id: 9, value: "Desarrollo de software a medida" },
+  { id: 10, value: "Diseño UX/UI" },
 
-	// Servicios de diseño y creatividad
-	{ id: 11, value: "Diseño gráfico y branding" },
-	{ id: 12, value: "Ilustración y animación 2D y 3D" },
-	{ id: 13, value: "Fotografía profesional" },
-	{ id: 14, value: "Diseño de interiores" },
-	{ id: 15, value: "Video marketing y producción audiovisual" },
-	{ id: 16, value: "Diseño de packaging" },
-	{ id: 17, value: "Calligrafía y lettering" },
-	{ id: 18, value: "Diseño web responsive" },
-	{ id: 19, value: "Arte urbano y muralismo" },
-	{ id: 20, value: "Diseño de infografías" },
+  // Servicios de diseño y creatividad
+  { id: 11, value: "Diseño gráfico y branding" },
+  { id: 12, value: "Ilustración y animación 2D y 3D" },
+  { id: 13, value: "Fotografía profesional" },
+  { id: 14, value: "Diseño de interiores" },
+  { id: 15, value: "Video marketing y producción audiovisual" },
+  { id: 16, value: "Diseño de packaging" },
+  { id: 17, value: "Calligrafía y lettering" },
+  { id: 18, value: "Diseño web responsive" },
+  { id: 19, value: "Arte urbano y muralismo" },
+  { id: 20, value: "Diseño de infografías" },
 
-	// Servicios de consultoría y asesoramiento
-	{ id: 21, value: "Consultoría empresarial" },
-	{ id: 22, value: "Asesoría legal" },
-	{ id: 23, value: "Coaching ejecutivo" },
-	{ id: 24, value: "Consultoría en recursos humanos" },
-	{ id: 25, value: "Asesoría financiera" },
-	{ id: 26, value: "Coaching de vida" },
-	{ id: 27, value: "Consultoría en sostenibilidad" },
-	{ id: 28, value: "Mediación y resolución de conflictos" },
-	{ id: 29, value: "Asesoría en inmigración" },
-	{ id: 30, value: "Consultoría en marketing estratégico" },
+  // Servicios de consultoría y asesoramiento
+  { id: 21, value: "Consultoría empresarial" },
+  { id: 22, value: "Asesoría legal" },
+  { id: 23, value: "Coaching ejecutivo" },
+  { id: 24, value: "Consultoría en recursos humanos" },
+  { id: 25, value: "Asesoría financiera" },
+  { id: 26, value: "Coaching de vida" },
+  { id: 27, value: "Consultoría en sostenibilidad" },
+  { id: 28, value: "Mediación y resolución de conflictos" },
+  { id: 29, value: "Asesoría en inmigración" },
+  { id: 30, value: "Consultoría en marketing estratégico" },
 
-	// Servicios para el hogar y la empresa
-	{ id: 31, value: "Limpieza a fondo de hogares y oficinas" },
-	{ id: 32, value: "Mantenimiento y reparaciones del hogar" },
-	{ id: 33, value: "Jardinería y paisajismo" },
-	{ id: 34, value: "Mudanzas y transporte" },
-	{ id: 35, value: "Reformas integrales" },
-	{ id: 36, value: "Instalaciones eléctricas y fontanería" },
-	{ id: 37, value: "Pintura y decoración" },
-	{ id: 38, value: "Carpintería y ebanistería" },
-	{ id: 39, value: "Servicios de seguridad" },
-	{ id: 40, value: "Organización de eventos" },
+  // Servicios para el hogar y la empresa
+  { id: 31, value: "Limpieza a fondo de hogares y oficinas" },
+  { id: 32, value: "Mantenimiento y reparaciones del hogar" },
+  { id: 33, value: "Jardinería y paisajismo" },
+  { id: 34, value: "Mudanzas y transporte" },
+  { id: 35, value: "Reformas integrales" },
+  { id: 36, value: "Instalaciones eléctricas y fontanería" },
+  { id: 37, value: "Pintura y decoración" },
+  { id: 38, value: "Carpintería y ebanistería" },
+  { id: 39, value: "Servicios de seguridad" },
+  { id: 40, value: "Organización de eventos" },
 ];
 
 // // export default function Home() {

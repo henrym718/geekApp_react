@@ -6,7 +6,8 @@ const useAuthStore = create((set) => ({
 	username: null,
 	setEmail: (email) => set({ email }),
 	setPassword: (password) => set({ password }),
-	setUsername: (username) => set({ username })
+	setUsername: (username) => set({ username }),
+	setCleanStore: () => set({ email: null, password: null, username: null })
 }));
 
 export default useAuthStore;

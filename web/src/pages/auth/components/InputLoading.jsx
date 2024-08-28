@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import { TailSpin } from "react-loader-spinner";
+import { Loader2 } from "lucide-react";
 import { IoAlertCircleSharp } from "react-icons/io5";
 import { IoMdCheckmark } from "react-icons/io";
 
@@ -24,7 +24,6 @@ export default function InputLoading({ name, type, onChange, error, msgError, op
     onChange(value);
   };
 
-  console.log(error);
   return (
     <div className="flex flex-col pb-5">
       <div
@@ -42,18 +41,7 @@ export default function InputLoading({ name, type, onChange, error, msgError, op
           autoComplete="off"
         />
 
-        {openSpinner ? (
-          <TailSpin
-            visible={true}
-            height="20"
-            width="20"
-            color="#74767E"
-            ariaLabel="tail-spin-loading"
-            radius="1"
-            wrapperStyle={{}}
-            wrapperClass=""
-          />
-        ) : null}
+        {openSpinner ? <Loader2 className="h-5 w-5 animate-spin text-[#74767E]" /> : null}
 
         {!openSpinner && showError ? <IoAlertCircleSharp size={20} color="red" /> : null}
         {/* {!openSpinner && !showError && textInput.length > 3 ? <IoMdCheckmark size={15} /> : null} */}

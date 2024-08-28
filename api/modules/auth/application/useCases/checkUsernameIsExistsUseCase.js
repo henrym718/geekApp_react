@@ -1,16 +1,15 @@
-import { AuthService } from '../services/authService.js'
+
 import { UserService } from '../../../user/application/services/userService.js'
-
-
 
 class CheckUsernameIsExistsUseCase {
     constructor() {
-        this.authService = new AuthService()
         this.userService = new UserService()
     }
 
     async execute(username) {
-        const isExistsUsername = await this.userService.countDocuments({ username })
+        const usernameRegex = this.userService.regexUsername(username);
+
+        const isExistsUsername = await this.userService.countDocuments({ username: usernameRegex })
         return isExistsUsername > 0
     }
 }

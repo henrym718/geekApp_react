@@ -5,7 +5,8 @@ export class CheckEmailIsExistsUseCase {
         this.authService = new AuthService();
     }
     async execute(email) {
-        const isExistsEmail = await this.authService.countDocuments({ email });
+        const emailLower = email.toLowerCase();
+        const isExistsEmail = await this.authService.countDocuments({ email: emailLower });
         return isExistsEmail > 0
     }
 }

@@ -39,8 +39,9 @@ export default function CreateAccountForm() {
             setMsgError(data ? "Ya tienes una cuenta con este email" : "");
             !data && setEmail(email);
           } catch (err) {
+            console.log(err);
             setError(true);
-            setMsgError("Ha ocurrido un error, intenta más tarde");
+            setMsgError(err.message);
           } finally {
             setOpenSpinner(false);
           }

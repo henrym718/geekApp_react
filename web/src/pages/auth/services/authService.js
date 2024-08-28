@@ -8,13 +8,23 @@ class AuthService {
         return data
     }
 
-    async loginUser(credentials) {
-        const { data } = await axiosPublic.post("/auth/logincredentials", credentials);
+    async checkEmail(email) {
+        const { data } = await axiosPublic.get(endpoints.auth.checkEmailIsExist(email));
+        return data
+    }
+
+    async checkUsername(username) {
+        const { data } = await axiosPublic.get(endpoints.auth.checkUsernameIsExists(username));
+        return data
+    }
+
+    async createAccount(credentials) {
+        const { data } = await axiosPublic.post(endpoints.auth.createAccount(), credentials);
         return data
     };
 
-    async createUser(credentials) {
-        const { data } = await axiosPublic.post("/auth/registercredentials", credentials);
+    async loginUser(credentials) {
+        const { data } = await axiosPublic.post("/auth/logincredentials", credentials);
         return data
     };
 
@@ -22,6 +32,7 @@ class AuthService {
         const { data } = await axiosPublic.get(endpoints.auth.getRefreshToken())
         return data
     }
+
 }
 
 export default new AuthService()

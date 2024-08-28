@@ -17,12 +17,22 @@ export class RegisterCredentialsUseCase {
   async execute(credentials) {
     try {
       /*obtener la data*/
-      const { email, password } = credentials;
+      const { email: emailUpper, password, username } = credentials;
+
+      /*normalizo los datos */
+      const email = emailUpper.toLowerCase();
+      const usernameRegex = this.userService.regexUsername(username);
+
 
       /*comprobar que el usuario no exista para poder continuar*/
-      const existsAuth = await this.authService.getAuthByfield({ email });
+      const existsAuth = await this.authService.countDocuments({ email });
       if (existsAuth)
         throw createError.BadRequest("Ya existe un usuario con este email");
+
+      /*compruebo que no existe un username */
+      const existsUsername = await this.userService.countDocuments({ username: usernameRegex })
+      if (existsUsername)
+        throw createError.BadRequest("Ya existe un usuario con este username");
 
       /*encryptar contraseña*/
       const passwordEncrypted = this.passwordService.encryptPasswords(password);
@@ -32,7 +42,7 @@ export class RegisterCredentialsUseCase {
         email,
         password: passwordEncrypted,
       });
-      if (!auth) throw createError.BadRequest("Error al crear el registro");
+      if (!auth) throw createError.ServiceUnavailable("Error al crear el registro");
 
       /*crear RefreshToken para el usuario*/
       const payloadrt = { id: auth._id };
@@ -42,9 +52,10 @@ export class RegisterCredentialsUseCase {
       const user = await this.userService.createNewUser({
         _id: auth._id,
         email,
+        username,
         rol: "BASICUSER",
       });
-      if (!user) throw createError.BadRequest("Error al crear el registro");
+      if (!user) throw createError.ServiceUnavailable("Error al crear el registro en la base de datos");
 
       /*crear AccessToken para el usuario*/
       const payloadat = { id: auth._id, rol: user.rol };

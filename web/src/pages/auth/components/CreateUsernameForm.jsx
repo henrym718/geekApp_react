@@ -1,17 +1,22 @@
-import { useRef, useState } from "react";
-import axiosPublic from "./../../../api/axiosPublic";
+import { useEffect, useRef, useState } from "react";
+import authService from "../services/authService";
 import useFormsStore from "../store/forms";
 import useAuthStore from "../store/auth";
 import InputLoading from "./InputLoading";
-import { endpoints } from "./../../../api/endpoints";
+import setAccessToken from "../utils/setAccessToken";
+import { Loader2 } from "lucide-react";
 import { IoIosArrowRoundBack } from "react-icons/io";
 
 export default function CreateUsernameForm() {
   const [error, setError] = useState(null);
   const [msgError, setMsgError] = useState("");
   const [openSpinner, setOpenSpinner] = useState(false);
-  const { setChangeAction } = useFormsStore((state) => state);
-  const { setUsername, email, password, username } = useAuthStore((state) => state);
+  const [openSpinnerButton, setOpenSpinnerButton] = useState(false);
+  const [msgErrorButton, setMsgErrorButton] = useState(false);
+
+  const { setChangeAction, setCloseModal } = useFormsStore((state) => state);
+  const { setCleanStore, setUsername, email, password, username } = useAuthStore((state) => state);
+
   const timeoutRef = useRef();
 
   const handleBackForm = () => {
@@ -41,13 +46,13 @@ export default function CreateUsernameForm() {
       setOpenSpinner(true);
       timeoutRef.current = setTimeout(async () => {
         try {
-          const { data } = await axiosPublic.get(endpoints.auth.checkUsernameIsExists(username));
+          const data = await authService.checkUsername(username);
           setError(data);
           setMsgError(data ? "Parece que este username ya existe" : "");
           !data && setUsername(username);
         } catch (error) {
           setError(true);
-          setMsgError("Ha ocurrido un error, intenta más tarde");
+          setMsgError(error.message);
         } finally {
           setOpenSpinner(false);
         }
@@ -55,12 +60,30 @@ export default function CreateUsernameForm() {
     }
   };
 
-  const handleOnClick = () => {
-    console.log(email, password, username);
+  const handleOnClick = async () => {
+    setOpenSpinnerButton(true);
+    setMsgErrorButton(false);
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      const credentials = { email, password, username };
+      const data = await authService.createAccount(credentials);
+      setAccessToken(data.accessToken);
+      setCloseModal();
+    } catch (error) {
+      setMsgErrorButton(error.message);
+    } finally {
+      setOpenSpinnerButton(false);
+    }
   };
 
+  useEffect(() => {
+    return () => {
+      setCleanStore();
+    };
+  }, []);
+
   return (
-    <div className="flex flex-col h-full mx-10 pt-5">
+    <div className="flex flex-col  h-full mx-10 pt-5">
       <div
         onClick={handleBackForm}
         className="flex space-x-[2px] items-center pb-6 -ml-4 cursor-pointer"
@@ -90,13 +113,18 @@ export default function CreateUsernameForm() {
         Genera confianza usando tu nombre o el de tu empresa
       </p>
       <button
-        className="w-full h-[42px] text-color5 bg-color3 hover:bg-zinc-700 font-medium rounded border disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-400 mt-12	"
+        className=" flex items-center justify-center w-full h-[42px] text-color5 bg-color3 hover:bg-zinc-700 font-medium rounded border disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-400 mt-12	"
         htmlType="submit"
         onClick={handleOnClick}
         disabled={error || error === null || (!error && openSpinner) ? true : false}
       >
-        Crear mi cuenta
+        {openSpinnerButton ? (
+          <Loader2 className="h-5 w-5 animate-spin text-white" />
+        ) : (
+          "Crear mi cuenta"
+        )}
       </button>
+      <p className="text-red-500 ">{msgErrorButton ? msgErrorButton : null}</p>
     </div>
   );
 }

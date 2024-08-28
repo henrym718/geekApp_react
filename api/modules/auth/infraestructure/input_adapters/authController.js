@@ -50,13 +50,12 @@ export class AuthController {
 
   async registerCredentials(req, res, next) {
     try {
-      const { refreshToken, accessToken, user } =
-        await this.registerCredentialsUseCase.execute(req.body);
+      const { refreshToken, accessToken, user } = await this.registerCredentialsUseCase.execute(req.body);
 
       if (req.platform === "web") {
         res
-          .cookie("refreshToken", refreshToken, env.OPTIONS_COOKIE)
           .status(200)
+          .cookie("refreshToken", refreshToken, env.OPTIONS_COOKIE)
           .json({ accessToken, user });
       }
 
