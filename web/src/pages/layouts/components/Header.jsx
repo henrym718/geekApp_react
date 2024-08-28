@@ -10,7 +10,7 @@ function Header() {
 
   const handleOpenModal = () => {
     setOpenModal();
-    setChangeAction("CREATE_USERNAME");
+    setChangeAction("LOGIN");
     if (buttonRef.current) {
       buttonRef.current.blur();
     }

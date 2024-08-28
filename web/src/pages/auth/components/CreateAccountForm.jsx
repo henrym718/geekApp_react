@@ -29,7 +29,7 @@ export default function CreateAccountForm() {
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
     if (email?.trim()?.length) {
-      if (email?.includes("@") && str[0]?.length && str[1].split(".")[1]?.length > 1) {
+      if (email?.includes("@") && str[0]?.length && str[1]?.split(".")[1]?.length > 1) {
         setOpenSpinner(true);
 
         timeoutRef.current = setTimeout(async () => {
@@ -64,7 +64,7 @@ export default function CreateAccountForm() {
   };
 
   return (
-    <div className="flex flex-col relative h-full mx-10 pt-5">
+    <div className="flex flex-col h-full pb-2 mx-10 pt-5">
       <div
         onClick={handleBackForm}
         className="header flex space-x-[2px] items-center pb-6 -ml-4 cursor-pointer"
@@ -73,7 +73,7 @@ export default function CreateAccountForm() {
         <span className="font-medium text-sm">Volver</span>
       </div>
       <div className="flex-grow">
-        <p className="text-2xl font-bold pb-8">Continuar con tu correo electrónico</p>
+        <p className="text-2xl font-bold pb-8">Crea una nueva cuenta</p>
         <p className="text-base font-medium text-color1 -tracking-tight pb-[10px]">Email</p>
         <InputLOading
           name="email"
@@ -88,6 +88,7 @@ export default function CreateAccountForm() {
           onChange={handleOnchangePassword}
           setDisabledButton={setDisabledButton}
           showCheck={error}
+          validateData={true}
         />
         <button
           className="w-full h-[42px] text-color5 bg-color3 hover:bg-zinc-700 font-medium rounded border disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-400 mt-12	"

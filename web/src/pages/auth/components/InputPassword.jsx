@@ -4,7 +4,12 @@ import { IoEyeOutline } from "react-icons/io5";
 import { IoCheckmarkCircleOutline } from "react-icons/io5";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 
-export default function InputPassword({ onChange, setDisabledButton, showCheck }) {
+export default function InputPassword({
+  onChange,
+  setDisabledButton,
+  showCheck,
+  validateData = false,
+}) {
   const [showPassword, setShowPassword] = useState(false);
   const [textInput, setTextINput] = useState("");
   const [check, setCheck] = useState({
@@ -21,22 +26,26 @@ export default function InputPassword({ onChange, setDisabledButton, showCheck }
   };
 
   useEffect(() => {
-    const patronLongitud = new RegExp(".{8,}");
-    const patronMinuscula = new RegExp("[a-z]");
-    const patronMayuscula = new RegExp("[A-Z]");
-    const patronNumero = new RegExp("[0-9]");
+    if (validateData) {
+      const patronLongitud = new RegExp(".{8,}");
+      const patronMinuscula = new RegExp("[a-z]");
+      const patronMayuscula = new RegExp("[A-Z]");
+      const patronNumero = new RegExp("[0-9]");
 
-    setCheck(() => ({
-      checkLength: patronLongitud.test(textInput),
-      checkNumber: patronNumero.test(textInput),
-      ckeckUpper: patronMayuscula.test(textInput),
-      checkLower: patronMinuscula.test(textInput),
-    }));
+      setCheck(() => ({
+        checkLength: patronLongitud.test(textInput),
+        checkNumber: patronNumero.test(textInput),
+        ckeckUpper: patronMayuscula.test(textInput),
+        checkLower: patronMinuscula.test(textInput),
+      }));
+    }
   }, [textInput]);
 
   useEffect(() => {
-    const allChecksTrue = Object.values(check).every(Boolean);
-    setDisabledButton(!allChecksTrue);
+    if (validateData) {
+      const allChecksTrue = Object.values(check).every(Boolean);
+      setDisabledButton(!allChecksTrue);
+    }
   }, [check]);
 
   return (

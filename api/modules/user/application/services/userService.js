@@ -20,8 +20,4 @@ export class UserService {
   async countDocuments(field) {
     return await this.userRepository.countDocuments(field);
   }
-
-  regexUsername(username) {
-    return { $regex: `^${username}$`, $options: "i" }
-  }
 }

@@ -1,10 +1,11 @@
 import { LoginCredentialsUseCase } from "../../application/useCases/loginCredentialsUseCase.js";
-import { RegisterCredentialsUseCase } from "../../application/useCases/registerCredentialsUseCase.js";
 import { LogoutUseCase } from "../../application/useCases/logoutUseCase.js";
 import { RefreshTokenUseCase } from "../../application/useCases/refreshTokenUseCase.js";
 import { ChekIsAuthenticatedUseCase } from "../../application/useCases/chekIsAuthenticatedUseCase.js";
+import { RegisterCredentialsUseCase } from "../../application/useCases/registerCredentialsUseCase.js";
 import { CheckEmailIsExistsUseCase } from "../../application/useCases/checkEmailIsExistsUseCase.js"
-import CheckUsernameIsExistsUseCase from './../../application/useCases/checkUsernameIsExistsUseCase.js';
+import { CheckUsernameIsExistsUseCase } from './../../application/useCases/checkUsernameIsExistsUseCase.js';
+import { CheckCredentialIsExistsUseCase } from '../../application/useCases/CheckCredentialIsExistsUseCase.js';
 import { env } from "../../../../config/env.js";
 
 export class AuthController {
@@ -16,6 +17,7 @@ export class AuthController {
     this.chekIsAuthenticatedUseCase = new ChekIsAuthenticatedUseCase();
     this.checkEmailIsExistsUseCase = new CheckEmailIsExistsUseCase();
     this.checkUernameIsExistsUseCase = new CheckUsernameIsExistsUseCase();
+    this.checkCredentialIsExistsUseCase = new CheckCredentialIsExistsUseCase();
 
     this.loginCredentials = this.loginCredentials.bind(this);
     this.registerCredentials = this.registerCredentials.bind(this);
@@ -24,6 +26,7 @@ export class AuthController {
     this.checkIsAuthenticated = this.checkIsAuthenticated.bind(this);
     this.checkEmailIsExists = this.checkEmailIsExists.bind(this)
     this.checkUernameIsExists = this.checkUernameIsExists.bind(this)
+    this.checkCredentialIsExists = this.checkCredentialIsExists.bind(this)
   }
 
   async loginCredentials(req, res, next) {
@@ -120,6 +123,15 @@ export class AuthController {
     try {
       const existsUsername = await this.checkUernameIsExistsUseCase.execute(req.params.username);
       res.status(200).json(existsUsername)
+    } catch (error) {
+      next(error)
+    }
+  }
+
+  async checkCredentialIsExists(req, res, next) {
+    try {
+      const existsCredential = await this.checkCredentialIsExistsUseCase.execute(req.params.credential)
+      res.status(200).json(existsCredential)
     } catch (error) {
       next(error)
     }
