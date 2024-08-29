@@ -31,7 +31,6 @@ export default function CreateAccountForm() {
     if (email?.trim()?.length) {
       if (email?.includes("@") && str[0]?.length && str[1]?.split(".")[1]?.length > 1) {
         setOpenSpinner(true);
-
         timeoutRef.current = setTimeout(async () => {
           try {
             const { data } = await axiosPublic.get(endpoints.auth.checkEmailIsExist(email));
@@ -39,7 +38,6 @@ export default function CreateAccountForm() {
             setMsgError(data ? "Ya tienes una cuenta con este email" : "");
             !data && setEmail(email);
           } catch (err) {
-            console.log(err);
             setError(true);
             setMsgError(err.message);
           } finally {
@@ -50,10 +48,7 @@ export default function CreateAccountForm() {
         setError(true);
         setMsgError("Parece que el email esta incompleto");
       }
-    } else if (
-      (error === false && email.trim() === "") ||
-      (error === true && email.trim() === "")
-    ) {
+    } else if ((error === false || error === true) && email.trim() === "") {
       setError(true);
       setMsgError("Parece que el email esta incompleto");
     }

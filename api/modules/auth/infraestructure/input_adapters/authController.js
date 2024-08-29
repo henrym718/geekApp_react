@@ -31,10 +31,7 @@ export class AuthController {
 
   async loginCredentials(req, res, next) {
     try {
-      const { email, password } = req.body;
-      const { refreshToken, accessToken, user } =
-        await this.loginCredentialsUseCase.execute({ email, password });
-
+      const { refreshToken, accessToken, user } = await this.loginCredentialsUseCase.execute(req.body);
       if (req.platform === "web") {
         res
           .cookie("refreshToken", refreshToken, env.OPTIONS_COOKIE)

@@ -8,7 +8,7 @@ export default function Home() {
   const [options, setOptions] = useState([]);
 
   const { user } = useUserStore((state) => state);
-  console.log(user);
+  console.log({ user });
 
   const handleChange = (value) => {
     const data = servicios.filter((service) =>

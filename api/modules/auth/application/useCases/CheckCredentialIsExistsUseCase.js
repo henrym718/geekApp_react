@@ -6,13 +6,13 @@ import { UserFilterService } from '../../../user/application/services/userFilter
 export class CheckCredentialIsExistsUseCase {
     constructor() {
         this.userService = new UserService()
-        this.UserFilterService = new UserFilterService()
+        this.userFilterService = new UserFilterService()
 
     }
 
     async execute(credential) {
-        const insensitiveRegexQuery = this.UserFilterService.insensitiveRegexQuery(credential)
-        const createOrFindUser = this.UserFilterService.createOrFindUser(insensitiveRegexQuery)
+        const insensitiveRegexQuery = this.userFilterService.insensitiveRegexQuery(credential)
+        const createOrFindUser = this.userFilterService.createOrFindUser(insensitiveRegexQuery)
         const isExistsCredential = await this.userService.countDocuments(createOrFindUser)
         return isExistsCredential > 0
     }

@@ -1,8 +1,8 @@
 import { AuthService } from "../services/authService.js";
+import { UserFilterService } from '../../../user/application/services/userFilterService.js';
 import { UserService } from "../../../user/application/services/userService.js";
 import { TokenService } from "../services/tokenService.js";
 import { PasswordService } from "../services/passwordService.js";
-//  import createError from "http-errors";
 import createError from "../../../../shared/httpError.js";
 
 
@@ -12,6 +12,7 @@ export class RegisterCredentialsUseCase {
     this.tokenService = new TokenService();
     this.userService = new UserService();
     this.passwordService = new PasswordService();
+    this.userFilterService = new UserFilterService
   }
 
   async execute(credentials) {
@@ -19,20 +20,18 @@ export class RegisterCredentialsUseCase {
       /*obtener la data*/
       const { email: emailUpper, password, username } = credentials;
 
+
       /*normalizo los datos */
       const email = emailUpper.toLowerCase();
-      const usernameRegex = this.userService.regexUsername(username);
+      const usernameRegex = this.userFilterService.insensitiveRegexQuery(username);
 
-
-      /*comprobar que el usuario no exista para poder continuar*/
-      const existsAuth = await this.authService.countDocuments({ email });
-      if (existsAuth)
-        throw createError.BadRequest("Ya existe un usuario con este email");
+      /*comprobar que el email no exista para poder continuar*/
+      const existsEmail = await this.authService.countDocuments({ email });
+      if (existsEmail) throw createError.BadRequest("Ya existe un usuario con este email");
 
       /*compruebo que no existe un username */
       const existsUsername = await this.userService.countDocuments({ username: usernameRegex })
-      if (existsUsername)
-        throw createError.BadRequest("Ya existe un usuario con este username");
+      if (existsUsername) throw createError.BadRequest("Ya existe un usuario con este username");
 
       /*encryptar contraseña*/
       const passwordEncrypted = this.passwordService.encryptPasswords(password);
@@ -40,6 +39,7 @@ export class RegisterCredentialsUseCase {
       /* agrego al registro su respectivo refreshtoken */
       const auth = await this.authService.createNewRegisterAuth({
         email,
+        username,
         password: passwordEncrypted,
       });
       if (!auth) throw createError.ServiceUnavailable("Error al crear el registro");
@@ -53,7 +53,7 @@ export class RegisterCredentialsUseCase {
         _id: auth._id,
         email,
         username,
-        rol: "BASICUSER",
+        rol: "AUTHENTICATED",
       });
       if (!user) throw createError.ServiceUnavailable("Error al crear el registro en la base de datos");
 

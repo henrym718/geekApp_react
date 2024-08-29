@@ -24,16 +24,16 @@ const useUserStore = create((set) => ({
     setUser: (userData) => {
         const transformData = {
             ...userData,
-            dateOfBirth: userData?.dateOfBirth ? new Date(userData.dateOfBirth) : null,
-            memberSince: userData?.memberSince ? new Date(userData.memberSince) : null
+            ...(userData?.dateOfBirth && { dateOfBirth: new Date(userData.dateOfBirth) }),
+            ...(userData?.memberSince && { memberSince: new Date(userData.memberSince) })
         }
         set({ user: transformData })
     },
     setUpdateUser: (updateData) => set((state) => {
         const transformData = {
             ...updateData,
-            dateOfBirth: updateData?.dateOfBirth ? new Date(updateData.dateOfBirth) : null,
-            memberSince: updateData?.memberSince ? new Date(updateData.memberSince) : null
+            ...(updateData?.dateOfBirth && { dateOfBirth: new Date(updateData.dateOfBirth) }),
+            ...(updateData?.memberSince && { memberSince: new Date(updateData.memberSince) })
         }
         return {
             user: {

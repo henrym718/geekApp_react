@@ -1,17 +1,16 @@
 
-import { UserService } from '../../../user/application/services/userService.js'
 import { UserFilterService } from '../../../user/application/services/userFilterService.js';
-
+import { AuthService } from '../services/authService.js';
 
 export class CheckUsernameIsExistsUseCase {
     constructor() {
-        this.userService = new UserService()
-        this.UserFilterService = new UserFilterService()
+        this.authService = new AuthService()
+        this.userFilterService = new UserFilterService()
     }
 
     async execute(username) {
-        const insensitiveRegexQuery = this.UserFilterService.insensitiveRegexQuery(username);
-        const isExistsUsername = await this.userService.countDocuments({ username: insensitiveRegexQuery })
+        const insensitiveRegexQuery = this.userFilterService.insensitiveRegexQuery(username.trim());
+        const isExistsUsername = await this.authService.countDocuments({ username: insensitiveRegexQuery })
         return isExistsUsername > 0
     }
 }

@@ -25,16 +25,10 @@ export default function CreateUsernameForm() {
 
   const handleOnchangeUserName = (username) => {
     setOpenSpinner(false);
-    const regex = /^[a-zA-Z0-9]+$/;
+
     if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-    if (!regex.test(username) && username.length) {
-      setError(true);
-      setMsgError("Intenta usar solo caracteres alfanumericos");
-      return;
-    }
-
-    if ((error !== null) & (!username.length || username.length < 6)) {
+    if ((error !== null) & (!username.trim().length || username.trim().length < 6)) {
       setError(true);
       setMsgError(
         "Es demasiado corto. Un buen nombre de usuario debe tener al menos 6 caracteres. "
@@ -42,7 +36,7 @@ export default function CreateUsernameForm() {
       return;
     }
 
-    if (username.length > 5) {
+    if (username.trim().length > 5) {
       setOpenSpinner(true);
       timeoutRef.current = setTimeout(async () => {
         try {

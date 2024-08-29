@@ -1,44 +1,81 @@
 import { useRef, useState } from "react";
 import useFormsStore from "../store/forms";
 import InputLOading from "../components/InputLoading";
-import AuthService from "../services/authService";
+import authService from "../services/authService";
 import InputPassword from "./InputPassword";
+import useUserStore from "../store/user";
+import setAccessToken from "../utils/setAccessToken";
+import { Loader2 } from "lucide-react";
 
 export default function LoginForm() {
   const [error, setError] = useState(null);
   const [msgError, setMsgError] = useState("");
   const [disabledButton, setDisabledButton] = useState(true);
-  const setChangeAction = useFormsStore((state) => state.setChangeAction);
-
   const [openSpinner, setOpenSpinner] = useState(false);
-
+  const [credential, setCredential] = useState("");
+  const [password, setPassword] = useState("");
+  const [msgErrorButton, setMsgErrorButton] = useState(false);
+  const [openSpinnerButton, setOpenSpinnerButton] = useState(false);
+  const { setChangeAction, setCloseModal } = useFormsStore((state) => state);
+  const { setUser } = useUserStore((state) => state);
   const timeoutRef = useRef(null);
 
   const handleChangeForm = () => {
     setChangeAction("CREATE_ACCOUNT");
   };
 
-  const handleOnchangeEmail = (email) => {
-    let str = email?.split("@");
+  const handleOnchangeEmail = (credential) => {
+    let str = credential?.split("@");
     setOpenSpinner(false);
+    if (timeoutRef.current) clearTimeout(timeoutRef.current);
 
-    if (
-      (email?.length > 5 && !email?.includes("@")) ||
-      (email?.includes("@") && str[0]?.length && str[1]?.split(".")[1]?.length > 1)
-    ) {
-      try {
+    if (credential?.trim()?.length) {
+      if (
+        (credential?.length > 5 && !credential?.includes("@")) ||
+        (credential?.includes("@") && str[0]?.length && str[1]?.split(".")[1]?.length > 1)
+      ) {
         setOpenSpinner(true);
-      } catch (error) {
+        timeoutRef.current = setTimeout(async () => {
+          try {
+            const existsCredential = await authService.checkCredential(credential);
+            setCredential(existsCredential ? credential : "");
+            setError(existsCredential ? false : true);
+            setMsgError(!existsCredential ? "Parece que aun no tienes una cuenta creada" : "");
+            setDisabledButton(existsCredential ? false : true);
+          } catch (error) {
+            setError(true);
+            setMsgError(error.message);
+          } finally {
+            setOpenSpinner(false);
+          }
+        }, 700);
+      } else if (credential?.includes("@")) {
         setError(true);
-        setMsgError(error.message);
-      } finally {
-        //setOpenSpinner(false);
+        setMsgError("Parece que el email esta incompleto");
       }
+    } else if ((error === false || error === true) && credential.trim() === "") {
+      setError(true);
+      setMsgError("Parece que tu email o username esta incompleto");
     }
   };
 
-  const handleOnchangePassword = (value) => {
-    console.log(value);
+  const handleOnchangePassword = (password) => {
+    setPassword(password);
+  };
+
+  const handleOnClick = async () => {
+    try {
+      setOpenSpinnerButton(true);
+      await new Promise((resolve) => setTimeout(resolve, 500));
+      const { accessToken, user } = await authService.loginWithCredential({ credential, password });
+      setUser(user);
+      setAccessToken(accessToken);
+      setCloseModal();
+    } catch (error) {
+      setMsgErrorButton(error.message);
+    } finally {
+      setOpenSpinnerButton(false);
+    }
   };
 
   return (
@@ -66,13 +103,22 @@ export default function LoginForm() {
         <InputPassword onChange={handleOnchangePassword} />
         <p className="underline text-right pt-2 -tracking-tight">¿Olvidaste tu contraseña?</p>
         <button
-          className="w-full h-[42px] text-color5 bg-color3 mt-12 hover:bg-zinc-700 font-medium rounded border disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-400"
+          className="w-full h-[42px] flex items-center justify-center text-color5 bg-color3 mt-12 hover:bg-zinc-700 font-medium rounded border disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-400"
           htmlType="submit"
-          disabled={disabledButton ? true : false}
-          //onClick={handleNextForm}
+          disabled={
+            error || disabledButton || !password.trim().length || openSpinner ? true : false
+          }
+          onClick={handleOnClick}
         >
-          Continuar
+          {openSpinnerButton ? (
+            <Loader2 className="h-5 w-5 animate-spin text-white" />
+          ) : (
+            "Continuar"
+          )}
         </button>
+        <p className="text-red-500 ">
+          {msgErrorButton && !openSpinnerButton ? msgErrorButton : null}
+        </p>
       </div>
       <div className=" pb-6">
         <p className="text-xs text-color4 opacity-90 leading-relaxed">
