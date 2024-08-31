@@ -7,6 +7,7 @@ import NewGig from "./../pages/createGig";
 import Auth from "../pages/auth";
 import ListGigsView from "../pages/listGig";
 import DetailGig from "../pages/detailGig";
+import RegisterSeller from "../pages/registerSeller";
 
 export const routes = createBrowserRouter([
   {
@@ -37,5 +38,9 @@ export const routes = createBrowserRouter([
   {
     path: "/authentication",
     element: <Auth />,
+  },
+  {
+    path: "/registerseller",
+    element: <RegisterSeller />,
   },
 ]);
