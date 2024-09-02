@@ -6,5 +6,8 @@ export const endpoints = {
         loginCredentials: () => "/auth/logincredentials",
         getRefreshToken: () => "/auth/refreshtoken",
         createAccount: () => "/auth/registercredentials"
+    },
+    subcategory: {
+        getAllSubcategories: (id) => `/subcategory/get/${id}`,
     }
 }
