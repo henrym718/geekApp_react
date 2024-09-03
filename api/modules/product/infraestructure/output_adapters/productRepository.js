@@ -1,5 +1,4 @@
 import { productModel } from "./productModel.js";
-import { convertToObjectId } from "../../../../shared/convertToObjectId.js";
 
 export class ProductRepository {
 	constructor() {

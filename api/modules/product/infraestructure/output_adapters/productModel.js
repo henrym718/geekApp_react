@@ -12,7 +12,7 @@ const productSchema = new Schema(
       province: String,
       city: String,
     },
-    tags: [String], 
+    tags: [String],
     faq: [{ question: String, answer: String, _id: false }],
     createdAt: { type: Date, default: new Date() },
     //campos de control
@@ -20,7 +20,7 @@ const productSchema = new Schema(
     active: { type: Boolean, default: false },
     //campos de referencia
     userId: { type: Schema.Types.ObjectId, ref: "User" },
-    subcategory: { type: Schema.Types.ObjectId, ref: "Subcategory" },
+    subcategory: { type: Schema.Types.ObjectId, ref: "  " },
   },
   {
     timestamps: false,

@@ -15,6 +15,7 @@ import imagesRoutes from "./modules/images/infraestructure/input_adapters/imageR
 import productRoutes from "./modules/product/infraestructure/input_adapters/productRoutes.js";
 import categoryRoutes from "./modules/category/infraestructure/input_adapters/categoryRoutes.js";
 import subCategoryRoutes from "./modules/subcategory/infraestructure/input_adapters/subcategoryRoutes.js";
+import skillRoutes from "./modules/skill/infraestructure/input_adapter/skillRoutes.js"
 
 /** esta es la que vale */
 app.use((req, res, next) => {
@@ -38,6 +39,7 @@ app.use(imagesRoutes);
 app.use(productRoutes);
 app.use(categoryRoutes);
 app.use(subCategoryRoutes);
+app.use(skillRoutes)
 
 //ErrorHandler
 app.use(errorLog);

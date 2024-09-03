@@ -1,5 +1,5 @@
 import { ProductService } from "../services/productService.js";
-import createERror from "../../../../shared/httpError.js";
+import createError from "../../../../shared/httpError.js";
 
 export class GetProductByIdUseCase {
 	constructor() {
@@ -8,7 +8,7 @@ export class GetProductByIdUseCase {
 
 	async execute(productid) {
 		const product = await this.productService.getProductById(productid);
-		if (!product) throw createERror.NotFound("Producto no encontrado");
+		if (!product) throw createError.NotFound("Producto no encontrado");
 		return product;
 	}
 }

@@ -1,9 +1,11 @@
 import { SubcaegoryService } from "../services/subcaegoryService.js";
+import { SkillService } from './../../../skill/application/services/skillService.js';
 import createError from "../../../../shared/httpError.js";
 
 export class CreateSubCategoryUseCase {
   constructor() {
     this.subcaegoryService = new SubcaegoryService();
+    this.skillService = new SkillService();
   }
 
   async execute({ name, urlIcon, urlCover, category }) {
@@ -20,6 +22,9 @@ export class CreateSubCategoryUseCase {
       urlCover,
       category,
     });
+
+    //Creo el recurso en la db para skill
+    await this.skillService.create({ _id: subCategory._id })
 
     //Respondo el recurso creado
     return subCategory;
