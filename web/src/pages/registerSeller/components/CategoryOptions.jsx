@@ -14,10 +14,6 @@ export default function CategoryOptions({ handleChangeForm }) {
     selectedCategory,
   } = useDataForm((state) => state);
 
-  const handleForm = () => {
-    handleChangeForm();
-  };
-
   const handleOnClickCategory = async (id) => {
     const data = await registerSellerService.getAllSubcategories(id);
     setSelectedCategory(id);
@@ -34,10 +30,10 @@ export default function CategoryOptions({ handleChangeForm }) {
   };
 
   return (
-    <div className="flex flex-col h-full pb-5 justify-between">
-      <div className="flex flex-col h-3/4 w-3/4 overflow-y-auto mx-16">
+    <div className="h-full w-3/4 ml-[150px]">
+      <div className="flex flex-col h-full overflow-y-auto">
+        <p className="pb-5 text-base font-semibold"> 1/5</p>
         <div className="border-b-2 border-gray-300 w-11/12 pb-4">
-          <p className="pb-5 text-base font-semibold"> 1/5</p>
           <h2 className="text-[40px] text-color3 font-semibold pb-3">
             Genial, entonces que tipo de trabajo vas a ofrecer <br />
             <h2 className="-mt-4">a tus clientes?</h2>

@@ -10,14 +10,14 @@ export default function index() {
   const { selectedSubcategories } = useDataForm((state) => state);
 
   const handleNextForm = () => {
-    if (form == "CATEGORY") {
-      setForm("SKILL");
+    if (form === "CATEGORY") {
       addStep();
+      setForm("SKILL");
     }
   };
 
   const handleBackForm = () => {
-    if (form == "SKILL") {
+    if (form === "SKILL") {
       setForm("CATEGORY");
       decreaseStep();
     }
@@ -25,8 +25,8 @@ export default function index() {
 
   return (
     <div className="flex flex-col h-screen">
-      <div className=" h-8  mb-20"> header</div>
-      <div className=" flex-grow overflow-hidden">
+      <div className=" h-8 mb-20"> header</div>
+      <div className=" flex flex-grow justify-center overflow-hidden">
         {form == "CATEGORY" && <CategoryOptions handleNextForm={handleNextForm} />}
         {form == "SKILL" && <SkillOptions />}
       </div>
