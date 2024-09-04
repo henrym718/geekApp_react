@@ -8,15 +8,7 @@ export class GetSkillUseCase {
 
     async execute(id) {
         const { skills } = await this.skillService.get(id)
-
-        const skillswhithid = skills.map((skill) => {
-            return {
-                id: crypto.randomUUID(),
-                value: skill
-            }
-        })
-
-        return skillswhithid
+        return skills
     }
 
 }

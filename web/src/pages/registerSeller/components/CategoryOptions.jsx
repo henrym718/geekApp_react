@@ -12,6 +12,9 @@ export default function CategoryOptions({ handleChangeForm }) {
     clearSelectedSubCategories,
     setSelectedCategory,
     selectedCategory,
+    setListSkills,
+    updateSkills,
+    cleanSkills,
   } = useDataForm((state) => state);
 
   const handleOnClickCategory = async (id) => {
@@ -19,14 +22,19 @@ export default function CategoryOptions({ handleChangeForm }) {
     setSelectedCategory(id);
     setListCategories(data);
     clearSelectedSubCategories();
+    cleanSkills();
   };
 
-  const handleOnChangeSubCategory = (id, isChecked) => {
-    isChecked
-      ? setSelectedSubcategory(id)
-      : updateSelectedSubcategory(
-          selectedSubcategories.filter((subCategory) => subCategory !== id)
-        );
+  const handleOnChangeSubCategory = async (id, isChecked) => {
+    if (isChecked) {
+      setSelectedSubcategory(id);
+      const skill = await registerSellerService.getSkillsById(id);
+      setListSkills(skill);
+    } else {
+      updateSelectedSubcategory(selectedSubcategories.filter((subCategory) => subCategory !== id));
+      const deleteSkills = await registerSellerService.getSkillsById(id);
+      updateSkills(deleteSkills);
+    }
   };
 
   return (
@@ -36,7 +44,7 @@ export default function CategoryOptions({ handleChangeForm }) {
         <div className="border-b-2 border-gray-300 w-11/12 pb-4">
           <h2 className="text-[40px] text-color3 font-semibold pb-3">
             Genial, entonces que tipo de trabajo vas a ofrecer <br />
-            <h2 className="-mt-4">a tus clientes?</h2>
+            <span className="-mt-4">a tus clientes?</span>
           </h2>
           <p>
             No te preocupes, puedes crear diferente perfiles para otras habilidades, este será el

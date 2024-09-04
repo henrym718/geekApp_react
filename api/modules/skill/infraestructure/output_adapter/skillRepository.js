@@ -15,7 +15,7 @@ export class SkillRepository {
     }
 
     async get(id) {
-        return await this.model.findById(id)
+        return await this.model.findById(id).select("-_id")
     }
 }
 

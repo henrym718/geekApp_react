@@ -8,6 +8,9 @@ export const endpoints = {
         createAccount: () => "/auth/registercredentials"
     },
     subcategory: {
-        getAllSubcategories: (id) => `/subcategory/get/${id}`,
+        getSubcategoriesbyId: (id) => `/subcategory/get/${id}`,
+    },
+    skill: {
+        getSkillsbyId: (id) => `/skill/get/${id}`
     }
 }

@@ -5,7 +5,12 @@ import { endpoints } from './../../../api/endpoints';
 
 class RegisterSellerService {
     async getAllSubcategories(id) {
-        const { data } = await axiosPublic(endpoints.subcategory.getAllSubcategories(id))
+        const { data } = await axiosPublic.get(endpoints.subcategory.getSubcategoriesbyId(id))
+        return data
+    }
+
+    async getSkillsById(id) {
+        const { data } = await axiosPublic.get(endpoints.skill.getSkillsbyId(id))
         return data
     }
 }
