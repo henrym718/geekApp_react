@@ -13,12 +13,12 @@ export default function SkillOptions() {
           <h2 className="text-[40px] text-color3 font-semibold pb-3">
             Excelente, Ahora cuentanos sobre tus habilidades
           </h2>
-          <p className="text-base font-normal">
+          <p className="text-base font-normal pb-10">
             Tus habilidades muestran a los clientes que puedes ofrecer y nos ayudan a aelegir que
             trabajos recomendarte. Agregue o elimine nuestra sugerencias, o comience a escribir para
             elegir mas.
           </p>
-          <p>Tus habilidades</p>
+          <p className="pb-2">Tus habilidades</p>
           <Tags selected={HandleSelectedTags} max={5} />
         </div>
 
