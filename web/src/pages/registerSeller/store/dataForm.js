@@ -24,7 +24,8 @@ const useDataForm = create((set) => ({
 
     /**Tags */
     setTag: (tag) => set((state) => ({ tags: [...state.tags, tag] })),
-    removeTag: (tag) => set((state) => ({ tags: state.tags.filter((t) => t !== tag) }))
+    removeTag: (tag) => set((state) => ({ tags: state.tags.filter((t) => t !== tag) })),
+    cleanTags: () => set({ tags: [] }),
 }))
 
 export default useDataForm

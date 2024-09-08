@@ -2,7 +2,7 @@ import { useEffect, useState, useRef } from "react";
 import useDataForm from "../store/dataForm";
 import { CircleX, X } from "lucide-react";
 
-export default function Tags({ selected, max }) {
+export default function Tags({ max }) {
   const [indexSelectedOption, setIndexSelectedOption] = useState(null);
   const [textInput, setTextInput] = useState("");
   const [isVisisbleOptions, setIsVisisbleOptions] = useState(false);

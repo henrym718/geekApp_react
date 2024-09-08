@@ -15,6 +15,7 @@ export default function Categories() {
     setListSkills,
     updateSkills,
     cleanSkills,
+    cleanTags,
   } = useDataForm((state) => state);
 
   const handleOnClickCategory = async (id) => {
@@ -23,6 +24,7 @@ export default function Categories() {
     setListCategories(data);
     clearSelectedSubCategories();
     cleanSkills();
+    cleanTags();
   };
 
   const handleOnChangeSubCategory = async (id, isChecked) => {
@@ -34,6 +36,7 @@ export default function Categories() {
       updateSelectedSubcategory(selectedSubcategories.filter((subCategory) => subCategory !== id));
       const deleteSkills = await registerSellerService.getSkillsById(id);
       updateSkills(deleteSkills);
+      cleanTags();
     }
   };
 
@@ -42,7 +45,7 @@ export default function Categories() {
       <div className="flex flex-col h-full overflow-y-auto">
         <p className="pb-5 text-base font-semibold"> 1/5</p>
         <div className="border-b-2 border-gray-300 w-11/12 pb-4">
-          <h2 className="text-[40px] text-color3 font-semibold pb-3">
+          <h2 className="text-[35px] text-color3 font-medium pb-3 leading-tight">
             Genial, entonces que tipo de trabajo vas a ofrecer <br />
             <span className="-mt-4">a tus clientes?</span>
           </h2>
