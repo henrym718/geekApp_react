@@ -1,8 +1,8 @@
-import registerSellerService from "./../services/registerSellerService";
+import registerSellerService from "../services/registerSellerService";
 import request from "../utils/request";
 import useDataForm from "../store/dataForm";
 
-export default function CategoryOptions({ handleChangeForm }) {
+export default function Categories() {
   const {
     subCategories,
     setListCategories,
@@ -38,7 +38,7 @@ export default function CategoryOptions({ handleChangeForm }) {
   };
 
   return (
-    <div className="h-full w-3/4 ml-[150px]">
+    <div className="h-full w-4/6 ml-[50px]">
       <div className="flex flex-col h-full overflow-y-auto">
         <p className="pb-5 text-base font-semibold"> 1/5</p>
         <div className="border-b-2 border-gray-300 w-11/12 pb-4">

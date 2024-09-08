@@ -3,33 +3,13 @@ import useDataForm from "../store/dataForm";
 import { CircleX, X } from "lucide-react";
 
 export default function Tags({ selected, max }) {
-  const [tags, setTags] = useState([]);
   const [indexSelectedOption, setIndexSelectedOption] = useState(null);
   const [textInput, setTextInput] = useState("");
   const [isVisisbleOptions, setIsVisisbleOptions] = useState(false);
   const [leakedSkills, setLeakedSkills] = useState([]);
-  const containerRef = useRef(null);
   const optionsRef = useRef(null);
 
-  const { skills, updateSkills } = useDataForm((state) => state);
-
-  // const removeTags = (indexToRemove) => {
-  //   const values = tags.filter((_, index) => index !== indexToRemove);
-  //   setTags(values);
-  //   selected(values);
-  // };
-
-  // const addTags = (event) => {
-  //   if (event.key === "Enter" && event.target.value.trim() !== "") {
-  //     if (max && tags.length >= max) {
-  //       return;
-  //     }
-  //     const tag = event.target.value.toLowerCase();
-  //     setTags([...tags, tag]);
-  //     selected([...tags, tag]);
-  //     event.target.value = "";
-  //   }
-  // };
+  const { skills, updateSkills, setSkill, tags, setTag, removeTag } = useDataForm((state) => state);
 
   const handleOnchangeInput = (text) => {
     setTextInput(text);
@@ -57,7 +37,7 @@ export default function Tags({ selected, max }) {
 
     if (event.key === "Enter") {
       if (indexSelectedOption !== null) {
-        setTags((prev) => [...prev, leakedSkills[indexSelectedOption]]);
+        setTag(leakedSkills[indexSelectedOption]);
         updateSkills(leakedSkills[indexSelectedOption]);
         setTextInput("");
         setIsVisisbleOptions(false);
@@ -72,7 +52,7 @@ export default function Tags({ selected, max }) {
 
   const onClickOptionSelected = (e, index) => {
     e.preventDefault();
-    setTags((prev) => [...prev, leakedSkills[index]]);
+    setTag(leakedSkills[index]);
     updateSkills(leakedSkills[index]);
     setIsVisisbleOptions(false);
     setTextInput("");
@@ -84,6 +64,11 @@ export default function Tags({ selected, max }) {
       setIsVisisbleOptions(false);
     }
   };
+  const removeTags = (e, tag) => {
+    e.preventDefault();
+    removeTag(tag);
+    setSkill(tag);
+  };
 
   useEffect(() => {
     document.addEventListener("mousedown", handleClickOutside);
@@ -93,9 +78,9 @@ export default function Tags({ selected, max }) {
   }, []);
 
   return (
-    <div className="flex flex-col" ref={containerRef}>
+    <div className="flex flex-col">
       <div className="flex flex-col items-start flex-wrap min-h-15 px-2 border border-gray-300 rounded-xl focus-within:border-black focus-within:border-opacity-50 focus-within:border-2">
-        <ListTags tags={tags} />
+        <ListTags tags={tags} removeTags={removeTags} />
         <Input
           onchange={handleOnchangeInput}
           onKeyDown={handleOnKeyDownInput}
@@ -116,7 +101,7 @@ export default function Tags({ selected, max }) {
   );
 }
 
-const ListTags = ({ tags = [] }) => {
+const ListTags = ({ tags = [], removeTags }) => {
   return (
     <ul className="flex flex-wrap pt-2">
       {tags.map((tag, index) => (
@@ -125,10 +110,7 @@ const ListTags = ({ tags = [] }) => {
           className="flex items-center justify-between h-6 border-2 border-slate-800 rounded-xl list-none m-1"
         >
           <p className=" text-color3 pl-2">{tag}</p>
-          <i
-            className="cursor-pointer mr-1"
-            //onClick={() => removeTags(index)}
-          >
+          <i className="cursor-pointer mr-1" onMouseDown={(e) => removeTags(e, tag)}>
             <X className="h-4" />
           </i>
         </li>
@@ -174,6 +156,7 @@ const Options = ({ options, setIndexSelected, indexSelected, optionsRef, onClick
   useEffect(() => {
     if (activeOptionRef.current) {
       activeOptionRef.current.scrollIntoView({
+        //scrollIntoView solo funcioina con 1 elemento
         behavior: "smooth", // opcional: hace que el scroll sea suave
         block: "nearest", // ajusta para que el elemento sea visible, el valor puede ser 'start', 'center', 'end' o 'nearest'
       });

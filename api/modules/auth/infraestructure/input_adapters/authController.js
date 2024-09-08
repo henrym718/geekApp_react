@@ -124,7 +124,6 @@ export class AuthController {
       next(error)
     }
   }
-
   async checkCredentialIsExists(req, res, next) {
     try {
       const existsCredential = await this.checkCredentialIsExistsUseCase.execute(req.params.credential)

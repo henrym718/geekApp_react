@@ -1,5 +1,5 @@
 import Tags from "./Tags";
-export default function SkillOptions() {
+export default function Skills() {
   const HandleSelectedTags = (options) => {
     console.log(options);
   };

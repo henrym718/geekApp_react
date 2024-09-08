@@ -18,11 +18,33 @@ import subCategoryRoutes from "./modules/subcategory/infraestructure/input_adapt
 import skillRoutes from "./modules/skill/infraestructure/input_adapter/skillRoutes.js"
 
 /** esta es la que vale */
+
+
+
+
+const allowedOrigins = ['http://localhost:5173'];
+
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', req.headers.origin || "*"); // Reemplaza con el origen de tu aplicación React
-  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
+  const origin = req.headers.origin;
+
+  // Configurar los encabezados CORS para todas las solicitudes
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization, Platform');
   res.setHeader('Access-Control-Allow-Credentials', 'true');
+  res.setHeader('Access-Control-Max-Age', '86400'); // Cache de 24 horas
+
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else {
+    res.setHeader('Access-Control-Allow-Origin', ''); // Puede ser necesario para que el navegador no tenga un error de CORS
+  }
+
+  // Manejo específico para solicitudes OPTIONS
+  if (req.method === 'OPTIONS') {
+    console.log("first")
+    return res.sendStatus(204); // No Content
+  }
+
   next();
 });
 

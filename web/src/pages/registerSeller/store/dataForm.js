@@ -5,14 +5,26 @@ const useDataForm = create((set) => ({
     selectedCategory: "",
     subCategories: [],
     skills: [],
+    tags: [],
+
+    /**Subcategory */
     setSelectedSubcategory: (array) => set((state) => ({ selectedSubcategories: [...state.selectedSubcategories, array] })),
     updateSelectedSubcategory: (selectedSubcategories) => set({ selectedSubcategories }),
     clearSelectedSubCategories: () => set({ selectedSubcategories: [] }),
+
+    /**Category */
     setSelectedCategory: (selectedCategory) => set({ selectedCategory }),
     setListCategories: (subCategories) => set({ subCategories }),
+
+    /**Skill to DB */
     setListSkills: (skills) => set((state) => ({ skills: [...state.skills, ...skills] })),
+    setSkill: (skills) => set((state) => ({ skills: [...state.skills, skills] })),
     updateSkills: (deleteSkills) => set((state) => ({ skills: state.skills.filter((skill) => !deleteSkills.includes(skill)) })),
-    cleanSkills: () => set({ skills: [] })
+    cleanSkills: () => set({ skills: [] }),
+
+    /**Tags */
+    setTag: (tag) => set((state) => ({ tags: [...state.tags, tag] })),
+    removeTag: (tag) => set((state) => ({ tags: state.tags.filter((t) => t !== tag) }))
 }))
 
 export default useDataForm
