@@ -145,7 +145,7 @@ const Input = ({ onchange, onKeyDown, value, setValue }) => {
         >
           <CircleX />
         </button>
-      ) : null}{" "}
+      ) : null}
     </div>
   );
 };

@@ -1,12 +1,14 @@
+import { Avatar } from "antd";
 import Tags from "./Tags";
+
 export default function Skills() {
   const HandleSelectedTags = (options) => {
     console.log(options);
   };
 
   return (
-    <div className="h-full w-4/6 ml-[50px]">
-      <div className=" flex h-full overflow-y-auto">
+    <div className=" h-full w-4/6 ml-[50px]">
+      <div className=" flex overflow-y-auto ">
         {/** Formulario */}
         <div className="flex flex-col w-1/2">
           <p className="pb-5 text-base font-semibold"> 2/5</p>
@@ -24,9 +26,12 @@ export default function Skills() {
             Max 15 habilidades
           </p>
         </div>
-
-        {/** Imagen de experiencia */}
-        <div></div>
+        <div className="w-1/2">
+          <div className="flex flex-col ml-28 mt-52 w-1/2">
+            <Avatar>U </Avatar>
+            <h2>Nuestro algoritmo le recomendará publicaciones de trabajo especificas </h2>
+          </div>
+        </div>
       </div>
     </div>
   );

@@ -7,7 +7,7 @@ import useDataForm from "./store/dataForm";
 
 export default function index() {
   const { form, setForm, addStep, decreaseStep, currentStep } = useFormsStore((state) => state);
-  const { selectedSubcategories, tags } = useDataForm((state) => state);
+  const { selectedSubcategories, tags, career } = useDataForm((state) => state);
 
   const handleNextForm = () => {
     if (form === "CATEGORY") {
@@ -55,7 +55,11 @@ export default function index() {
           />
         )}
         {form == "CARRER" && (
-          <ButtomCarrer handleNextForm={handleNextForm} handleBackForm={handleBackForm} />
+          <ButtomCarrer
+            handleNextForm={handleNextForm}
+            handleBackForm={handleBackForm}
+            career={career}
+          />
         )}
       </div>
     </div>
@@ -100,7 +104,7 @@ const ButtomSkills = ({ handleNextForm, handleBackForm, tags }) => {
   );
 };
 
-const ButtomCarrer = ({ handleNextForm, handleBackForm }) => {
+const ButtomCarrer = ({ handleNextForm, handleBackForm, career }) => {
   return (
     <div className=" flex flex-col justify-center space-y-8">
       <div className="flex justify-between mx-8">
@@ -112,7 +116,7 @@ const ButtomCarrer = ({ handleNextForm, handleBackForm }) => {
         </button>
         <button
           className="h-12 bg-green-700 text-white rounded-xl px-6 text-lg  font-medium disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-400"
-          //disabled={tags.length ? false : true}
+          disabled={career.length > 4 ? false : true}
           //onClick={handleNextForm}
         >
           A continuación agrega tus habilidades
