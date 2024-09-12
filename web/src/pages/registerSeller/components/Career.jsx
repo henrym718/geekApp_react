@@ -42,7 +42,7 @@ export default function Career() {
         {career.trim().length && isfocusInput ? (
           <button
             onMouseDown={handleOnMouseDown}
-            className="absolute right-2 top-1/2 transform -translate-y-1/2  px-3 py-1 rounded-lg h-7"
+            className="absolute right-2 top-[45%] transform -translate-y-1/2 px-3 py-1 rounded-lg h-7"
           >
             <CircleX />
           </button>

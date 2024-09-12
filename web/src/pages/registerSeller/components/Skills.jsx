@@ -1,5 +1,6 @@
 import { Avatar } from "antd";
 import Tags from "./Tags";
+import avatar from "../../../../svg/avatar.jpg";
 
 export default function Skills() {
   const HandleSelectedTags = (options) => {
@@ -27,9 +28,16 @@ export default function Skills() {
           </p>
         </div>
         <div className="w-1/2">
-          <div className="flex flex-col ml-28 mt-52 w-1/2">
-            <Avatar>U </Avatar>
-            <h2>Nuestro algoritmo le recomendará publicaciones de trabajo especificas </h2>
+          <div className="ml-48 mt-52 w-1/2 bg-black bg-opacity-5 rounded-xl">
+            <div className=" ml-8 flex flex-col pt-4 w-3/4">
+              <img className="rounded-full pb-4" src={avatar} alt="avatar" width={60} height={60} />
+
+              <h2 className="text-[22px] font-light leading-tight pb-1">
+                "El algoritmo le recomendará publicaciones de trabajo especificas según sus
+                habilidades. Así que elíjalos cuidadosamente para tener la mejor cobinación!"
+              </h2>
+              <span className="pb-5 font-medium">Consejo Pro</span>
+            </div>
           </div>
         </div>
       </div>
