@@ -1,11 +1,8 @@
 import { useEffect, useRef } from "react";
-import useFormsStore from "../pages/auth/store/forms";
 
-export default function Modal({ children }) {
+export default function Modal({ children, isOpenModal, setCloseModal }) {
   const bgRef = useRef();
   const contentRef = useRef();
-
-  const { isOpenModal, setCloseModal } = useFormsStore((state) => state);
 
   const handleClickOutside = (event) => {
     if (

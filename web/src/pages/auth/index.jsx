@@ -8,7 +8,7 @@ export default function Auth() {
   const { form, isOpenModal, setCloseModal } = useFormsStore((state) => state);
 
   return (
-    <Modal open={isOpenModal} onCancel={setCloseModal}>
+    <Modal isOpenModal={isOpenModal} setCloseModal={setCloseModal}>
       <div className="flex h-[645px] w-[875px] ">
         <div className="min-w-[50%]">
           <img

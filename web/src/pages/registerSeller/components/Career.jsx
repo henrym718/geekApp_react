@@ -1,6 +1,7 @@
 import { useState } from "react";
 import useDataForm from "../store/dataForm";
 import { CircleX } from "lucide-react";
+import Modal from "../../../ui/Modal";
 
 export default function Career() {
   const [isfocusInput, setIsfocusInput] = useState(false);
