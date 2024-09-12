@@ -6,6 +6,9 @@ export default function Autocomplete() {
   const [textInput, setTextInput] = useState("");
   const [isVisibleOpt, setIsVisibleOpt] = useState(false);
   const [countriesSearch, setCountriesSearch] = useState(countries);
+  const [hoveredOptionIndex, setHoveredOptionIndex] = useState(null);
+  const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
+
   const inputRef = useRef();
 
   const handleOnChange = (e) => {
@@ -22,6 +25,8 @@ export default function Autocomplete() {
     setTextInput("");
     setCountriesSearch(countries);
     setIsVisibleOpt(true);
+    setHoveredOptionIndex(null);
+    setSelectedOptionIndex(null);
     inputRef.current.focus();
   };
 
@@ -32,6 +37,16 @@ export default function Autocomplete() {
       countries.filter((country) => country.toLowerCase().includes(countryopt.toLowerCase()))
     );
     setIsVisibleOpt(false);
+    setHoveredOptionIndex(null);
+    setSelectedOptionIndex(null);
+  };
+
+  const handleOnKeyDown = (event) => {
+    if (event.key === "ArrowDown") {
+      setSelectedOptionIndex((prevIndex) => (prevIndex === null ? 0 : prevIndex + 1));
+    } else if (event.key === "ArrowUp") {
+      setSelectedOptionIndex((prevIndex) => (prevIndex === null ? 0 : prevIndex - 1));
+    }
   };
 
   return (
@@ -45,6 +60,8 @@ export default function Autocomplete() {
           value={textInput}
           className="h-full w-full rounded-lg pl-2"
           type="text"
+          placeholder="Ex: Ecuador"
+          onKeyDown={handleOnKeyDown}
         />
         {textInput.trim().length ? (
           <button
@@ -55,13 +72,18 @@ export default function Autocomplete() {
           </button>
         ) : null}
         {isVisibleOpt && countriesSearch.length ? (
-          <div className="absolute top-10 rounded-md shadow-lg max-h-56 w-full py-2 px-3 border overflow-y-auto ">
-            <ul>
+          <div className="absolute top-10 rounded-md shadow-lg max-h-56 w-full border overflow-y-auto py-2 ">
+            <ul className="leading-8">
               {countriesSearch.map((country, index) => (
                 <li
+                  className={`
+                    ${index === hoveredOptionIndex ? "bg-black bg-opacity-5" : null} 
+                    ${index === selectedOptionIndex ? "bg-black bg-opacity-5" : null} 
+                    cursor-pointer px-2`}
                   onMouseDown={(e) => handleOnClickOpt(e, country)}
-                  className="cursor-pointer"
                   key={index}
+                  onMouseEnter={() => setHoveredOptionIndex(index)}
+                  onMouseLeave={() => setHoveredOptionIndex(null)}
                 >
                   {country}
                 </li>
