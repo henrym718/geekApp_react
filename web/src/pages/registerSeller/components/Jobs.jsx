@@ -1,6 +1,8 @@
 import { useState } from "react";
-import { Plus } from "lucide-react";
 import Modal from "../../../ui/Modal";
+import Autocomplete from "../../../ui/Autocomplete";
+import { Plus } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 
 export default function Jobs() {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -21,7 +23,9 @@ export default function Jobs() {
         </p>
         <AddExperience setIsOpenModal={setIsOpenModal} />
         <Modal isOpenModal={isOpenModal} setCloseModal={setCloseModal}>
-          <div className="h-[400px] w-[400px]">ddd</div>
+          <div className="h-[800px] w-[700px]">
+            <JobForm />
+          </div>
         </Modal>
       </div>
     </div>
@@ -36,6 +40,56 @@ const AddExperience = ({ setIsOpenModal }) => {
     >
       <Plus size={35} color="#faf9f9" className="bg-green-600 rounded-full mb-2" />
       <p className="text-2xl text-color4 font-medium ">Agregar experiencia</p>
+    </div>
+  );
+};
+
+const JobForm = () => {
+  return (
+    <div className="py-9 px-8">
+      <h2 className="text-4xl text-black font-medium pb-6">Agregar Experiencia Laboral</h2>
+      <div className="pb-6">
+        <p className="pb-2 font-medium">Cargo *</p>
+        <input
+          name="job"
+          className="h-9 w-full border border-black border-opacity-15 rounded-lg pl-3"
+          type="text"
+          placeholder="Ej: Ingeniero de Software"
+          autoComplete="off"
+        />
+      </div>
+      <div className="pb-6">
+        <p className="pb-2 font-medium">Empresa *</p>
+        <input
+          name="company"
+          className="h-9 w-full border border-black border-opacity-15 rounded-lg pl-3"
+          type="text"
+          placeholder="Ej: Microsoft"
+          autoComplete="off"
+        />
+      </div>
+      <div className="flex flex-col pb-6">
+        <p className="pb-2 font-medium">Ubicacion *</p>
+        <div className="flex space-x-8">
+          <input
+            name="company"
+            className=" w-1/2 h-9 border border-black border-opacity-15 rounded-lg pl-3"
+            type="text"
+            placeholder="Ej: Guayaquil"
+            autoComplete="off"
+          />
+
+          <div className="w-1/2">
+            <Autocomplete />
+          </div>
+        </div>
+      </div>
+      <div>
+        <label className=" flex items-center space-x-2">
+          <input className="h-5 w-5" type="checkbox" />
+          <p className="text-color1">Actualmente estot trabajando aqui</p>
+        </label>
+      </div>
     </div>
   );
 };

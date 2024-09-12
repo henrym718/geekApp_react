@@ -1,10 +1,8 @@
 import { useState } from "react";
 import useDataForm from "../store/dataForm";
 import { CircleX } from "lucide-react";
-import Modal from "../../../ui/Modal";
 
 export default function Career() {
-  const [isfocusInput, setIsfocusInput] = useState(false);
   const { setCareer, cleanCareer, career } = useDataForm((state) => state);
 
   console.log(career);
@@ -36,11 +34,9 @@ export default function Career() {
           type="text"
           className="h-9 rounded-lg border-2 border-black border-opacity-10 w-full pr-10 pl-2"
           value={career}
-          onFocus={() => setIsfocusInput(true)}
-          onBlur={() => setIsfocusInput(false)}
           onChange={handleOnChange}
         />
-        {career.trim().length && isfocusInput ? (
+        {career.trim().length ? (
           <button
             onMouseDown={handleOnMouseDown}
             className="absolute right-2 top-[45%] transform -translate-y-1/2 px-3 py-1 rounded-lg h-7"
