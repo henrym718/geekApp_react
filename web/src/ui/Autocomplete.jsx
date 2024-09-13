@@ -1,23 +1,24 @@
 import React, { useRef, useState } from "react";
 import countries from "../pages/registerSeller/utils/countries";
 import { CircleX } from "lucide-react";
+import { useEffect } from "react";
 
 export default function Autocomplete() {
+  const [countriesSearch, setCountriesSearch] = useState(countries);
   const [textInput, setTextInput] = useState("");
   const [isVisibleOpt, setIsVisibleOpt] = useState(false);
-  const [countriesSearch, setCountriesSearch] = useState(countries);
-  const [hoveredOptionIndex, setHoveredOptionIndex] = useState(null);
-  const [selectedOptionIndex, setSelectedOptionIndex] = useState(null);
+  const [activeOptionIndex, setActiveOptionIndex] = useState(null);
 
   const inputRef = useRef();
+  const activeOptionRef = useRef();
 
   const handleOnChange = (e) => {
-    setTextInput(e.target.value);
+    const value = e.target.value;
+    setTextInput(value);
     setCountriesSearch(
-      countries.filter((countrie) =>
-        countrie.toLowerCase().includes(e?.target?.value?.toLowerCase())
-      )
+      countries.filter((countrie) => countrie.toLowerCase().includes(value?.toLowerCase()))
     );
+    setIsVisibleOpt(true);
   };
 
   const handleOnMouseDown = (e) => {
@@ -25,8 +26,7 @@ export default function Autocomplete() {
     setTextInput("");
     setCountriesSearch(countries);
     setIsVisibleOpt(true);
-    setHoveredOptionIndex(null);
-    setSelectedOptionIndex(null);
+    setActiveOptionIndex(null);
     inputRef.current.focus();
   };
 
@@ -37,17 +37,38 @@ export default function Autocomplete() {
       countries.filter((country) => country.toLowerCase().includes(countryopt.toLowerCase()))
     );
     setIsVisibleOpt(false);
-    setHoveredOptionIndex(null);
-    setSelectedOptionIndex(null);
+    setActiveOptionIndex(null);
   };
 
   const handleOnKeyDown = (event) => {
     if (event.key === "ArrowDown") {
-      setSelectedOptionIndex((prevIndex) => (prevIndex === null ? 0 : prevIndex + 1));
+      setActiveOptionIndex((prevIndex) =>
+        prevIndex === null || prevIndex === countriesSearch.length - 1 ? 0 : prevIndex + 1
+      );
     } else if (event.key === "ArrowUp") {
-      setSelectedOptionIndex((prevIndex) => (prevIndex === null ? 0 : prevIndex - 1));
+      setActiveOptionIndex((prevIndex) =>
+        prevIndex === null || prevIndex === 0 ? countriesSearch.length - 1 : prevIndex - 1
+      );
+    } else if (event.key === "Enter" && activeOptionIndex !== null) {
+      setIsVisibleOpt(false);
+      setActiveOptionIndex(null);
+      setTextInput(countriesSearch[activeOptionIndex]);
+      setCountriesSearch(
+        countries.filter((country) =>
+          country.toLowerCase().includes(countriesSearch[activeOptionIndex].toLowerCase())
+        )
+      );
     }
   };
+
+  useEffect(() => {
+    if (activeOptionRef.current) {
+      activeOptionRef.current.scrollIntoView({
+        behevior: "smooth",
+        block: "nearest",
+      });
+    }
+  }, [activeOptionIndex]);
 
   return (
     <div>
@@ -72,18 +93,20 @@ export default function Autocomplete() {
           </button>
         ) : null}
         {isVisibleOpt && countriesSearch.length ? (
-          <div className="absolute top-10 rounded-md shadow-lg max-h-56 w-full border overflow-y-auto py-2 ">
+          <div className="absolute top-10 rounded-md shadow-lg max-h-56 w-full border overflow-y-auto py-2 z-10 bg-white">
             <ul className="leading-8">
               {countriesSearch.map((country, index) => (
                 <li
                   className={`
-                    ${index === hoveredOptionIndex ? "bg-black bg-opacity-5" : null} 
-                    ${index === selectedOptionIndex ? "bg-black bg-opacity-5" : null} 
+                    ${
+                      index === activeOptionIndex ? "bg-black bg-opacity-5" : ""
+                    }                     
                     cursor-pointer px-2`}
                   onMouseDown={(e) => handleOnClickOpt(e, country)}
                   key={index}
-                  onMouseEnter={() => setHoveredOptionIndex(index)}
-                  onMouseLeave={() => setHoveredOptionIndex(null)}
+                  onMouseEnter={() => setActiveOptionIndex(index)}
+                  onMouseLeave={() => setActiveOptionIndex(null)}
+                  ref={activeOptionIndex === index ? activeOptionRef : null}
                 >
                   {country}
                 </li>

@@ -48,16 +48,7 @@ const JobForm = () => {
   return (
     <div className="py-9 px-8">
       <h2 className="text-4xl text-black font-medium pb-6">Agregar Experiencia Laboral</h2>
-      <div className="pb-6">
-        <p className="pb-2 font-medium">Cargo *</p>
-        <input
-          name="job"
-          className="h-9 w-full border border-black border-opacity-15 rounded-lg pl-3"
-          type="text"
-          placeholder="Ej: Ingeniero de Software"
-          autoComplete="off"
-        />
-      </div>
+
       <div className="pb-6">
         <p className="pb-2 font-medium">Empresa *</p>
         <input
@@ -84,12 +75,49 @@ const JobForm = () => {
           </div>
         </div>
       </div>
-      <div>
-        <label className=" flex items-center space-x-2">
-          <input className="h-5 w-5" type="checkbox" />
-          <p className="text-color1">Actualmente estot trabajando aqui</p>
-        </label>
+      <div className="pb-6">
+        <p className="pb-2 font-medium">Cargo *</p>
+        <input
+          name="job"
+          className="h-9 w-full border border-black border-opacity-15 rounded-lg pl-3"
+          type="text"
+          placeholder="Ej: Ingeniero de Software"
+          autoComplete="off"
+        />
       </div>
+      <div className="flex space-x-6 pb-4">
+        <div className="flex flex-col w-full ">
+          <p className="pb-2 font-medium"> Fecha de inicio *</p>
+          <div className="flex h-9 space-x-2 ">
+            <ButonOpt name="Año" />
+            <ButonOpt name="Mes" />
+          </div>
+        </div>
+        <div className="flex flex-col w-full ">
+          <p className="pb-2 font-medium"> Fecha de inicio *</p>
+          <div className="flex h-9 space-x-2 ">
+            <ButonOpt name="Año" />
+            <ButonOpt name="Mes" />
+          </div>
+        </div>
+      </div>
+      <label className=" flex items-center space-x-2">
+        <input className="h-5 w-5" type="checkbox" />
+        <p className="text-color1">Actualmente estoy trabajando aqui</p>
+      </label>
+    </div>
+  );
+};
+
+const ButonOpt = ({ name }) => {
+  return (
+    <div className="relative flex w-full h-full">
+      <button className="w-full border rounded-lg text-start pl-4 text-sm ">{name}</button>
+      <ChevronDown
+        className="absolute top-1/2 right-4 -translate-y-1/2 text-black"
+        strokeWidth={1}
+        size={25}
+      />
     </div>
   );
 };
