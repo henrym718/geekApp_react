@@ -110,14 +110,29 @@ const JobForm = () => {
 };
 
 const ButonOpt = ({ name }) => {
+  const [isVisibleOpt, setIsVisibleOpt] = useState(false);
+
   return (
-    <div className="relative flex w-full h-full">
-      <button className="w-full border rounded-lg text-start pl-4 text-sm ">{name}</button>
-      <ChevronDown
-        className="absolute top-1/2 right-4 -translate-y-1/2 text-black"
-        strokeWidth={1}
-        size={25}
-      />
+    <div className="flex flex-col relative w-full h-full">
+      <div
+        onClick={() => setIsVisibleOpt((prev) => !prev)}
+        className="flex active:scale-90 transition-transform duration-200 ease-out"
+      >
+        <button className="w-full h-9 border rounded-lg text-start pl-4 text-sm ">{name}</button>
+        <ChevronDown
+          className="absolute top-1/2 right-4 -translate-y-1/2 text-black"
+          strokeWidth={1}
+          size={25}
+        />
+      </div>
+      {isVisibleOpt ? (
+        <ul className="relative z-20 bg-white border shadow-lg transition-all duration-300 ease-out">
+          <li>hola</li>
+          <li>hola</li>
+          <li>hola</li>
+          <li>hola</li>
+        </ul>
+      ) : null}
     </div>
   );
 };
