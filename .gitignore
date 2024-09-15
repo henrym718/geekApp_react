@@ -1,7 +1,7 @@
 
 # Ignorar node_modules en subdirectorios client y api
-web/node_modules/
-movil/node_modules/
-api/node_modules/
-api/.env
+node_modules
+package-lock.json
+*.log
+*.gz
 
