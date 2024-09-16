@@ -86,10 +86,24 @@ const JobForm = () => {
         />
       </div>
       <TimeInJob />
-      <label className=" flex items-center space-x-2">
+      <label className=" flex items-center space-x-2 mb-6">
         <input className="h-5 w-5" type="checkbox" />
         <p className="text-color1">Actualmente estoy trabajando aqui</p>
       </label>
+      <div className="flex flex-col w-full pb-10">
+        <p className="pb-2 font-medium">Descripciòn</p>
+        <textarea
+          className="w-full border border-black border-opacity-15 rounded-lg px-2 py-2"
+          rows={6}
+          name="description"
+        />
+      </div>
+      <div className="flex gap-6 justify-end items-center">
+        <button className="text-slate-500 text-sm">Cancelar</button>
+        <button className="h-9 bg-green-700 text-white rounded-lg px-6">
+          Guardar
+        </button>
+      </div>
     </div>
   );
 };
