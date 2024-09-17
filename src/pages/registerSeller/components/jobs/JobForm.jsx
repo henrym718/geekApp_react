@@ -20,7 +20,6 @@ export default function JobForm({ onSelect, setCloseModal }) {
     },
   });
 
-  console.log(job);
   const handleOnSelected = (key, opt) => {
     setJob((prev) => ({ ...prev, [key]: opt }));
   };
@@ -39,7 +38,6 @@ export default function JobForm({ onSelect, setCloseModal }) {
         );
       }
     };
-
     const isAllFieldsComplete =
       job.company && job.city && job.country && job.role && verifyIsPeriodCompleted();
 
