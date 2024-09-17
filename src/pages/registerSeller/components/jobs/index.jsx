@@ -8,6 +8,10 @@ export default function Jobs() {
 
   const setCloseModal = () => setIsOpenModal(false);
 
+  const handleOnSeleted = (job) => {
+    console.log(job);
+  };
+
   return (
     <div className=" h-full w-4/6 ml-[50px]">
       <div className="flex flex-col">
@@ -23,7 +27,7 @@ export default function Jobs() {
         <AddExperienceButton setIsOpenModal={setIsOpenModal} />
         <Modal isOpenModal={isOpenModal} setCloseModal={setCloseModal}>
           <div className="h-[800px] w-[700px]">
-            <JobForm />
+            <JobForm setCloseModal={setCloseModal} onSelect={handleOnSeleted} />
           </div>
         </Modal>
       </div>

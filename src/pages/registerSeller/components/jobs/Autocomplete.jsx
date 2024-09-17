@@ -3,7 +3,7 @@ import countries from "../../utils/countries";
 import { CircleX } from "lucide-react";
 import { useEffect } from "react";
 
-export default function Autocomplete() {
+export default function Autocomplete({ onSelect }) {
   const [countriesSearch, setCountriesSearch] = useState(countries);
   const [textInput, setTextInput] = useState("");
   const [isVisibleOpt, setIsVisibleOpt] = useState(false);
@@ -28,6 +28,7 @@ export default function Autocomplete() {
     setIsVisibleOpt(true);
     setActiveOptionIndex(null);
     inputRef.current.focus();
+    onSelect(null);
   };
 
   const handleOnClickOpt = (e, countryopt) => {
@@ -38,6 +39,7 @@ export default function Autocomplete() {
     );
     setIsVisibleOpt(false);
     setActiveOptionIndex(null);
+    onSelect(countryopt); // devuelvo la opt selecionada
   };
 
   const handleOnKeyDown = (event) => {
@@ -50,14 +52,7 @@ export default function Autocomplete() {
         prevIndex === null || prevIndex === 0 ? countriesSearch.length - 1 : prevIndex - 1
       );
     } else if (event.key === "Enter" && activeOptionIndex !== null) {
-      setIsVisibleOpt(false);
-      setActiveOptionIndex(null);
-      setTextInput(countriesSearch[activeOptionIndex]);
-      setCountriesSearch(
-        countries.filter((country) =>
-          country.toLowerCase().includes(countriesSearch[activeOptionIndex].toLowerCase())
-        )
-      );
+      handleOnClickOpt(event, countriesSearch[activeOptionIndex]);
     }
   };
 

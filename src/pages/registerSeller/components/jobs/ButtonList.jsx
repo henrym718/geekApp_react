@@ -24,6 +24,7 @@ function ButtonList({ values, name, disabled, onSelected }) {
     setIsVisibleOpt(false);
     setData(values);
     setActiveOptionIndex(null);
+    onSelected(data[index]);
   };
 
   const handleOnClickButton = () => {
@@ -48,10 +49,7 @@ function ButtonList({ values, name, disabled, onSelected }) {
         prevIndex === null || prevIndex === 0 ? data.length - 1 : prevIndex - 1
       );
     } else if (key === "Enter" && activeOptionIndex != null) {
-      setSelectedItem(data[activeOptionIndex]);
-      setIsVisibleOpt(false);
-      setData(values);
-      setActiveOptionIndex(null);
+      handleOnClickItem(activeOptionIndex);
     }
   };
 
@@ -70,12 +68,6 @@ function ButtonList({ values, name, disabled, onSelected }) {
   }, [handleClickOutside]);
 
   useEffect(() => {
-    if (selectedItem) {
-      onSelected(selectedItem);
-    }
-  }, [selectedItem]);
-
-  useEffect(() => {
     if (activeOptrRef.current) {
       activeOptrRef.current.scrollIntoView({
         behavior: "smooth",
@@ -87,6 +79,7 @@ function ButtonList({ values, name, disabled, onSelected }) {
   useEffect(() => {
     setData(values);
     setSelectedItem(null);
+    onSelected(null);
   }, [values, disabled]);
 
   return (
