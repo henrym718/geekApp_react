@@ -1,6 +1,5 @@
-import { Avatar } from "antd";
 import Tags from "./Tags";
-import avatar from "../../../../svg/avatar.jpg";
+import avatar from "../../../../../svg/avatar.jpg";
 
 export default function Skills() {
   const HandleSelectedTags = (options) => {

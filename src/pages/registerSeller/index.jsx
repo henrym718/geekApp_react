@@ -1,8 +1,8 @@
-import ProgressBar from "./components/Progressbar";
-import Categories from "./components/Categories";
-import Skills from "./components/Skills";
-import Career from "./components/Career";
-import Jobs from "./components/Jobs";
+import ProgressBar from "./ui/Progressbar";
+import Categories from "./components/categories";
+import Skills from "./components/skills";
+import Career from "./components/careers";
+import Jobs from "./components/jobs";
 import useFormsStore from "./store/forms";
 import useDataForm from "./store/dataForm";
 

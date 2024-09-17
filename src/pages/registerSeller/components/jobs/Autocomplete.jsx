@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import countries from "../pages/registerSeller/utils/countries";
+import countries from "../../utils/countries";
 import { CircleX } from "lucide-react";
 import { useEffect } from "react";
 

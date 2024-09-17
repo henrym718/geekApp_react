@@ -3,7 +3,7 @@ import { Search } from "lucide-react";
 import { ChevronDown } from "lucide-react";
 import { Check } from "lucide-react";
 
-function ButtonList({ values, name, active = false, onSelected }) {
+function ButtonList({ values, name, disabled, onSelected }) {
   const [data, setData] = useState(values);
   const [isVisibleOpt, setIsVisibleOpt] = useState(false);
   const [selectedItem, setSelectedItem] = useState("");
@@ -87,7 +87,7 @@ function ButtonList({ values, name, active = false, onSelected }) {
   useEffect(() => {
     setData(values);
     setSelectedItem(null);
-  }, [values]);
+  }, [values, disabled]);
 
   return (
     <div ref={containerRef} className="flex flex-col relative w-full h-full">
@@ -96,7 +96,7 @@ function ButtonList({ values, name, active = false, onSelected }) {
         className="flex active:scale-90 transition-transform duration-200 ease-out"
       >
         <button
-          disabled={active}
+          disabled={disabled}
           className="w-full h-9 border rounded-lg text-start pl-4 text-sm disabled:bg-black disabled:bg-opacity-10"
         >
           {selectedItem || name}

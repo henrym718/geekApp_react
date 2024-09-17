@@ -1,5 +1,5 @@
 import { useEffect, useState, useRef } from "react";
-import useDataForm from "../store/dataForm";
+import useDataForm from "../../store/dataForm";
 import { CircleX, X } from "lucide-react";
 
 export default function Tags({ max }) {

@@ -1,9 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import ButtonList from "../ui/ButtonList";
-import dataYears from "../utils/years";
-import dataMonths from "../utils/month";
+import { useState } from "react";
+import ButtonList from "./ButtonList";
+import dataYears from "../../utils/years";
+import dataMonths from "../../utils/month";
 
-export default function TimeInJob() {
+export default function PeriodSelector({ disabled }) {
   const [optsSelected, setOptsSelected] = useState({
     startMonth: null,
     startYear: null,
@@ -48,11 +48,13 @@ export default function TimeInJob() {
             name="Mes"
             values={dataMonths}
             onSelected={(endMonth) => handleMonthSelected("endMonth", endMonth)}
+            disabled={disabled}
           />
           <ButtonList
             name="Año"
             values={endYears}
             onSelected={(endYear) => handleYearSelected("endYear", endYear)}
+            disabled={disabled}
           />
         </div>
       </div>

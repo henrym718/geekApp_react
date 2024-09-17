@@ -1,4 +1,4 @@
-import useDataForm from "../store/dataForm";
+import useDataForm from "../../store/dataForm";
 import { CircleX } from "lucide-react";
 
 export default function Career() {
