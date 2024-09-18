@@ -6,6 +6,7 @@ import InputLOading from "./InputLoading";
 import InputPassword from "./InputPassword";
 import { endpoints } from "./../../../api/endpoints";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { Button } from "../../../ui";
 
 export default function CreateAccountForm() {
   const [error, setError] = useState(null);
@@ -85,14 +86,14 @@ export default function CreateAccountForm() {
           showCheck={error}
           validateData={true}
         />
-        <button
-          className="w-full h-[42px] text-color5 bg-color3 hover:bg-zinc-700 font-medium rounded border disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-400 mt-12	"
-          htmlType="submit"
+        <Button
+          className="w-full h-[42px] mt-12"
+          variant="black"
           disabled={!disabledButton && !error ? false : true}
           onClick={handleNextForm}
         >
           Continuar
-        </button>
+        </Button>
       </div>
       <div className=" pb-6">
         <p className="text-xs text-color4 opacity-90 leading-relaxed">

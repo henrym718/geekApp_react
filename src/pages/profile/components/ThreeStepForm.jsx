@@ -2,15 +2,14 @@ import { Form, Select, Input, Button } from "antd";
 import useHandleData from "../hooks/useHandleData";
 
 export default function ThreeStepForm({ next, previous }) {
-  const { setDataStoreFn, handleDataForm, initialValuesThreeStep } =
-    useHandleData({ next });
+  const { setDataStoreFn, handleDataForm, initialValuesThreeStep } = useHandleData({ next });
 
   return (
     <div>
       <Form onFinish={handleDataForm} initialValues={initialValuesThreeStep}>
         <Form.Item
-          name='levelOfEducation'
-          label='Nivel de Etudios'
+          name="levelOfEducation"
+          label="Nivel de Etudios"
           rules={[{ required: true, message: "Campo Requerido" }]}
         >
           <Select
@@ -25,20 +24,18 @@ export default function ThreeStepForm({ next, previous }) {
           />
         </Form.Item>
         <Form.Item
-          name='profession'
-          label='profesion'
+          name="profession"
+          label="profesion"
           rules={[{ required: true, message: "Campo Requerido" }]}
         >
           <Input
-            placeholder='Ingeniero den sotware'
-            type='text'
-            onChange={(e) =>
-              setDataStoreFn({ [e.currentTarget.id]: e.currentTarget.value })
-            }
+            placeholder="Ingeniero den sotware"
+            type="text"
+            onChange={(e) => setDataStoreFn({ [e.currentTarget.id]: e.currentTarget.value })}
           />
         </Form.Item>
         <Button onClick={previous}>Anterior</Button>
-        <Button htmlType='submit'>Enviar</Button>
+        <Button htmlType="submit">Enviar</Button>
       </Form>
     </div>
   );

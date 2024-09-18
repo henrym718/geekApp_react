@@ -8,7 +8,7 @@ export default function Jobs() {
 
   const setCloseModal = () => setIsOpenModal(false);
 
-  const handleOnSeleted = (job) => {
+  const handleOnSelet = (job) => {
     console.log(job);
   };
 
@@ -27,7 +27,7 @@ export default function Jobs() {
         <AddExperienceButton setIsOpenModal={setIsOpenModal} />
         <Modal isOpenModal={isOpenModal} setCloseModal={setCloseModal}>
           <div className="h-[800px] w-[700px]">
-            <JobForm setCloseModal={setCloseModal} onSelect={handleOnSeleted} />
+            <JobForm setCloseModal={setCloseModal} onSelect={handleOnSelet} />
           </div>
         </Modal>
       </div>

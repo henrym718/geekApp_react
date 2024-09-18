@@ -12,8 +12,7 @@ export default function useOptionsSelector(dataPlaces) {
   /*obtengo dinamicamente los sectores al formato que pide el comnponente*/
   const cityObject = city && dataPlaces.find((obj) => obj.city == city);
   const cityValues = cityObject && cityObject.sector;
-  const sectorsOp =
-    cityValues && cityValues.map((e) => ({ label: e, value: e }));
+  const sectorsOp = cityValues && cityValues.map((e) => ({ label: e, value: e }));
 
   return { citiesOp, sectorsOp, setCity };
 }

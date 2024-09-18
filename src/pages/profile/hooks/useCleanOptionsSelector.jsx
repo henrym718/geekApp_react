@@ -1,10 +1,5 @@
 import { useEffect } from "react";
-export default function useCleanOptionsSelector(
-  setCity,
-  store,
-  setDataStoreFn,
-  formRef
-) {
+export default function useCleanOptionsSelector(setCity, store, setDataStoreFn, formRef) {
   useEffect(() => {
     setCity(store?.city);
   }, []);

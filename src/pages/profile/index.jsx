@@ -18,11 +18,11 @@ export default function InputProfile() {
   ];
 
   return (
-    <div className='flex flex-col  justify-center '>
-      <div className=' m-auto mt-11'>
+    <div className="flex flex-col  justify-center ">
+      <div className=" m-auto mt-11">
         <Steps current={current} items={items} />
       </div>
-      <div className='w-1/2 m-auto mt-6'>{items[current].content} </div>
+      <div className="w-1/2 m-auto mt-6">{items[current].content} </div>
     </div>
   );
 }

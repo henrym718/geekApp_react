@@ -12,20 +12,20 @@ export default function DetailGig() {
   };
 
   return (
-    <div className='flex flex-col gap-7'>
+    <div className="flex flex-col gap-7">
       <div>{author}</div>
       <div>{title}</div>
-      <div className='flex gap-3'>
+      <div className="flex gap-3">
         <select onChange={(e) => console.log(e.target.value)}>
-          <option value='' disabled selected>
+          <option value="" disabled selected>
             Selecciona
           </option>
 
-          <option value='Trf'>Triunfo</option>
-          <option value='Trc'>Troncal</option>
+          <option value="Trf">Triunfo</option>
+          <option value="Trc">Troncal</option>
         </select>
         <input
-          type='range'
+          type="range"
           min={0}
           max={100}
           value={sliderValue}

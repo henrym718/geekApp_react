@@ -28,7 +28,7 @@ export default function Career() {
         </p>
         <p className="pb-2">Tu rol profesional</p>
       </div>
-      <div class="relative w-3/5">
+      <div className="relative w-3/5">
         <input
           type="text"
           className="h-9 rounded-lg border-2 border-black border-opacity-10 w-full pr-10 pl-2"

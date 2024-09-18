@@ -1,26 +1,33 @@
 import { useEffect, useState } from "react";
 import PeriodSelector from "./PeriodSelector";
 import Autocomplete from "./Autocomplete";
+import { Button } from "../../../../ui";
+import { Job } from "../../../../types/seller";
 
-export default function JobForm({ onSelect, setCloseModal }) {
+interface PropsJobForm {
+  onSelect: (job: Job) => void;
+  setCloseModal: () => void;
+}
+
+export default function JobForm({ onSelect, setCloseModal }: PropsJobForm) {
   const [isDisabledButton, setIsDisabledButton] = useState(true);
-  const [keepWorking, setKeepWorking] = useState(null);
+  const [keepWorking, setKeepWorking] = useState(false);
 
-  const [job, setJob] = useState({
-    company: null,
-    city: null,
-    country: null,
-    role: null,
-    responsabilities: null,
+  const [job, setJob] = useState<Job>({
+    company: "",
+    city: "",
+    country: "",
+    role: "",
+    responsabilities: "",
     period: {
-      startMonth: null,
-      startYear: null,
-      endMonth: null,
-      endYear: null,
+      startMonth: "",
+      startYear: "",
+      endMonth: "",
+      endYear: "",
     },
   });
 
-  const handleOnSelected = (key, opt) => {
+  const handleOnSelected = (key: string, opt: string) => {
     setJob((prev) => ({ ...prev, [key]: opt }));
   };
 
@@ -42,7 +49,7 @@ export default function JobForm({ onSelect, setCloseModal }) {
       job.company && job.city && job.country && job.role && verifyIsPeriodCompleted();
 
     setIsDisabledButton(!isAllFieldsComplete);
-  }, [job]);
+  }, [job, keepWorking]);
 
   return (
     <div className="py-9 px-8">
@@ -72,7 +79,7 @@ export default function JobForm({ onSelect, setCloseModal }) {
           />
 
           <div className="w-1/2">
-            <Autocomplete onSelect={(opt) => handleOnSelected("country", opt)} />
+            <Autocomplete onSelect={(opt: string) => handleOnSelected("country", opt)} />
           </div>
         </div>
       </div>
@@ -88,8 +95,8 @@ export default function JobForm({ onSelect, setCloseModal }) {
         />
       </div>
       <PeriodSelector
-        onSelected={(opt) => handleOnSelected("period", opt)}
-        keepWorking={(value) => setKeepWorking(value)}
+        onSelected={(opt: string) => handleOnSelected("period", opt)}
+        keepWorking={(value: boolean) => setKeepWorking(value)}
       />
 
       <div className="flex flex-col w-full pb-10">
@@ -102,16 +109,12 @@ export default function JobForm({ onSelect, setCloseModal }) {
         />
       </div>
       <div className="flex gap-6 justify-end items-center">
-        <button onClick={() => setCloseModal()} className="text-slate-500 text-sm">
+        <Button className="h-9" variant="transparent" onClick={() => setCloseModal()}>
           Cancelar
-        </button>
-        <button
-          disabled={isDisabledButton}
-          onClick={handleOnClick}
-          className="h-9 bg-green-700 text-white rounded-lg px-6 disabled:bg-black disabled:bg-opacity-15 disabled:cursor-default"
-        >
+        </Button>
+        <Button className="h-9" variant="green" onClick={handleOnClick} disabled={isDisabledButton}>
           Guardar
-        </button>
+        </Button>
       </div>
     </div>
   );

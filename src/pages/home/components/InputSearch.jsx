@@ -8,11 +8,9 @@ export default function InputSearch() {
   const navigate = useNavigate();
   const [query, setQuery] = useState();
 
-  const { data } = useQuery(
-    ["tags", query],
-    () => homeService.getOptionesSearch(query),
-    { enabled: !!query }
-  );
+  const { data } = useQuery(["tags", query], () => homeService.getOptionesSearch(query), {
+    enabled: !!query,
+  });
   const onChange = (value) => setQuery(value);
 
   const onKeyUp = (event) => {
@@ -29,12 +27,7 @@ export default function InputSearch() {
         onChange={onChange}
         onKeyUp={onKeyUp}
       >
-        <Input.Search
-          size="large"
-          placeholder="input here"
-          enterButton
-        
-        />
+        <Input.Search size="large" placeholder="input here" enterButton />
       </AutoComplete>
     </div>
   );

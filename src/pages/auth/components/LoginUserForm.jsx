@@ -24,27 +24,20 @@ export default function LoginUserForm() {
   };
 
   return (
-    <div className='m-auto mt-11'>
-      <Button
-        className='ml-[-15px] border-none mb-4'
-        onClick={() => setAccion("CHECK_EMAIL")}
-      >
+    <div className="m-auto mt-11">
+      <Button className="ml-[-15px] border-none mb-4" onClick={() => setAccion("CHECK_EMAIL")}>
         <LeftOutlined />
       </Button>
-      <h2 className='mb-2 font-extrabold'>Iniciar Sesion</h2>
+      <h2 className="mb-2 font-extrabold">Iniciar Sesion</h2>
       <span>Enter your email below to create your account</span>
-      <div className='mt-8'>
+      <div className="mt-8">
         <Form onFinish={handleStateForm}>
-          <Form.Item name='password' rules={[{ required: true }]}>
-            <Input
-              className='h-10'
-              type='password'
-              placeholder='digite su contrasena'
-            />
+          <Form.Item name="password" rules={[{ required: true }]}>
+            <Input className="h-10" type="password" placeholder="digite su contrasena" />
           </Form.Item>
-          <div className='flex flex-col'>
+          <div className="flex flex-col">
             <span>{error && error} </span>
-            <Button htmlType='submit' size={"large"}>
+            <Button htmlType="submit" size={"large"}>
               Continuar
             </Button>
           </div>

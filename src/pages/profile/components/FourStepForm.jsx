@@ -14,11 +14,11 @@ export default function FourStepForm({ previous }) {
   return (
     <div>
       <Form onFinish={handleDataForm}>
-        <Form.Item label='Avatar'>
+        <Form.Item label="Avatar">
           <Upload
-            listType='picture-circle'
+            listType="picture-circle"
             maxCount={1}
-            accept='.jpeg, .png'
+            accept=".jpeg, .png"
             customRequest={customRequest}
           >
             <div>{<PlusOutlined />}</div>
@@ -26,29 +26,25 @@ export default function FourStepForm({ previous }) {
           {error && <span> {error} </span>}
         </Form.Item>
         <Form.Item
-          name='displayName'
-          label='Nombre de usuario'
+          name="displayName"
+          label="Nombre de usuario"
           rules={[{ required: true, message: "Campo Requerido" }]}
         >
           <Input
-            onChange={(e) =>
-              setDataStoreFn({ [e.currentTarget.id]: e.currentTarget.value })
-            }
+            onChange={(e) => setDataStoreFn({ [e.currentTarget.id]: e.currentTarget.value })}
           />
         </Form.Item>
         <Form.Item
-          name='aboutMe'
-          label='Acerca de mi'
+          name="aboutMe"
+          label="Acerca de mi"
           rules={[{ required: true, message: "Campo Requerido" }]}
         >
           <TextArea
-            onChange={(e) =>
-              setDataStoreFn({ [e.currentTarget.id]: e.currentTarget.value })
-            }
+            onChange={(e) => setDataStoreFn({ [e.currentTarget.id]: e.currentTarget.value })}
           />
         </Form.Item>
         <Button onClick={previous}>Anterior</Button>
-        <Button htmlType='submit'>Finalizar</Button>
+        <Button htmlType="submit">Finalizar</Button>
       </Form>
     </div>
   );

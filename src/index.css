@@ -4,11 +4,10 @@
 @tailwind components;
 @tailwind utilities;
 
-
 @layer base {
-	body {
-		@apply bg-primary  text-color1;
-	}
+  body {
+    @apply bg-primary  text-color1;
+  }
 }
 
 @layer utilities {
@@ -29,10 +28,7 @@
   font-weight: 500;
 }
 
-
 /**#06202A/ color de HULU 031116 --fiverr #fff text-gray-300 platsy bg-[#13161C]*/
-
-
 
 /*Cambia el tipo de letra de todos los componentes de Ant Design */
 .ant-form-item-label,
@@ -44,5 +40,3 @@
   line-height: 1.5;
   color: #09090b;
 }
-
-

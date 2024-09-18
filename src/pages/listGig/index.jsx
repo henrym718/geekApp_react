@@ -119,9 +119,9 @@ export default function ListGigsView() {
   ];
 
   return (
-    <div className='container'>
+    <div className="container">
       {gigs.map((gig) => (
-        <div className='container__item '>
+        <div className="container__item ">
           <Link to={`/${gig.author}/${gig.title}`}>
             <CardGigs key={gig.id} gig={gig} />
           </Link>

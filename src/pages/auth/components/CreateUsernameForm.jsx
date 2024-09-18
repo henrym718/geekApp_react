@@ -6,6 +6,7 @@ import InputLoading from "./InputLoading";
 import setAccessToken from "../utils/setAccessToken";
 import { Loader2 } from "lucide-react";
 import { IoIosArrowRoundBack } from "react-icons/io";
+import { Button } from "../../../ui";
 
 export default function CreateUsernameForm() {
   const [error, setError] = useState(null);
@@ -106,9 +107,9 @@ export default function CreateUsernameForm() {
       <p className=" text-sm text-color4 -mt-3">
         Genera confianza usando tu nombre o el de tu empresa
       </p>
-      <button
-        className=" flex items-center justify-center w-full h-[42px] text-color5 bg-color3 hover:bg-zinc-700 font-medium rounded border disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-400 mt-12	"
-        htmlType="submit"
+      <Button
+        className="flex items-center justify-center w-full h-[42px] mt-12"
+        variant="black"
         onClick={handleOnClick}
         disabled={error || error === null || (!error && openSpinner) ? true : false}
       >
@@ -116,8 +117,8 @@ export default function CreateUsernameForm() {
           <Loader2 className="h-5 w-5 animate-spin text-white" />
         ) : (
           "Crear mi cuenta"
-        )}
-      </button>
+        )}{" "}
+      </Button>
       <p className="text-red-500 ">{msgErrorButton ? msgErrorButton : null}</p>
     </div>
   );

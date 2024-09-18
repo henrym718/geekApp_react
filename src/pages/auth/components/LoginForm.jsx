@@ -6,6 +6,7 @@ import InputPassword from "./InputPassword";
 import useUserStore from "../store/user";
 import setAccessToken from "../utils/setAccessToken";
 import { Loader2 } from "lucide-react";
+import { Button } from "../../../ui";
 
 export default function LoginForm() {
   const [error, setError] = useState(null);
@@ -102,9 +103,9 @@ export default function LoginForm() {
         <p className="text-base font-medium text-color1 -tracking-tight pb-[10px]">Contraseña</p>
         <InputPassword onChange={handleOnchangePassword} />
         <p className="underline text-right pt-2 -tracking-tight">¿Olvidaste tu contraseña?</p>
-        <button
-          className="w-full h-[42px] flex items-center justify-center text-color5 bg-color3 mt-12 hover:bg-zinc-700 font-medium rounded border disabled:cursor-default disabled:bg-gray-100 disabled:text-gray-400"
-          htmlType="submit"
+        <Button
+          className="w-full h-[42px] flex items-center justify-center mt-12"
+          variant="black"
           disabled={
             error || disabledButton || !password.trim().length || openSpinner ? true : false
           }
@@ -115,7 +116,8 @@ export default function LoginForm() {
           ) : (
             "Continuar"
           )}
-        </button>
+        </Button>
+
         <p className="text-red-500 ">
           {msgErrorButton && !openSpinnerButton ? msgErrorButton : null}
         </p>
