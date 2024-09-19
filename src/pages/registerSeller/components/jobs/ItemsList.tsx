@@ -8,7 +8,7 @@ interface JobsListProps {
 
 export default function Itemslist({ items }: JobsListProps) {
   return (
-    <div>
+    <div className="flex gap-2 flex-wrap w-full h-[200px] overflow-x-auto">
       {items.map((item) => {
         return <Item item={adapJobToItem(item)} />;
       })}

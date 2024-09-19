@@ -3,18 +3,21 @@ import { Job } from "../../../../types/seller";
 import UseDataForm from "../../store/dataForm";
 import Modal from "../../../../ui/Modal";
 import AddExperienceButton from "./AddExperienceButton";
+import AddExperienceIcon from "./AddExperienceIcon";
 import JobForm from "./JobForm";
 import ItemsList from "./ItemsList";
 
 export default function Jobs() {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const setCloseModal = () => setIsOpenModal(false);
   const { jobs, setJobs } = UseDataForm((state) => state);
+
+  const setCloseModal = () => setIsOpenModal(false);
+  const setOpenModal = () => setIsOpenModal(true);
 
   const handleOnSelet = (job: Job) => {
     setJobs(job);
   };
-  console.log(jobs);
+
   return (
     <div className=" h-full w-4/6 ml-[50px]">
       <div className="flex flex-col">
@@ -27,8 +30,14 @@ export default function Jobs() {
           pero si recien estas empezando aun puedes crear un gran perfil, solo continua a la
           siguiente pagina.
         </p>
-        <div className="flex gap-2">
-          <AddExperienceButton setIsOpenModal={setIsOpenModal} />
+        <div className="flex items-center gap-5 overflow-x-auto">
+          <div>
+            {!jobs.length ? (
+              <AddExperienceButton setIsOpenModal={setOpenModal} />
+            ) : (
+              <AddExperienceIcon setOpenModal={setOpenModal} />
+            )}
+          </div>
           <ItemsList items={jobs} />
         </div>
         <Modal isOpenModal={isOpenModal} setCloseModal={setCloseModal}>
