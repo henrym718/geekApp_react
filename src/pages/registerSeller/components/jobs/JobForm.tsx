@@ -33,6 +33,7 @@ export default function JobForm({ onSelect, setCloseModal }: PropsJobForm) {
 
   const handleOnClick = () => {
     onSelect(job);
+    setCloseModal();
   };
 
   useEffect(() => {

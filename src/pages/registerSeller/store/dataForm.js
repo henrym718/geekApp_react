@@ -7,6 +7,7 @@ const useDataForm = create((set) => ({
   skills: [],
   tags: [],
   career: "",
+  jobs: [],
 
   /**Subcategory */
   setSelectedSubcategory: (array) =>
@@ -30,9 +31,12 @@ const useDataForm = create((set) => ({
   removeTag: (tag) => set((state) => ({ tags: state.tags.filter((t) => t !== tag) })),
   cleanTags: () => set({ tags: [] }),
 
-  /**career */
+  /**Career */
   setCareer: (career) => set({ career }),
   cleanCareer: () => set({ career: "" }),
+
+  /**Jobs */
+  setJobs: (job) => set((state) => ({ jobs: [...state.jobs, job] })),
 }));
 
 export default useDataForm;

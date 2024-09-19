@@ -7,7 +7,7 @@ export interface Job {
   period: {
     startMonth: string | number;
     startYear: string | number;
-    endMonth?: string | number;
-    endYear?: string | number;
+    endMonth?: string | number | undefined;
+    endYear?: string | number | undefined;
   };
 }
