@@ -37,6 +37,7 @@ const useDataForm = create((set) => ({
 
   /**Jobs */
   setJobs: (job) => set((state) => ({ jobs: [...state.jobs, job] })),
+  removeJob: (index) => set((state) => ({ jobs: state.jobs.filter((_, i) => i !== index) })),
 }));
 
 export default useDataForm;

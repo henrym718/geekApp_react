@@ -78,8 +78,8 @@ function ButtonList({ values, name, disabled, onSelected }) {
 
   useEffect(() => {
     setData(values);
-    setSelectedItem(null);
-    onSelected(null);
+    setSelectedItem("");
+    onSelected("");
   }, [values, disabled]);
 
   return (

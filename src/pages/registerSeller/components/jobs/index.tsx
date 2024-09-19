@@ -19,8 +19,8 @@ export default function Jobs() {
   };
 
   return (
-    <div className=" h-full w-4/6 ml-[50px]">
-      <div className="flex flex-col">
+    <div className="h-full w-4/6 ml-[50px]">
+      <div className="flex flex-col h-full pb-8 overflow-y-auto">
         <p className="pb-5 text-base font-semibold"> 4/5</p>
         <h2 className="text-[35px] text-color3 font-medium pb-3 leading-tight w-3/6">
           Es momento que nos cuentanos sobre tu experiencia laboral
@@ -30,7 +30,7 @@ export default function Jobs() {
           pero si recien estas empezando aun puedes crear un gran perfil, solo continua a la
           siguiente pagina.
         </p>
-        <div className="flex items-center gap-5 overflow-x-auto">
+        <div className="flex items-center gap-5">
           <div>
             {!jobs.length ? (
               <AddExperienceButton setIsOpenModal={setOpenModal} />
@@ -38,14 +38,12 @@ export default function Jobs() {
               <AddExperienceIcon setOpenModal={setOpenModal} />
             )}
           </div>
-          <ItemsList items={jobs} />
+          {jobs.length ? <ItemsList items={jobs} /> : null}{" "}
         </div>
-        <Modal isOpenModal={isOpenModal} setCloseModal={setCloseModal}>
-          <div className="h-[800px] w-[700px]">
-            <JobForm setCloseModal={setCloseModal} onSelect={handleOnSelet} />
-          </div>
-        </Modal>
       </div>
+      <Modal isOpenModal={isOpenModal} setCloseModal={setCloseModal}>
+        <JobForm setCloseModal={setCloseModal} onSelect={handleOnSelet} />
+      </Modal>
     </div>
   );
 }

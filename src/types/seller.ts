@@ -5,9 +5,9 @@ export interface Job {
   role: string;
   responsabilities: string;
   period: {
-    startMonth: string | number;
-    startYear: string | number;
-    endMonth?: string | number | undefined;
-    endYear?: string | number | undefined;
+    startMonth: string;
+    startYear: string;
+    endMonth: string;
+    endYear: string;
   };
 }

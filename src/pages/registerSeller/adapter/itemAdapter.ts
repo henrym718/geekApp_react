@@ -2,29 +2,27 @@ import { Item } from "../components/jobs/Item";
 import { Job } from "../../../types/seller";
 
 export function adapJobToItem(job: Job): Item {
-  const {
-    city,
-    company,
-    country,
-    role,
-    period: { startMonth, startYear, endMonth, endYear },
-  } = job;
+  const { city, company, country, role, period } = job;
 
   const formatPeriod = (
-    startMonth: string | number,
-    startYear: string | number,
-    endMonth: string | number | undefined,
-    endYear: string | number | undefined
+    startMonth: string,
+    startYear: string,
+    endMonth: string,
+    endYear: string
   ) => {
     return endMonth && endYear
       ? `${startMonth} ${startYear} - ${endMonth} ${endYear}`
-      : `${startMonth} ${startYear}`;
+      : `${startMonth} ${startYear} - actual`;
   };
 
   return {
-    id: role,
     title: role,
-    content: `${company}| ${formatPeriod(startMonth, startYear, endMonth, endYear)} `,
+    content: `${company} | ${formatPeriod(
+      period?.startMonth,
+      period?.startYear,
+      period?.endMonth,
+      period?.endYear
+    )} `,
     footer: `${city}, ${country}`,
   };
 }

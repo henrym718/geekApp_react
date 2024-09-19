@@ -5,10 +5,10 @@ import dataMonths from "../../utils/month";
 
 export default function PeriodSelector({ onSelected, keepWorking }) {
   const [optsSelected, setOptsSelected] = useState({
-    startMonth: null,
-    startYear: null,
-    endMonth: null,
-    endYear: null,
+    startMonth: "",
+    startYear: "",
+    endMonth: "",
+    endYear: "",
   });
   const [endYears, setEndYears] = useState([]);
   const [currentJob, setCurrentJob] = useState(false);

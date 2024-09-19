@@ -1,8 +1,8 @@
 import { GiOpenFolder } from "react-icons/gi";
 import { Trash2 } from "lucide-react";
+import useDataForm from "../../store/dataForm";
 
 export interface Item {
-  id: string;
   title: string;
   content: string;
   footer: string;
@@ -10,10 +10,11 @@ export interface Item {
 
 interface ItemProps {
   item: Item;
+  index: number;
 }
 
-export default function Item({ item }: ItemProps) {
-  console.log({ item });
+export default function Item({ item, index }: ItemProps) {
+  const { removeJob } = useDataForm((state) => state);
   return (
     <div className="relative border-2 rounded-md h-[250px] w-[400px] px-4 py-6">
       <div className="flex  gap-4">
@@ -25,6 +26,7 @@ export default function Item({ item }: ItemProps) {
         </div>
       </div>
       <Trash2
+        onClick={() => removeJob(index)}
         size={35}
         className="absolute top-5 right-5 p-1 border-2 border-green-600 rounded-full text-green-600 cursor-pointer"
       />
