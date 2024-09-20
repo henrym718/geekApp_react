@@ -14,7 +14,7 @@ export function Button({ variant, children, className, ...props }: ButtonProps) 
     green: "bg-green-700 text-white",
     transparent: "bg-white !border-none text-slate-500 text-sm",
     black: "text-white bg-color3 hover:bg",
-    white: "",
+    white: "text-color3 border-color3",
   };
 
   /** Asignaciòn de estilos en una variable */

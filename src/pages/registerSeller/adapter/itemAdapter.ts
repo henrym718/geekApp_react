@@ -1,4 +1,4 @@
-import { Item } from "../components/jobs/Item";
+import { Item } from "../components/experience/Item";
 import { Job } from "../../../types/seller";
 
 export function adapJobToItem(job: Job): Item {

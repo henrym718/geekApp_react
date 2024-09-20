@@ -53,7 +53,7 @@ export default function JobForm({ onSelect, setCloseModal }: PropsJobForm) {
   }, [job, keepWorking]);
 
   return (
-    <div className="py-9 px-8">
+    <div className="py-9 px-8 w-[630px] h-full">
       <h2 className="text-4xl text-black font-medium pb-6">Agregar Experiencia Laboral</h2>
 
       <div className="pb-6">

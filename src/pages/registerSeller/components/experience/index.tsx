@@ -2,8 +2,8 @@ import { useState } from "react";
 import { Job } from "../../../../types/seller";
 import UseDataForm from "../../store/dataForm";
 import Modal from "../../../../ui/Modal";
-import AddExperienceButton from "./AddExperienceButton";
-import AddExperienceIcon from "./AddExperienceIcon";
+import AddButton from "./AddButton";
+import AddIcon from "./AddIcon";
 import JobForm from "./JobForm";
 import ItemsList from "./ItemsList";
 
@@ -33,9 +33,9 @@ export default function Jobs() {
         <div className="flex items-center gap-5">
           <div>
             {!jobs.length ? (
-              <AddExperienceButton setIsOpenModal={setOpenModal} />
+              <AddButton setIsOpenModal={setOpenModal} name="Agregar experiencia" />
             ) : (
-              <AddExperienceIcon setOpenModal={setOpenModal} />
+              <AddIcon setOpenModal={setOpenModal} />
             )}
           </div>
           {jobs.length ? <ItemsList items={jobs} /> : null}{" "}
