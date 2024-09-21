@@ -1,6 +1,6 @@
 import Item from "./Item";
-import { adapJobToItem } from "../../adapter/itemAdapter";
-import { Job } from "../../../../types/seller";
+import { adapJobToItem } from "../adapter/itemAdapter";
+import { Job } from "../../../types/seller";
 
 interface JobsListProps {
   items: Array<Job>;

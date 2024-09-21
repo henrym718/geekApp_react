@@ -1,6 +1,6 @@
 import { GiOpenFolder } from "react-icons/gi";
 import { Trash2 } from "lucide-react";
-import useDataForm from "../../store/dataForm";
+import useDataForm from "../store/dataForm";
 
 export interface Item {
   title: string;

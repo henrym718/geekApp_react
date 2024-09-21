@@ -116,7 +116,7 @@ function ButtonList({ values, name, disabled, onSelected }) {
               size={20}
             />
           </div>
-          <ul className="relative max-h-64 pb-2 overflow-y-auto">
+          <ul className="relative max-h-56 pb-2 overflow-y-auto">
             {data.length ? (
               data.map((value, index) => (
                 <li

@@ -4,12 +4,12 @@ import Autocomplete from "./Autocomplete";
 import { Button } from "../../../../ui";
 import { Job } from "../../../../types/seller";
 
-interface PropsJobForm {
+interface ExperienceFormProps {
   onSelect: (job: Job) => void;
   setCloseModal: () => void;
 }
 
-export default function JobForm({ onSelect, setCloseModal }: PropsJobForm) {
+export default function ExperienceForm({ onSelect, setCloseModal }: ExperienceFormProps) {
   const [isDisabledButton, setIsDisabledButton] = useState(true);
   const [keepWorking, setKeepWorking] = useState(false);
 

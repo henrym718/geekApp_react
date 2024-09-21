@@ -20,7 +20,7 @@ export default function index() {
         {form === "EDUCATION" && <Education />}
       </div>
       <div className="pb-1">
-        <Footer form={form} steps={5} />
+        <Footer form={form} steps={7} />
       </div>
     </div>
   );

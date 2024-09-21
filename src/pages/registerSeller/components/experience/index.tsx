@@ -2,10 +2,10 @@ import { useState } from "react";
 import { Job } from "../../../../types/seller";
 import UseDataForm from "../../store/dataForm";
 import Modal from "../../../../ui/Modal";
-import AddButton from "./AddButton";
-import AddIcon from "./AddIcon";
-import JobForm from "./JobForm";
-import ItemsList from "./ItemsList";
+import AddButton from "../../ui/AddButton";
+import AddIcon from "../../ui/AddIcon";
+import ExperienceForm from "./ExperienceForm";
+import ItemsList from "../../ui/ItemsList";
 
 export default function Jobs() {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -42,7 +42,7 @@ export default function Jobs() {
         </div>
       </div>
       <Modal isOpenModal={isOpenModal} setCloseModal={setCloseModal}>
-        <JobForm setCloseModal={setCloseModal} onSelect={handleOnSelet} />
+        <ExperienceForm setCloseModal={setCloseModal} onSelect={handleOnSelet} />
       </Modal>
     </div>
   );
