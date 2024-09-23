@@ -4,7 +4,7 @@ interface AddExperienceIconProps {
   setOpenModal: () => void;
 }
 
-export default function AddExperienceIcon({ setOpenModal }: AddExperienceIconProps) {
+export default function AddIcon({ setOpenModal }: AddExperienceIconProps) {
   return (
     <Plus
       onClick={() => setOpenModal()}

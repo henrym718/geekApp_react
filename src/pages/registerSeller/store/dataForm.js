@@ -8,6 +8,7 @@ const useDataForm = create((set) => ({
   tags: [],
   career: "",
   jobs: [],
+  education: [],
 
   /**Subcategory */
   setSelectedSubcategory: (array) =>
@@ -38,6 +39,10 @@ const useDataForm = create((set) => ({
   /**Jobs */
   setJobs: (job) => set((state) => ({ jobs: [...state.jobs, job] })),
   removeJob: (index) => set((state) => ({ jobs: state.jobs.filter((_, i) => i !== index) })),
+
+  /**Education */
+  setEducation: (education) => set((state) => ({ education: [...state.education, education] })),
+  removeEducation: (index) => set((state) => ({ education: state.education.filter((_, i) => i !== index) })),
 }));
 
 export default useDataForm;

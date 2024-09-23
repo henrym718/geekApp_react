@@ -77,17 +77,11 @@ export default function index({ form, steps }: IndexProps) {
         <ProgressBar steps={steps} currentStep={currentStep} />
       </div>
       <div
-        className={`flex pb-3 items-center mx-8 ${
-          form === "CATEGORY" ? "justify-end" : "justify-between"
-        }`}
+        className={`flex pb-3 items-center mx-8 ${form === "CATEGORY" ? "justify-end" : "justify-between"}`}
       >
         {/* Botón "Volver", se muestra solo si no está en el primer formulario */}
         {form !== "CATEGORY" ? (
-          <Button
-            className="h-12 !rounded-xl text-lg"
-            onClick={handleOnClickBackButton}
-            variant="white"
-          >
+          <Button className="h-12 !rounded-xl text-lg" onClick={handleOnClickBackButton} variant="white">
             Volver
           </Button>
         ) : null}

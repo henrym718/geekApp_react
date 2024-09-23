@@ -1,21 +1,25 @@
 import { useState } from "react";
-import { Job } from "../../../../types/seller";
+import { Experience } from "../../../../types/seller";
 import UseDataForm from "../../store/dataForm";
 import Modal from "../../../../ui/Modal";
 import AddButton from "../../ui/AddButton";
 import AddIcon from "../../ui/AddIcon";
 import ExperienceForm from "./ExperienceForm";
 import ItemsList from "../../ui/ItemsList";
+import { adapExperienceToItem } from "../../adapter/itemAdapter";
+import { GiOpenFolder } from "react-icons/gi";
+// import { IoSchool } from "react-icons/io5";
+// <IoSchool className="text-green-600" size={50} />
 
 export default function Jobs() {
   const [isOpenModal, setIsOpenModal] = useState(false);
-  const { jobs, setJobs } = UseDataForm((state) => state);
+  const { jobs, setJobs, removeJob } = UseDataForm((state) => state);
 
   const setCloseModal = () => setIsOpenModal(false);
   const setOpenModal = () => setIsOpenModal(true);
 
-  const handleOnSelet = (job: Job) => {
-    setJobs(job);
+  const handleOnSelet = (experience: Experience) => {
+    setJobs(experience);
   };
 
   return (
@@ -26,9 +30,8 @@ export default function Jobs() {
           Es momento que nos cuentanos sobre tu experiencia laboral
         </h2>
         <p className="text-base font-normal pb-10 w-3/6">
-          Al agregar tu experiencia en empresas tienes mayor posibilidades de concretar ofertas,
-          pero si recien estas empezando aun puedes crear un gran perfil, solo continua a la
-          siguiente pagina.
+          Al agregar tu experiencia en empresas tienes mayor posibilidades de concretar ofertas, pero si
+          recien estas empezando aun puedes crear un gran perfil, solo continua a la siguiente pagina.
         </p>
         <div className="flex items-center gap-5">
           <div>
@@ -38,7 +41,14 @@ export default function Jobs() {
               <AddIcon setOpenModal={setOpenModal} />
             )}
           </div>
-          {jobs.length ? <ItemsList items={jobs} /> : null}{" "}
+          {jobs.length ? (
+            <ItemsList<Experience>
+              Icon={<GiOpenFolder className="text-green-600" size={50} />}
+              items={jobs}
+              removeItem={removeJob}
+              adapterItem={adapExperienceToItem}
+            />
+          ) : null}
         </div>
       </div>
       <Modal isOpenModal={isOpenModal} setCloseModal={setCloseModal}>

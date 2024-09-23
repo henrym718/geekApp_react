@@ -1,9 +1,9 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import ButtonList from "../../ui/ButtonList";
 import years from "../../utils/years";
 
 interface PeriodSelectorProps {
-  onSelect: () => void;
+  onSelect: (opts: OptsSelected) => void;
 }
 interface OptsSelected {
   startYear: string;
@@ -16,7 +16,17 @@ export default function PeriodSelector({ onSelect }: PeriodSelectorProps) {
     endYear: "",
   });
 
-  const handleOnSelect = () => {};
+  const handleOnSelect = (key: string, value: string) => {
+    setOptsSelected((prev) => ({ ...prev, [key]: value }));
+  };
+
+  const endYearOptions = useMemo(() => {
+    return years.filter((year) => +year >= +optsSelected.startYear);
+  }, [optsSelected.startYear]);
+
+  useEffect(() => {
+    onSelect(optsSelected);
+  }, [optsSelected]);
 
   return (
     <div className="flex flex-col w-full ">
@@ -26,13 +36,13 @@ export default function PeriodSelector({ onSelect }: PeriodSelectorProps) {
           name="Año de inicio"
           values={years}
           disabled={false}
-          onSelected={handleOnSelect}
+          onSelected={(startYear: string) => handleOnSelect("startYear", startYear)}
         />
         <ButtonList
           name="Año de graduación"
-          values={years}
+          values={endYearOptions}
           disabled={false}
-          onSelected={handleOnSelect}
+          onSelected={(endYear: string) => handleOnSelect("endYear", endYear)}
         />
       </div>
     </div>
