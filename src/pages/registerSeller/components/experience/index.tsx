@@ -8,8 +8,6 @@ import ExperienceForm from "./ExperienceForm";
 import ItemsList from "../../ui/ItemsList";
 import { adapExperienceToItem } from "../../adapter/itemAdapter";
 import { GiOpenFolder } from "react-icons/gi";
-// import { IoSchool } from "react-icons/io5";
-// <IoSchool className="text-green-600" size={50} />
 
 export default function Jobs() {
   const [isOpenModal, setIsOpenModal] = useState(false);

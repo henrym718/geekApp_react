@@ -5,14 +5,15 @@ import TextArea from "../../../../ui/TextArea";
 import PeriodSelector from "./PeriodSelector";
 import useDataForm from "../../store/dataForm";
 import { Education } from "../../../../types/seller";
+import Autocomplete from "../../ui/Autocomplete";
+import { educationLevel } from "../../utils/levelOfEducation";
 
-interface EducacionFormProps {
+interface Props {
   setCloseModal: () => void;
 }
 
-export default function EducationForm({ setCloseModal }: EducacionFormProps) {
+export default function EducationForm({ setCloseModal }: Props) {
   const [selected, setSetselected] = useState<Partial<Education>>();
-
   const { setEducation } = useDataForm((state) => state);
 
   const hanldeOptSelected = (key: string, value: string | { startYear: string; endYear: string }) => {
@@ -63,12 +64,10 @@ export default function EducationForm({ setCloseModal }: EducacionFormProps) {
       </div>
       <div className="pb-6">
         <p className="pb-2 font-medium"> Nivel de estudios</p>
-        <Input
-          onChange={(e) => hanldeOptSelected(e.target.name, e.target.value)}
-          name="level"
-          className="h-9"
-          variant="default"
+        <Autocomplete
+          data={educationLevel}
           placeholder="Ex: Bootcamp"
+          onSelect={(value) => hanldeOptSelected("level", value)}
         />
       </div>
       <div className="pb-6">

@@ -1,19 +1,25 @@
 import { useEffect, useState } from "react";
 import PeriodSelector from "./PeriodSelector";
-import Autocomplete from "./Autocomplete";
+import Autocomplete from "../../ui/Autocomplete";
 import { Button } from "../../../../ui";
-import { Job } from "../../../../types/seller";
+import { Experience } from "../../../../types/seller";
+import countries from "../../utils/countries";
 
-interface ExperienceFormProps {
-  onSelect: (job: Job) => void;
+interface Props {
+  onSelect: (experience: Experience) => void;
   setCloseModal: () => void;
 }
 
-export default function ExperienceForm({ onSelect, setCloseModal }: ExperienceFormProps) {
-  const [isDisabledButton, setIsDisabledButton] = useState(true);
-  const [keepWorking, setKeepWorking] = useState(false);
+interface State {
+  experience: Experience;
+  keepWorking: boolean;
+  isDisabledButton: boolean;
+}
 
-  const [job, setJob] = useState<Job>({
+export default function ExperienceForm({ onSelect, setCloseModal }: Props) {
+  const [isDisabledButton, setIsDisabledButton] = useState<State["isDisabledButton"]>(true);
+  const [keepWorking, setKeepWorking] = useState<State["keepWorking"]>(false);
+  const [experience, setExperience] = useState<State["experience"]>({
     company: "",
     city: "",
     country: "",
@@ -28,29 +34,36 @@ export default function ExperienceForm({ onSelect, setCloseModal }: ExperienceFo
   });
 
   const handleOnSelected = (key: string, opt: string) => {
-    setJob((prev) => ({ ...prev, [key]: opt }));
+    setExperience((prev) => ({ ...prev, [key]: opt }));
   };
 
   const handleOnClick = () => {
-    onSelect(job);
+    onSelect(experience);
     setCloseModal();
   };
 
   useEffect(() => {
     const verifyIsPeriodCompleted = () => {
       if (keepWorking) {
-        return job.period.startMonth && job.period.startYear;
+        return experience.period.startMonth && experience.period.startYear;
       } else {
         return (
-          job.period.startMonth && job.period.startYear && job.period.endMonth && job.period.endYear
+          experience.period.startMonth &&
+          experience.period.startYear &&
+          experience.period.endMonth &&
+          experience.period.endYear
         );
       }
     };
     const isAllFieldsComplete =
-      job.company && job.city && job.country && job.role && verifyIsPeriodCompleted();
+      experience.company &&
+      experience.city &&
+      experience.country &&
+      experience.role &&
+      verifyIsPeriodCompleted();
 
     setIsDisabledButton(!isAllFieldsComplete);
-  }, [job, keepWorking]);
+  }, [experience, keepWorking]);
 
   return (
     <div className="py-9 px-8 w-[630px] h-full">
@@ -80,7 +93,11 @@ export default function ExperienceForm({ onSelect, setCloseModal }: ExperienceFo
           />
 
           <div className="w-1/2">
-            <Autocomplete onSelect={(opt: string) => handleOnSelected("country", opt)} />
+            <Autocomplete
+              data={countries}
+              placeholder="Ex: Ecuador"
+              onSelect={(opt) => handleOnSelected("country", opt)}
+            />
           </div>
         </div>
       </div>
