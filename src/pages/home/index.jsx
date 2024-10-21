@@ -11,9 +11,7 @@ export default function Home() {
   console.log({ user });
 
   const handleChange = (value) => {
-    const data = servicios.filter((service) =>
-      service.value.toLowerCase().includes(value.toLowerCase())
-    );
+    const data = servicios.filter((service) => service.value.toLowerCase().includes(value.toLowerCase()));
     setOptions(data);
   };
 
@@ -30,12 +28,7 @@ export default function Home() {
       <div>
         <div className=" flex flex-col bg-hero px-5 py-10 sm:items-center sm:py-24 ">
           <TextIntroduction />
-          <Autocomplete
-            options={options}
-            onChange={handleChange}
-            onSelected={handleOnSelected}
-            limit={10}
-          />
+          <Autocomplete options={options} onChange={handleChange} onSelected={handleOnSelected} limit={10} />
         </div>
       </div>
       <div className="sm:max-w-screen-xl sm:mx-auto">

@@ -25,7 +25,7 @@ export default function Jobs() {
       <div className="flex flex-col h-full pb-8 overflow-y-auto">
         <p className="pb-5 text-base font-semibold"> 4/5</p>
         <h2 className="text-[35px] text-color3 font-medium pb-3 leading-tight w-3/6">
-          Es momento que nos cuentanos sobre tu experiencia laboral
+          Es momento que nos cuentes sobre tu experiencia laboral
         </h2>
         <p className="text-base font-normal pb-10 w-3/6">
           Al agregar tu experiencia en empresas tienes mayor posibilidades de concretar ofertas, pero si

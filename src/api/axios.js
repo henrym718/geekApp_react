@@ -1,6 +1,8 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "http://localhost:8000/api";
+const baseURL = process.env.API_URL || "http://localhost:8000/api";
+
+axios.defaults.baseURL = baseURL;
 axios.defaults.withCredentials = true;
 axios.defaults.timeout = 1000;
 axios.defaults.headers.common["Platform"] = "web";
