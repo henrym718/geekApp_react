@@ -35,6 +35,8 @@ export default function index({ form, steps }: IndexProps) {
       SKILL: "CAREER",
       CAREER: "EXPERIENCE",
       EXPERIENCE: "EDUCATION",
+      EDUCATION: "ABOUTME",
+      ABOUTME: "PROFILE",
     };
     const nextForm = formFlow[form];
     if (nextForm) {
@@ -51,6 +53,8 @@ export default function index({ form, steps }: IndexProps) {
       CAREER: "A continuación agrega tu experiencia",
       EXPERIENCE: "A continuación agrega tus estudios",
       EDUCATION: "A continuación agrega un sobre ti ",
+      ABOUTME: "A continuación completa tu perfil",
+      PROFILE: "Guardar tu registro",
     };
     return nameForm[form] || ""; // Devuelve la etiqueta según el formulario actual
   };
@@ -62,6 +66,8 @@ export default function index({ form, steps }: IndexProps) {
       CAREER: "SKILL",
       EXPERIENCE: "CAREER",
       EDUCATION: "EXPERIENCE",
+      ABOUTME: "EDUCATION",
+      PROFILE: "ABOUTME",
     };
     const backForm = backFlow[form];
     if (backForm) {

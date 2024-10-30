@@ -3,6 +3,8 @@ import Skills from "./components/skills";
 import Career from "./components/careers";
 import Experience from "./components/experience";
 import Education from "./components/education";
+import Aboutme from "./components/aboutme";
+import Profile from "./components/profile";
 import Footer from "./components/footer";
 import useFormsStore from "./store/forms";
 
@@ -18,6 +20,8 @@ export default function index() {
         {form === "CAREER" && <Career />}
         {form === "EXPERIENCE" && <Experience />}
         {form === "EDUCATION" && <Education />}
+        {form === "ABOUTME" && <Aboutme />}
+        {form === "PROFILE" && <Profile />}
       </div>
       <div className="pb-1">
         <Footer form={form} steps={7} />

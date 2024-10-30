@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 const useFormsStore = create((set) => ({
-  form: "CATEGORY",
+  form: "PROFILE",
   currentStep: 1,
   setForm: (form) => set({ form }),
   addStep: () => set((state) => ({ currentStep: state.currentStep + 1 })),

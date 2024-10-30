@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseURL = process.env.API_URL || "http://localhost:8000/api";
+const baseURL = "http://localhost:8000/api";
 
 axios.defaults.baseURL = baseURL;
 axios.defaults.withCredentials = true;
