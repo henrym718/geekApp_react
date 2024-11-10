@@ -2,6 +2,7 @@ import { useState } from "react";
 import Modal from "../../../../ui/Modal";
 import { Button } from "../../../../ui";
 import { Plus } from "lucide-react";
+import ImageCropper from "./ImageCropper";
 
 interface State {
   isOpenModal: boolean;
@@ -28,6 +29,7 @@ export default function Avatar() {
           <p className="text-3xl font-medium pb-5">Tu foto</p>
           <div className="flex gap-6">
             <section className="flex flex-col gap-2 justify-center">
+              <ImageCropper />
               <div className="flex justify-center items-center w-56 h-56 rounded-full bg-black bg-opacity-5 border-2 border-dashed">
                 <div className="w-20 h-20 rounded-full bg-slate-200"></div>
               </div>
